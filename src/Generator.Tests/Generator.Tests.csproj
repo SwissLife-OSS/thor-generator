@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="EventSourceDefinitions\ISimpleEventSource.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-preview-20170517-02" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
@@ -15,6 +20,21 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Generator\Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="EventSourceDefinitions\EventSourceSamples.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EventSourceSamples.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="EventSourceDefinitions\EventSourceSamples.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventSourceSamples.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

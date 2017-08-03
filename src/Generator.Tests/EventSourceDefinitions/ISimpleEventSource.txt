@@ -3,11 +3,11 @@
 namespace ChilliCream.Tracing.Generator.Tests
 {
     [EventSourceDefinition(Name = "Mock")]
-    public interface IMockEventSource
+    public interface ISimpleEventSource
     {
         [Event(1, 
             Level = EventLevel.Informational, 
-            Message = "Host {2} created.", 
+            Message = "Simple is called {0}.", 
             Version = 2)]
         void Simple(string name);
     }

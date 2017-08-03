@@ -16,7 +16,7 @@ namespace ChilliCream.Tracing.Generator
         public string Message { get; set; }
         public EventTags Tags { get; set; }
         public EventActivityOptions ActivityOptions { get; set; }
-        public string ArgumentSyntax { get; set; }
+        public string AttributeSyntax { get; set; }
         public List<EventArgumentDefinition> Arguments { get; } = new List<EventArgumentDefinition>();
     }
 }

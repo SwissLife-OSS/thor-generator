@@ -47,6 +47,7 @@ namespace ChilliCream.Tracing.Generator
                 && TryParseEventAttribute(eventAttribute, out EventDefinition eventDefinition)
                 && TryParseEventArgument(node, out List<EventArgumentDefinition> eventArgumentDefinitions))
             {
+                eventDefinition.Name = node.Identifier.Text;
                 eventDefinition.Arguments.AddRange(eventArgumentDefinitions);
                 EventSourceDefinition.Events.Add(eventDefinition);
             }
@@ -94,7 +95,7 @@ namespace ChilliCream.Tracing.Generator
             }
 
             eventDefinition.EventId = int.Parse(GetValue(eventId));
-            eventDefinition.ArgumentSyntax = eventAttribute.ToString();
+            eventDefinition.AttributeSyntax = eventAttribute.ToString();
 
             foreach (AttributeArgumentSyntax argument in eventAttribute.ArgumentList.Arguments.Skip(1))
             {
