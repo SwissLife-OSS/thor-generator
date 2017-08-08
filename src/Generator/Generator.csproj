@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
-    <AssemblyName>ChilliCream.Tracing.Generator</AssemblyName>
-    <RootNamespace>ChilliCream.Tracing.Generator</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>ChilliCream.Logging.Generator</AssemblyName>
+    <RootNamespace>ChilliCream.Logging.Generator</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ChilliCream.Logging.Abstractions" Version="1.0.0-preview1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.3.1" />
-    <PackageReference Include="Microsoft.Diagnostics.Tracing.EventSource.Redist" Version="1.1.28" />
   </ItemGroup>
 
 </Project>

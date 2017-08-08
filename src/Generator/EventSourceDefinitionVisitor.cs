@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Diagnostics.Tracing;
+using System.Diagnostics.Tracing;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.Logging.Generator
 {
     /// <summary>
     /// This visitor inspects syntax trees for event source definitions.

@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
-    <AssemblyName>ChilliCream.Tracing.Generator.Tests</AssemblyName>
-    <RootNamespace>ChilliCream.Tracing.Generator</RootNamespace>
+    <TargetFramework>net47</TargetFramework>
+    <AssemblyName>ChilliCream.Logging.Generator.Tests</AssemblyName>
+    <RootNamespace>ChilliCream.Logging.Generator</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

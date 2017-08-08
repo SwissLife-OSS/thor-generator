@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ChilliCream.Tracing.Generator.EventSourceDefinitions {
+namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ChilliCream.Tracing.Generator.EventSourceDefinitions {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Tracing.Generator.EventSourceDefinitions.EventSourceSamples", typeof(EventSourceSamples).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Logging.Generator.EventSourceDefinitions.EventSourceSamples", typeof(EventSourceSamples).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,7 +63,7 @@ namespace ChilliCream.Tracing.Generator.EventSourceDefinitions {
         /// <summary>
         ///   Looks up a localized string similar to using Microsoft.Diagnostics.Tracing;
         ///
-        ///namespace ChilliCream.Tracing.Generator.Tests
+        ///namespace ChilliCream.Logging.Generator.Tests
         ///{
         ///    [EventSourceDefinition(Name = &quot;Mock&quot;)]
         ///    public interface ISimpleEventSource

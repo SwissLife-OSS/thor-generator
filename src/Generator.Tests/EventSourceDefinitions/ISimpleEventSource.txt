@@ -1,6 +1,6 @@
 ﻿using Microsoft.Diagnostics.Tracing;
 
-namespace ChilliCream.Tracing.Generator.Tests
+namespace ChilliCream.Logging.Generator.Tests
 {
     [EventSourceDefinition(Name = "Mock")]
     public interface ISimpleEventSource

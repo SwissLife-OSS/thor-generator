@@ -1,7 +1,7 @@
-﻿using Microsoft.Diagnostics.Tracing;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.Logging.Generator
 {
     public class EventDefinition
     {

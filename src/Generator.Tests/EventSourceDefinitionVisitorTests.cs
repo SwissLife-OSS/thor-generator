@@ -1,22 +1,17 @@
-﻿using ChilliCream.Tracing.Generator.EventSourceDefinitions;
-using FluentAssertions;
+﻿using System.Diagnostics.Tracing;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
-using Microsoft.Diagnostics.Tracing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FluentAssertions;
 using Xunit;
+using ChilliCream.Logging.Generator.EventSourceDefinitions;
 
-namespace ChilliCream.Tracing.Generator.Tests
+namespace ChilliCream.Logging.Generator.Tests
 {
     public class EventSourceDefinitionVisitorTests
     {
         [Fact]
-        public async Task InspectSimpleEventSource()
+        public void InspectSimpleEventSource()
         {
             // arrange
             SyntaxTree tree = CSharpSyntaxTree.ParseText(EventSourceSamples.SimpleEventSource);
