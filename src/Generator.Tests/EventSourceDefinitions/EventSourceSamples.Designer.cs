@@ -61,6 +61,27 @@ namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Collections.Generic;
+        ///using System.Linq;
+        ///using System.Text;
+        ///using System.Threading.Tasks;
+        ///
+        ///namespace Foo
+        ///{
+        ///    public class Bar
+        ///    {
+        ///    }
+        ///}
+        ///.
+        /// </summary>
+        internal static string EventSourceTemplate {
+            get {
+                return ResourceManager.GetString("EventSourceTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to using Microsoft.Diagnostics.Tracing;
         ///
         ///namespace ChilliCream.Logging.Generator.Tests
