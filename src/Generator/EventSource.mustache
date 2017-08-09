@@ -1,0 +1,53 @@
+﻿using System;
+using System.Diagnostics.Tracing;
+using System.Text;
+
+namespace {{namespace}}
+{
+    [EventSource({{parameter-string}})]
+    public sealed class {{name}}
+        : EventSource
+    {
+        private {{name}}() { }
+
+        public static readonly I{{name}} Log = new {{name}}();
+
+
+{{#write-core}}
+        [NonEvent]
+        protected unsafe void WriteEmptyWithRelatedActivityIdCore({{parameter-string}})
+        {
+            if (IsEnabled())
+            {
+{{#parameters}}
+{{#isString}}
+                StringExtensions.EnsureItIsNotNull(ref {{name}});
+{{/isString}}
+{{/parameters}}
+
+{{#parameters}}
+{{#isString}}
+                fixed (char* {{name}}Bytes = {{name}})
+                {
+{{/isString}}
+{{/parameters}}
+                const short dataCount = {{parameters-count}};
+                EventData* data = stackalloc EventData[dataCount];
+
+{{#parameters}}
+                data[0].DataPointer = (IntPtr)({{operator}}{{name}});
+                data[0].Size = {{size}};
+{{/parameters}}
+
+{{#parameters}}
+{{#isString}}
+                }
+{{/isString}}
+{{/parameters}}
+
+                WriteEventWithRelatedActivityIdCore(eventId, &relatedActivityId, dataCount, data);
+            }
+        }
+{{/write-core}}
+    }
+}

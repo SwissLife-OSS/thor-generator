@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="EventSourceDefinitions\EventSourceSamples.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
