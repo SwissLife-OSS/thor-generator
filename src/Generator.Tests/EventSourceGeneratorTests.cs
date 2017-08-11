@@ -22,24 +22,11 @@ namespace ChilliCream.Logging.Generator
             visitor.Visit(simpleEventSource);
 
             // act
-            tree = CSharpSyntaxTree.ParseText(EventSourceSamples.EventSourceTemplate);
-            SyntaxNode eventSourceTemplate = tree.GetRoot();
-
-            EventSourceRewriter eventSourceRewriter = new EventSourceRewriter(visitor.EventSourceDefinition);
-            SyntaxNode eventSource = eventSourceRewriter.Visit(eventSourceTemplate);
+            EventSourceGenerator generator = new EventSourceGenerator(visitor.EventSourceDefinition);
+            string eventSourceCode = generator.CreateEventSource();
 
             // assert
 
         }
-
-        [Fact]
-        public void NustacheTest()
-        {
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string json = File.ReadAllText(@"C:\Work\EventSourceGenerator\src\Generator\EventSource.json");
-            object data = serializer.Deserialize<IDictionary<string, object>>(json);
-
-        }
-
     }
 }

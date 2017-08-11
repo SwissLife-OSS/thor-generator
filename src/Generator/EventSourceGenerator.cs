@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ChilliCream.Logging.Generator.Models;
+using ChilliCream.Logging.Generator.Resources;
 using Nustache.Core;
 
 namespace ChilliCream.Logging.Generator
@@ -12,20 +14,15 @@ namespace ChilliCream.Logging.Generator
         private readonly EventSourceDefinition _eventSourceDefinition;
         private readonly string _templateCode;
 
-        public EventSourceGenerator(EventSourceDefinition eventSourceDefinition, string templateCode)
+        public EventSourceGenerator(EventSourceDefinition eventSourceDefinition)
         {
             if (eventSourceDefinition == null)
             {
                 throw new ArgumentNullException(nameof(eventSourceDefinition));
             }
 
-            if (templateCode == null)
-            {
-                throw new ArgumentNullException(nameof(templateCode));
-            }
-
             _eventSourceDefinition = eventSourceDefinition;
-            _templateCode = templateCode;
+            _templateCode = Encoding.UTF8.GetString(Templates.EventSourceBase);
         }
 
         public string CreateEventSource()

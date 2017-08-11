@@ -9,6 +9,12 @@ namespace ChilliCream.Logging.Generator.Tests
             Level = EventLevel.Informational, 
             Message = "Simple is called {0}.", 
             Version = 2)]
-        void Simple(string name);
+        void Simple1(string name);
+
+        [Event(2, 
+            Level = EventLevel.Informational, 
+            Message = "Simple is called {0}.", 
+            Version = 2)]
+        void Simple2(string name, int x, string y);
     }
 }
