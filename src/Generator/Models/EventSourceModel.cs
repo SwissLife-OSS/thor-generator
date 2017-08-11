@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ChilliCream.Logging.Generator.Models;
 using Newtonsoft.Json;
 
 namespace ChilliCream.Logging.Generator
@@ -15,5 +16,8 @@ namespace ChilliCream.Logging.Generator
 
         [JsonProperty("events")]
         public List<EventModel> Events { get; set; } = new List<EventModel>();
+
+        [JsonProperty("writeMethods")]
+        public List<WriteCoreModel> WriteMethods { get; set; } = new List<WriteCoreModel>();
     }
 }

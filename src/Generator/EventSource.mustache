@@ -22,13 +22,13 @@ namespace {{namespace}}
             }
         }
 
-        [Event({{id}}, {{#attribute}}{{#parameters}}{{#isFollowing}}, {{/isFollowing}}{{name}} = {{value}}{{/parameters}}{{/attribute}})]
-        private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) =>
-            WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
+        {{attributeSyntax}}
+        private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) 
+            => WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
 
 {{/events}}
 
-{{#write-core}}
+{{#writeMethods}}
         [NonEvent]
         protected unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
         {
@@ -46,7 +46,7 @@ namespace {{namespace}}
                 {
 {{/isString}}
 {{/parameters}}
-                const short dataCount = {{parameters-count}};
+                const short dataCount = {{parametersCount}};
                 EventData* data = stackalloc EventData[dataCount];
                 data[0].DataPointer = (IntPtr)(&applicationId);
                 data[0].Size = 4;
@@ -66,6 +66,6 @@ namespace {{namespace}}
                 WriteEventCore(eventId, dataCount, data);
             }
         }
-{{/write-core}}
+{{/writeMethods}}
     }
 }
