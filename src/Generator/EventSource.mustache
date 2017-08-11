@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics.Tracing;
 using System.Text;
+using ChilliCream.Logging.Abstractions;
 
 namespace {{namespace}}
 {
     [EventSource({{parameter-string}})]
     public sealed class {{name}}
-        : EventSource
+        : EventSourceBase
     {
         private {{name}}() { }
 
@@ -15,7 +16,7 @@ namespace {{namespace}}
 
 {{#write-core}}
         [NonEvent]
-        protected unsafe void WriteEmptyWithRelatedActivityIdCore({{parameter-string}})
+        protected unsafe void WriteCore(int eventId, int applicationId, Guid activityId, {{parameter-string}})
         {
             if (IsEnabled())
             {
@@ -33,10 +34,13 @@ namespace {{namespace}}
 {{/parameters}}
                 const short dataCount = {{parameters-count}};
                 EventData* data = stackalloc EventData[dataCount];
-
+                data[0].DataPointer = (IntPtr)(&applicationId);
+                data[0].Size = 4;
+                data[1].DataPointer = (IntPtr)(&activityId);
+                data[1].Size = 16;
 {{#parameters}}
-                data[0].DataPointer = (IntPtr)({{operator}}{{name}});
-                data[0].Size = {{size}};
+                data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
+                data[{{position}}].Size = {{size}};
 {{/parameters}}
 
 {{#parameters}}
@@ -45,7 +49,7 @@ namespace {{namespace}}
 {{/isString}}
 {{/parameters}}
 
-                WriteEventWithRelatedActivityIdCore(eventId, &relatedActivityId, dataCount, data);
+                WriteEventCore(eventId, dataCount, data);
             }
         }
 {{/write-core}}

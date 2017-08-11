@@ -1,31 +1,32 @@
 ﻿{
-    "namespace": "n",
-    "name": "c",
-    "parameter-string": null,
-    "write-core": [
+  "namespace": "n",
+  "name": "c",
+  "parameter-string": null,
+  "events": [
+    {
+      "parameter-string": "int a, string b"
+    }
+  ], 
+  "write-core": [
+    {
+      "parameter-string": "int a, string b",
+      "parameters-count": 4,
+      "parameters": [
         {
-            "string-parameters": [ { "name": "a" } ],
-            "parameter-string": "int a, string b",
-            "parameters-count": 2,
-            "parameters": [
-                {
-                    "name": "a",
-                    "size": "4",
-                    "isString": false,
-                    "operator": "&"
-                },
-                {
-                    "name": "b",
-                    "size": "((b.Length + 1) * 2)",
-                    "isString": true,
-                    "operator": null
-                }
-            ]
+          "name": "a",
+          "size": "4",
+          "isString": false,
+          "operator": "&",
+          "position": 2
+        },
+        {
+          "name": "b",
+          "size": "((b.Length + 1) * 2)",
+          "isString": true,
+          "operator": null,
+          "position": 3
         }
-    ]
-
-
-
-
-
+      ]
+    }
+  ]
 }
