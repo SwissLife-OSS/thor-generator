@@ -5,7 +5,12 @@ using ChilliCream.Logging.Abstractions;
 
 namespace {{namespace}}
 {
-    [EventSource({{attribute-parameter-string}})]
+{{#attribute}}
+    [EventSource({{argumentSyntax}})]
+{{/attribute}}
+{{^attribute}}
+    [EventSource]
+{{/attribute}}
     public sealed class {{name}}
         : EventSourceBase
     {

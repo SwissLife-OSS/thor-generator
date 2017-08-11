@@ -14,8 +14,8 @@ namespace ChilliCream.Logging.Generator
         [JsonProperty("namespace")]
         public string Namespace { get; set; }
 
-        [JsonProperty("attributeArgumentSyntax")]
-        public string AttributeArgumentSyntax { get; set; }
+        [JsonProperty("attribute")]
+        public AttributeModel Attribute { get; set; }
 
         [JsonProperty("events")]
         public List<EventModel> Events { get; set; } = new List<EventModel>();

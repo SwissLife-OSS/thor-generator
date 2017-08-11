@@ -36,9 +36,17 @@ namespace ChilliCream.Logging.Generator
             EventSourceModel eventSourceModel = new EventSourceModel
             {
                 Name = _eventSourceDefinition.ClassName,
-                Namespace = _eventSourceDefinition.Namespace,
-                AttributeArgumentSyntax = CreateAttributeArgumentSyntax()
+                Namespace = _eventSourceDefinition.Namespace
             };
+
+            string attributeArgumentSyntax = CreateAttributeArgumentSyntax();
+            if (attributeArgumentSyntax != null)
+            {
+                eventSourceModel.Attribute = new AttributeModel
+                {
+                    ArgumentSyntax = attributeArgumentSyntax
+                };
+            }
 
             AddEvents(eventSourceModel);
             AddWriteMethods(eventSourceModel);
