@@ -5,18 +5,32 @@ using ChilliCream.Logging.Abstractions;
 
 namespace {{namespace}}
 {
-    [EventSource({{parameter-string}})]
+    [EventSource({{attribute-parameter-string}})]
     public sealed class {{name}}
         : EventSourceBase
     {
         private {{name}}() { }
 
         public static readonly I{{name}} Log = new {{name}}();
+{{#events}}
+        [NonEvent]
+        public void {{name}}({{#parameters}}{{#isFollowing}}, {{/isFollowing}}{{type}} {{name}}{{/parameters}})
+        {
+            if (IsEnabled())
+            {
+                ProcessCreated(Application.Id, Scope.CurrentActivityId{{#parameters}}, {{name}}{{/parameters}});
+            }
+        }
 
+        [Event({{id}}, {{#attribute}}{{#parameters}}{{#isFollowing}}, {{/isFollowing}}{{name}} = {{value}}{{/parameters}}{{/attribute}})]
+        private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) =>
+            WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
+
+{{/events}}
 
 {{#write-core}}
         [NonEvent]
-        protected unsafe void WriteCore(int eventId, int applicationId, Guid activityId, {{parameter-string}})
+        protected unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
         {
             if (IsEnabled())
             {
