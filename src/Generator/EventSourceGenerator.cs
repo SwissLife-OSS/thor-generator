@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ChilliCream.Logging.Generator.Models;
 using ChilliCream.Logging.Generator.Resources;
+using ChilliCream.Logging.Generator.Types;
 using Nustache.Core;
 
 namespace ChilliCream.Logging.Generator
@@ -153,16 +154,27 @@ namespace ChilliCream.Logging.Generator
         }
 
         // TODO : Add type handlers
-        private string GetWriteMethodParameterType(string type)
+        private string GetWriteMethodParameterType(string typeName)
         {
-            return "string";
+            IParameterTypeInfo typeInfo;
+            if (!ParameterTypeInfo.TryGet(typeName, out typeInfo))
+            {
+                throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
+            }
+            return typeInfo.Name;
         }
 
         private void AddTypeDetails(EventParameterModel eventParameterModel)
         {
-            eventParameterModel.IsString = true;
-            eventParameterModel.Size = "((b.Length + 1) * 2)";
-            eventParameterModel.Operator = null;
+            IParameterTypeInfo typeInfo;
+            if (!ParameterTypeInfo.TryGet(eventParameterModel.Type, out typeInfo))
+            {
+                throw new ArgumentException("The specified type is not allowed.", nameof(eventParameterModel));
+            }
+
+            eventParameterModel.IsString = typeInfo.IsString;
+            eventParameterModel.Size = typeInfo.Size;
+            eventParameterModel.Operator = typeInfo.Operator;
         }
     }
 }

@@ -24,7 +24,8 @@ namespace ChilliCream.Logging.Generator
             // act
             EventSourceGenerator generator = new EventSourceGenerator(visitor.EventSourceDefinition);
             string eventSourceCode = generator.CreateEventSource();
-
+            eventSourceCode = CSharpSyntaxTree.ParseText(eventSourceCode).GetRoot().NormalizeWhitespace().ToString();
+           
             // assert
 
         }
