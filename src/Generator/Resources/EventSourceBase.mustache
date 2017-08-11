@@ -12,6 +12,7 @@ namespace {{namespace}}
         private {{name}}() { }
 
         public static readonly I{{name}} Log = new {{name}}();
+
 {{#events}}
         [NonEvent]
         public void {{name}}({{#parameters}}{{#isFollowing}}, {{/isFollowing}}{{type}} {{name}}{{/parameters}})
@@ -22,7 +23,7 @@ namespace {{namespace}}
             }
         }
 
-        {{attributeSyntax}}
+        [{{attributeSyntax}}]
         private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) 
             => WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
 

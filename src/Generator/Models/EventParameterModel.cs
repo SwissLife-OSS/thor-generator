@@ -24,5 +24,8 @@ namespace ChilliCream.Logging.Generator
 
         [JsonProperty("type")]
         public string Type { get; set; }
+
+        [JsonProperty("isFollowing")]
+        public bool IsFollowing { get; set; }
     }
 }
