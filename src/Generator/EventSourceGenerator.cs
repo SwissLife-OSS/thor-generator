@@ -119,14 +119,14 @@ namespace ChilliCream.Logging.Generator
 
         private void AddWriteMethods(EventSourceModel eventSourceModel)
         {
-            int c = 97;
-            int i = 2;
-            bool isFollowing = false;
-
             foreach (WriteMethod writeMethod in GetWriteMethods())
             {
                 if (!writeMethod.Equals(_defaultWriteMethod))
                 {
+                    int c = 97;
+                    int i = 2;
+                    bool isFollowing = false;
+
                     WriteCoreModel writeCoreModel = new WriteCoreModel();
                     foreach (string type in writeMethod.ParameterTypes)
                     {

@@ -202,7 +202,8 @@ namespace ChilliCream.Logging.Generator.Analyzer
 
         private static string GetValue(ParameterSyntax node)
         {
-            return (node.Type as PredefinedTypeSyntax)?.Keyword.Text;
+            return (node.Type as PredefinedTypeSyntax)?.Keyword.Text
+                ?? (node.Type as QualifiedNameSyntax).ToString();
         }
     }
 }
