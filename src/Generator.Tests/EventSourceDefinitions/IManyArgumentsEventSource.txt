@@ -11,6 +11,6 @@ namespace ManyArgumentsEventSourceNamespace
             Message = "Simple is called {0}.", 
             Version = 1)]
         void Simple(string a, short b, int c, long d, ushort e, 
-            unit f, uint g, decimal, h, bool i, double j);
+            unit f, ulong g, decimal, System.Boolean h, bool i, double j);
     }
 }

@@ -69,6 +69,36 @@ namespace ChilliCream.Logging.Generator
             visitor.EventSourceDefinition.Events.Any(t => t.Name == "B").Should().BeTrue();
         }
 
+        [Fact(DisplayName = "Analyzer: Event with multiple arguments")]
+        public void InspectEventWithMultipleArguments()
+        {
+            // arrange
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(EventSourceSamples.ManyArgumentsEventSource);
+            SyntaxNode eventSource = tree.GetRoot();
+
+            // act
+            EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+            visitor.Visit(eventSource);
+
+            // assert
+            visitor.EventSourceDefinition.Should().NotBeNull();
+
+            visitor.EventSourceDefinition.Events.Should().HaveCount(1);
+
+            EventDefinition eventDefinition = visitor.EventSourceDefinition.Events.First();
+            eventDefinition.Arguments.Should().HaveCount(11);
+            eventDefinition.Arguments[0].Type.Should().Be("string");
+            eventDefinition.Arguments[1].Type.Should().Be("short");
+            eventDefinition.Arguments[2].Type.Should().Be("int");
+            eventDefinition.Arguments[3].Type.Should().Be("long");
+            eventDefinition.Arguments[4].Type.Should().Be("ushort");
+            eventDefinition.Arguments[5].Type.Should().Be("unit");
+            eventDefinition.Arguments[6].Type.Should().Be("ulong");
+            eventDefinition.Arguments[7].Type.Should().Be("decimal");
+            eventDefinition.Arguments[8].Type.Should().Be("System.Boolean");
+            eventDefinition.Arguments[9].Type.Should().Be("bool");
+            eventDefinition.Arguments[10].Type.Should().Be("double");
+        }
 
         [InlineData("[EventSourceDefinition(Name = \"a\")]", "a", null, null)]
         [InlineData("[EventSourceDefinition(Guid = \"b\")]", null, "b", null)]
