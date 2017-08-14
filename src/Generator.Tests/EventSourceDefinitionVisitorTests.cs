@@ -7,24 +7,27 @@ using Xunit;
 using ChilliCream.Logging.Generator.EventSourceDefinitions;
 using ChilliCream.Logging.Generator.Analyzer;
 
-namespace ChilliCream.Logging.Generator.Tests
+namespace ChilliCream.Logging.Generator
 {
+    [Trait("Analyzer", null)]
     public class EventSourceDefinitionVisitorTests
     {
-        [Fact]
+        [Fact(DisplayName = "Analyzer: Simple Event Source")]
         public void InspectSimpleEventSource()
         {
             // arrange
             SyntaxTree tree = CSharpSyntaxTree.ParseText(EventSourceSamples.SimpleEventSource);
-            SyntaxNode simpleEventSource = tree.GetRoot();
+            SyntaxNode eventSource = tree.GetRoot();
 
             // act
             EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
-            visitor.Visit(simpleEventSource);
+            visitor.Visit(eventSource);
 
             // assert
             visitor.EventSourceDefinition.Should().NotBeNull();
 
+            visitor.EventSourceDefinition.Namespace.Should().Be("FooNamespace");
+            visitor.EventSourceDefinition.ClassName.Should().Be("SimpleEventSource");
             visitor.EventSourceDefinition.Name.Should().Be("Mock");
             visitor.EventSourceDefinition.Guid.Should().BeNull();
             visitor.EventSourceDefinition.LocalizationResources.Should().BeNull();
@@ -45,6 +48,51 @@ namespace ChilliCream.Logging.Generator.Tests
             eventArgumentDefinition.Name.Should().Be("name");
             eventArgumentDefinition.Type.Should().Be("string");
             eventArgumentDefinition.ParameterSyntax.Should().NotBeNullOrWhiteSpace();
+        }
+
+        [Fact(DisplayName = "Analyzer: Event Source with two Events")]
+        public void InspectEventSourceWithMultipleEvents()
+        {
+            // arrange
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(EventSourceSamples.TwoEventsEventSource);
+            SyntaxNode eventSource = tree.GetRoot();
+
+            // act
+            EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+            visitor.Visit(eventSource);
+
+            // assert
+            visitor.EventSourceDefinition.Should().NotBeNull();
+
+            visitor.EventSourceDefinition.Events.Should().HaveCount(2);
+            visitor.EventSourceDefinition.Events.Any(t => t.Name == "A").Should().BeTrue();
+            visitor.EventSourceDefinition.Events.Any(t => t.Name == "B").Should().BeTrue();
+        }
+
+
+        [InlineData("[EventSourceDefinition(Name = \"a\")]", "a", null, null)]
+        [InlineData("[EventSourceDefinition(Guid = \"b\")]", null, "b", null)]
+        [InlineData("[EventSourceDefinition(LocalizationResources = \"c\")]", null, null, "c")]
+        [InlineData("[EventSourceDefinition(Name = \"x\", Guid = \"y\", LocalizationResources = \"z\")]", "x", "y", "z")]
+        [Theory(DisplayName = "Analyzer: Definition Attribute")]
+        public void InspectDefinitionAttribute(string attribute, string expectedName,
+            string expectedGuid, string expectedLocalizationResources)
+        {
+            // arrange
+            string sourceCode = EventSourceSamples.SimpleEventSource
+                .Replace("[EventSourceDefinition(Name = \"Mock\")]", attribute);
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(sourceCode);
+            SyntaxNode eventSource = tree.GetRoot();
+
+            // act
+            EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+            visitor.Visit(eventSource);
+
+            // assert
+            visitor.EventSourceDefinition.Should().NotBeNull();
+            visitor.EventSourceDefinition.Name.Should().Be(expectedName);
+            visitor.EventSourceDefinition.Guid.Should().Be(expectedGuid);
+            visitor.EventSourceDefinition.LocalizationResources.Should().Be(expectedLocalizationResources);
         }
     }
 }

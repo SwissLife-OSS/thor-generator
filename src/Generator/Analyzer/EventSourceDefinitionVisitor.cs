@@ -25,11 +25,28 @@ namespace ChilliCream.Logging.Generator.Analyzer
         /// <value>The event source definition.</value>
         public EventSourceDefinition EventSourceDefinition { get; private set; }
 
+        private NamespaceDeclarationSyntax NamespaceDeclaration { get; set; }
+
+        public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
+        {
+            NamespaceDeclaration = node;
+            base.VisitNamespaceDeclaration(node);
+        }
+
         public override void VisitAttribute(AttributeSyntax node)
         {
-            if (node.Parent?.Parent is InterfaceDeclarationSyntax)
+            if (node.Parent?.Parent is InterfaceDeclarationSyntax interfaceDeclaration)
             {
                 EventSourceDefinition = ParseEventSourceAttribute(node);
+
+                string interfaceName = interfaceDeclaration.Identifier.Text;
+                if (interfaceName[0] == 'I')
+                {
+                    interfaceName = interfaceName.Substring(1);
+                }
+
+                EventSourceDefinition.ClassName = interfaceName;
+                EventSourceDefinition.Namespace = NamespaceDeclaration.Name.ToString();
             }
 
             base.VisitAttribute(node);

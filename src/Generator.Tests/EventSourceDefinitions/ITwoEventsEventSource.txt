@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics.Tracing;
 
-namespace FooNamespace
+namespace TwoEventsNamespace
 {
-    [EventSourceDefinition(Name = "Mock")]
+    [EventSourceDefinition(Name = "TwoEvents")]
     public interface ITwoEventsEventSource
     {
         [Event(1, 
