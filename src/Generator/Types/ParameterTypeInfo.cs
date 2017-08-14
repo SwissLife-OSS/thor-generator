@@ -1,58 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ChilliCream.Logging.Generator.Types
 {
-    internal interface IParameterTypeInfo
-    {
-        bool IsType(string typeName);
-
-        string Name { get; }
-        string Size { get; }
-        string Operator { get; }
-        bool IsString { get; }
-    }
-
-    internal class StringParameterTypeInfo
-        : ParameterTypeInfo<string>
-    {
-        public StringParameterTypeInfo()
-            : base("string", "((b.Length + 1) * 2)")
-        {
-            IsString = true;
-            Operator = null;
-        }
-    }
-
-    internal class Int64ParameterTypeInfo
-       : ParameterTypeInfo<long>
-    {
-        public Int64ParameterTypeInfo()
-            : base("long", sizeof(long))
-        {
-        }
-    }
-
-    internal class Int32ParameterTypeInfo
-        : ParameterTypeInfo<int>
-    {
-        public Int32ParameterTypeInfo()
-            : base("int", sizeof(int))
-        {
-        }
-    }
-
-    internal class Int16ParameterTypeInfo
-        : ParameterTypeInfo<short>
-    {
-        public Int16ParameterTypeInfo()
-            : base("short", sizeof(short))
-        {
-        }
-    }
-
     internal class ParameterTypeInfo<T>
         : IParameterTypeInfo
     {
@@ -128,7 +79,13 @@ namespace ChilliCream.Logging.Generator.Types
             new StringParameterTypeInfo(),
             new Int64ParameterTypeInfo(),
             new Int32ParameterTypeInfo(),
-            new Int16ParameterTypeInfo()
+            new Int16ParameterTypeInfo(),
+            new UInt64ParameterTypeInfo(),
+            new UInt32ParameterTypeInfo(),
+            new UInt16ParameterTypeInfo(),
+            new DecimalParameterTypeInfo(),
+            new DoubleParameterTypeInfo(),
+            new BooleanParameterTypeInfo()
         };
 
         public static bool TryGet(string typeName,

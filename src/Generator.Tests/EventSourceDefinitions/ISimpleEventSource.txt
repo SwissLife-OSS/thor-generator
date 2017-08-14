@@ -1,6 +1,6 @@
 ﻿using Microsoft.Diagnostics.Tracing;
 
-namespace ChilliCream.Logging.Generator.Tests
+namespace FooNamespace
 {
     [EventSourceDefinition(Name = "Mock")]
     public interface ISimpleEventSource
@@ -16,5 +16,11 @@ namespace ChilliCream.Logging.Generator.Tests
             Message = "Simple is called {0}.", 
             Version = 2)]
         void Simple2(string name, int x, string y);
+
+        [Event(4, 
+            Level = EventLevel.Informational, 
+            Message = "Simple is called {0}.", 
+            Version = 2)]
+        void Simple2(string name, int x, string y, System.Boolean z);
     }
 }

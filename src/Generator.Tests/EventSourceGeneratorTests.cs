@@ -2,10 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
 using ChilliCream.Logging.Generator.EventSourceDefinitions;
-using Nustache.Core;
-using System.Collections.Generic;
-using System.Web.Script.Serialization;
-using System.IO;
+using ChilliCream.Logging.Generator.Analyzer;
 
 namespace ChilliCream.Logging.Generator
 {
@@ -24,8 +21,7 @@ namespace ChilliCream.Logging.Generator
             // act
             EventSourceGenerator generator = new EventSourceGenerator(visitor.EventSourceDefinition);
             string eventSourceCode = generator.CreateEventSource();
-            eventSourceCode = CSharpSyntaxTree.ParseText(eventSourceCode).GetRoot().NormalizeWhitespace().ToString();
-           
+
             // assert
 
         }

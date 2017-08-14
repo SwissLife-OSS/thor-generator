@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Diagnostics.Tracing;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Logging.Generator.Analyzer
 {
     /// <summary>
     /// This visitor inspects syntax trees for event source definitions.
@@ -45,7 +45,7 @@ namespace ChilliCream.Logging.Generator
                 && eventAttribute != null
                 && eventAttribute.ArgumentList.Arguments.Count > 0
                 && TryParseEventAttribute(eventAttribute, out EventDefinition eventDefinition)
-                && TryParseEventArgument(node, out List<EventArgumentDefinition> eventArgumentDefinitions))
+                && TryParseEventArguments(node, out List<EventArgumentDefinition> eventArgumentDefinitions))
             {
                 eventDefinition.Name = node.Identifier.Text;
                 eventDefinition.Arguments.AddRange(eventArgumentDefinitions);
@@ -143,7 +143,7 @@ namespace ChilliCream.Logging.Generator
             return true;
         }
 
-        private bool TryParseEventArgument(MethodDeclarationSyntax eventDeclaration, out List<EventArgumentDefinition> eventArgument)
+        private bool TryParseEventArguments(MethodDeclarationSyntax eventDeclaration, out List<EventArgumentDefinition> eventArgument)
         {
             eventArgument = new List<EventArgumentDefinition>();
 

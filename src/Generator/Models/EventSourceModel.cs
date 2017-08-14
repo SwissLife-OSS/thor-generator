@@ -8,19 +8,10 @@ namespace ChilliCream.Logging.Generator
 {
     internal class EventSourceModel
     {
-        [JsonProperty("name")]
         public string Name { get; set; }
-
-        [JsonProperty("namespace")]
         public string Namespace { get; set; }
-
-        [JsonProperty("attribute")]
         public AttributeModel Attribute { get; set; }
-
-        [JsonProperty("events")]
         public List<EventModel> Events { get; set; } = new List<EventModel>();
-
-        [JsonProperty("writeMethods")]
         public List<WriteCoreModel> WriteMethods { get; set; } = new List<WriteCoreModel>();
     }
 }

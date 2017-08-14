@@ -1,4 +1,4 @@
-﻿namespace ChilliCream.Logging.Generator
+﻿namespace ChilliCream.Logging.Generator.Analyzer
 {
     public class EventArgumentDefinition
     {

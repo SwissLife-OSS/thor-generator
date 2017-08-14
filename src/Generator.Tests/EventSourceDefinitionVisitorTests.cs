@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using FluentAssertions;
 using Xunit;
 using ChilliCream.Logging.Generator.EventSourceDefinitions;
+using ChilliCream.Logging.Generator.Analyzer;
 
 namespace ChilliCream.Logging.Generator.Tests
 {

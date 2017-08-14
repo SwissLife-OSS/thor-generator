@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ChilliCream.Logging.Generator.Analyzer;
 using ChilliCream.Logging.Generator.Models;
 using ChilliCream.Logging.Generator.Resources;
 using ChilliCream.Logging.Generator.Types;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Nustache.Core;
 
 namespace ChilliCream.Logging.Generator
@@ -29,7 +32,9 @@ namespace ChilliCream.Logging.Generator
         public string CreateEventSource()
         {
             EventSourceModel eventSourceModel = CreateGeneratorModel();
-            return Render.StringToString(_templateCode, eventSourceModel, renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
+            string sourceCode = Render.StringToString(_templateCode, eventSourceModel,
+                renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
+            return CSharpSyntaxTree.ParseText(sourceCode).GetRoot().NormalizeWhitespace().ToString();
         }
 
         private EventSourceModel CreateGeneratorModel()
@@ -94,7 +99,7 @@ namespace ChilliCream.Logging.Generator
 
                 int i = 0;
                 bool isFollowing = false;
-
+                
                 foreach (EventArgumentDefinition eventArgument in eventDefinition.Arguments)
                 {
                     EventParameterModel parameterModel = new EventParameterModel
@@ -136,6 +141,7 @@ namespace ChilliCream.Logging.Generator
                         writeCoreModel.Parameters.Add(parameterModel);
                         isFollowing = true;
                     }
+                    writeCoreModel.ParametersCount = i;
                     eventSourceModel.WriteMethods.Add(writeCoreModel);
                 }
             }
@@ -153,7 +159,6 @@ namespace ChilliCream.Logging.Generator
             return hashSet;
         }
 
-        // TODO : Add type handlers
         private string GetWriteMethodParameterType(string typeName)
         {
             IParameterTypeInfo typeInfo;
