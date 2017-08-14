@@ -4,6 +4,7 @@ using Xunit;
 using ChilliCream.Logging.Generator.EventSourceDefinitions;
 using ChilliCream.Logging.Generator.Analyzer;
 
+
 namespace ChilliCream.Logging.Generator
 {
     public class EventSourceGeneratorTests

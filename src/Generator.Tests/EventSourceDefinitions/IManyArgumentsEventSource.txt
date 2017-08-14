@@ -1,0 +1,16 @@
+﻿using System;
+using System.Diagnostics.Tracing;
+
+namespace ManyArgumentsEventSourceNamespace
+{
+    [EventSourceDefinition(Name = "ManyArgumentsEventSource")]
+    public interface IManyArgumentsEventSource
+    {
+        [Event(1, 
+            Level = EventLevel.Informational, 
+            Message = "Simple is called {0}.", 
+            Version = 1)]
+        void Simple(string a, short b, int c, long d, ushort e, 
+            unit f, uint g, decimal, h, bool i, double j);
+    }
+}

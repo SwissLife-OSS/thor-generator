@@ -4,12 +4,18 @@ using System.Diagnostics.Tracing;
 namespace FooNamespace
 {
     [EventSourceDefinition(Name = "Mock")]
-    public interface ISimpleEventSource
+    public interface ITwoEventsEventSource
     {
         [Event(1, 
             Level = EventLevel.Informational, 
             Message = "Simple is called {0}.", 
             Version = 2)]
-        void Simple(string name);
+        void A(string name);
+
+        [Event(2, 
+            Level = EventLevel.Informational, 
+            Message = "Simple is called {0}.", 
+            Version = 2)]
+        void B(string name);
     }
 }

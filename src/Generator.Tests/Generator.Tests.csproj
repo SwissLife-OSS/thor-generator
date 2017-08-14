@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="EventSourceDefinitions\ITwoEventsEventSource" />
     <EmbeddedResource Include="EventSourceDefinitions\ISimpleEventSource.txt" />
   </ItemGroup>
 
