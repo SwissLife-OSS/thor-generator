@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net47</TargetFramework>
     <AssemblyName>ChilliCream.Logging.Generator.Tests</AssemblyName>
     <RootNamespace>ChilliCream.Logging.Generator</RootNamespace>
     <IsPackable>false</IsPackable>

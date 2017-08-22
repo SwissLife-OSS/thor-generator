@@ -99,7 +99,7 @@ namespace ChilliCream.Logging.Generator
 
                 int i = 0;
                 bool isFollowing = false;
-                
+
                 foreach (EventArgumentDefinition eventArgument in eventDefinition.Arguments)
                 {
                     EventParameterModel parameterModel = new EventParameterModel

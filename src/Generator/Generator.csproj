@@ -1,14 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net47</TargetFramework>
     <AssemblyName>ChilliCream.Logging.Generator</AssemblyName>
     <RootNamespace>ChilliCream.Logging.Generator</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ChilliCream.Logging.Abstractions" Version="1.0.0-preview1" />
+    <PackageReference Include="Microsoft.Build" Version="15.3.409" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.3.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="2.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="nustache.core" Version="1.0.0-alfa2" />
   </ItemGroup>
