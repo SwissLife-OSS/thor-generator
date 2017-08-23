@@ -31,10 +31,17 @@ namespace ChilliCream.Logging.Generator
 
         public string CreateEventSource()
         {
+            // generate event source
             EventSourceModel eventSourceModel = CreateGeneratorModel();
             string sourceCode = Render.StringToString(_templateCode, eventSourceModel,
                 renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
-            return CSharpSyntaxTree.ParseText(sourceCode).GetRoot().NormalizeWhitespace().ToString();
+
+            // reformat methods
+            //SyntaxNode syntaxRoot = CSharpSyntaxTree.ParseText(sourceCode).GetRoot();
+            //FormatMethodsRewriter rewriter = new FormatMethodsRewriter();
+            //syntaxRoot = rewriter.Visit(syntaxRoot);
+            //return syntaxRoot.ToString();
+            return sourceCode;
         }
 
         private EventSourceModel CreateGeneratorModel()

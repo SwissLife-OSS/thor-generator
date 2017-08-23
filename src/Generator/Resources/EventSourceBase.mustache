@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Tracing;
 using System.Text;
-using ChilliCream.Logging.Abstractions;
+using ChilliCream.Tracing;
+using ChilliCream.Tracing.Abstractions;
 
 namespace {{namespace}}
 {
@@ -13,6 +14,7 @@ namespace {{namespace}}
 {{/attribute}}
     public sealed class {{name}}
         : EventSourceBase
+        , I{{name}}
     {
         private {{name}}() { }
 
@@ -24,7 +26,7 @@ namespace {{namespace}}
         {
             if (IsEnabled())
             {
-                {{name}}(Application.Id, Scope.CurrentActivityId{{#parameters}}, {{name}}{{/parameters}});
+                {{name}}(Application.Id, ActivityStack.Id{{#parameters}}, {{name}}{{/parameters}});
             }
         }
 
@@ -37,13 +39,13 @@ namespace {{namespace}}
 {{/events}}
 {{#writeMethods}}
         [NonEvent]
-        protected unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
+        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
         {
             if (IsEnabled())
             {
 {{#parameters}}
 {{#isString}}
-                StringExtensions.EnsureItIsNotNull(ref {{name}});
+                StringExtensions.SetToEmptyIfNull(ref {{name}});
 {{/isString}}
 {{/parameters}}
 
@@ -60,19 +62,25 @@ namespace {{namespace}}
                 data[1].DataPointer = (IntPtr)(&activityId);
                 data[1].Size = 16;
 {{#parameters}}
+{{#isString}}
+                data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
+                data[{{position}}].Size = (({{name}}.Length + 1) * 2);
+{{/isString}}
+{{#isNotString}}
                 data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
                 data[{{position}}].Size = {{size}};
+{{/isNotString}}
 {{/parameters}}
 
+                WriteEventCore(eventId, dataCount, data);
 {{#parameters}}
 {{#isString}}
                 }
 {{/isString}}
 {{/parameters}}
-
-                WriteEventCore(eventId, dataCount, data);
             }
         }
+
 {{/writeMethods}}
     }
 }

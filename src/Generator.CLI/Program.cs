@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ChilliCream.Logging.Generator;
 
 namespace Generator.CLI
@@ -7,10 +8,14 @@ namespace Generator.CLI
     {
         static void Main(string[] args)
         {
-            Class1 c = new Class1(@"C:\Work\EventSourceDemo\EventSourceDemo\EventSourceDemo.sln");
-            c.Foo().Wait();
-            Console.WriteLine("Hello World!");
-            Console.ReadLine();
+            DirectoryInfo directory = new DirectoryInfo(Environment.CurrentDirectory);
+
+            foreach (FileInfo file in directory.GetFiles("*.sln", SearchOption.AllDirectories))
+            {
+                Console.WriteLine(file.FullName);
+                EventSourceBuilder builder = new EventSourceBuilder(file.FullName);
+                builder.BuildAsync().Wait();
+            }
         }
     }
 }
