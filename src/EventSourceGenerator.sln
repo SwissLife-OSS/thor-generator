@@ -1,12 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26823.1
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\Generator.csproj", "{CA54FBD8-FB29-4DCF-B3AB-032D94DD663F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.CLI", "Generator.CLI\Generator.CLI.csproj", "{6D1D9695-90A9-4EAA-A05B-DC944034CE87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Tests", "Generator.Tests\Generator.Tests.csproj", "{C480EB8E-7EC8-49AA-AAD5-8643FFBEF574}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Roslyn", "Generator.Roslyn\Generator.Roslyn.csproj", "{B03098F4-96F1-4609-93AD-F2E03E345CF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{C480EB8E-7EC8-49AA-AAD5-8643FFBEF574}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C480EB8E-7EC8-49AA-AAD5-8643FFBEF574}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C480EB8E-7EC8-49AA-AAD5-8643FFBEF574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B03098F4-96F1-4609-93AD-F2E03E345CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B03098F4-96F1-4609-93AD-F2E03E345CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B03098F4-96F1-4609-93AD-F2E03E345CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B03098F4-96F1-4609-93AD-F2E03E345CF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
