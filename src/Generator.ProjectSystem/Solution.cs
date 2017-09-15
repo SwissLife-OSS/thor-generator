@@ -4,6 +4,6 @@ namespace ChilliCream.Logging.Generator
 {
     public interface ISolution
     {
-        IReadOnlyCollection<IProject> Projects { get; }
+        IReadOnlyCollection<Project> Projects { get; }
     }
 }
