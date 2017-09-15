@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
@@ -11,7 +12,7 @@ namespace ChilliCream.Logging.Generator
 
         public DocumentId(string name, IEnumerable<string> folders)
         {
-            _internalId = folders.Any() ? string.Join(_separator, folders) + "\\" + name : name;
+            _internalId = folders.Any() ? Path.Combine(Path.Combine(folders.ToArray()), name) : name;
         }
 
         public bool Equals(DocumentId other)
@@ -46,6 +47,10 @@ namespace ChilliCream.Logging.Generator
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
             return _internalId;

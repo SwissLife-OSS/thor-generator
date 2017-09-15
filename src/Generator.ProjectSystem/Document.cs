@@ -121,6 +121,16 @@ namespace ChilliCream.Logging.Generator
             return new Document(name, folders, readDocumentAsync);
         }
 
+        public static Document Create(Func<string> readDocument, string name, params string[] folders)
+        {
+            return new Document(name, folders, c => Task.Run(readDocument, c));
+        }
+
+        public static Document Create(Func<string> readDocument, string name, IEnumerable<string> folders)
+        {
+            return new Document(name, folders, c => Task.Run(readDocument, c));
+        }
+
         #endregion
     }
 }

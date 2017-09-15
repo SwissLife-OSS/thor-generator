@@ -11,6 +11,6 @@ namespace ChilliCream.Logging.Generator
 
         Task<Project> OpenAsync(string projectFileOrDirectoryName);
 
-        Task CommitChangesAsync(string projectFileOrDirectoryName);
+        Task CommitChangesAsync(Project project);
     }
 }

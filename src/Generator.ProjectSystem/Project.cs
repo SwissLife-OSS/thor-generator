@@ -9,15 +9,20 @@ namespace ChilliCream.Logging.Generator
         private readonly HashSet<DocumentId> _updatedDocuments = new HashSet<DocumentId>();
         private readonly Dictionary<DocumentId, Document> _documents = new Dictionary<DocumentId, Document>();
 
-        private Project(ProjectId projectId, IEnumerable<Document> documents)
+        private Project(IProjectId projectId, IEnumerable<Document> documents)
         {
             Id = projectId;
             _documents = documents.Distinct().ToDictionary(t => t.Id);
         }
 
-        public ProjectId Id { get; }
+        public IProjectId Id { get; }
         public IReadOnlyCollection<Document> Documents => _documents.Values;
         public IReadOnlyCollection<DocumentId> UpdatedDocumets => _updatedDocuments;
+
+        public Document GetDocument(DocumentId documentId)
+        {
+            return _documents[documentId];
+        }
 
         /// <summary>
         /// Adds or replaces a document of this project.
@@ -55,7 +60,7 @@ namespace ChilliCream.Logging.Generator
             return document;
         }
 
-        public static Project Create(ProjectId projectId, IEnumerable<Document> documents)
+        public static Project Create(IProjectId projectId, IEnumerable<Document> documents)
         {
             if (projectId == null)
             {
