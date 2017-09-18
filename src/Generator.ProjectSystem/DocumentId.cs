@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -20,7 +21,14 @@ namespace ChilliCream.Logging.Generator
         /// <param name="folders">The folders.</param>
         public DocumentId(string name, IEnumerable<string> folders)
         {
-            _internalId = folders.Any() ? Path.Combine(Path.Combine(folders.ToArray()), name) : name;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            _internalId = (folders?.Any() ?? false)
+                ? Path.Combine(Path.Combine(folders.ToArray()), name)
+                : name;
         }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace ChilliCream.Logging.Generator
             {
                 return false;
             }
-            return Equals(obj as Document);
+            return Equals(obj as DocumentId);
         }
 
         /// <summary>
@@ -90,7 +98,7 @@ namespace ChilliCream.Logging.Generator
         {
             if (ReferenceEquals(x, null))
             {
-                return !ReferenceEquals(y, null);
+                return ReferenceEquals(y, null);
             }
             else
             {
