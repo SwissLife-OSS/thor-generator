@@ -35,23 +35,36 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// <param name="name">Name of the file.</param>
         /// <param name="folders">The folders.</param>
         /// <returns>Returns a new document object.</returns>
-        /// <exception cref="ArgumentException">
-        /// The document content cannot be null or empty or consist only of a whitespace.
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="content" /> is <c>null</c>
         /// or
-        /// The file name cannot be null or empty or consist only of a whitespace.
+        /// <paramref name="content" /> is <see cref="string.Empty">
+        /// or
+        /// <paramref name="content" /> consists of a whitespace
+        /// or
+        /// <paramref name="name" /> is <c>null</c>
+        /// or
+        /// <paramref name="name" /> is <see cref="string.Empty">
+        /// or
+        /// <paramref name="name" /> consists of a whitespace
+        /// or
+        /// <paramref name="folders" /> is <c>null</c>.
         /// </exception>
         public Document UpdateDocument(string content, string name, IEnumerable<string> folders)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
-                // Todo : resources
-                throw new ArgumentException("The document content cannot be null or empty or consist only of a whitespace.", nameof(content));
+                throw new ArgumentNullException(nameof(content));
             }
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                // Todo : resources
-                throw new ArgumentException("The file name cannot be null or empty or consist only of a whitespace.", nameof(fileName));
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if(folders == null)
+            {
+                throw new ArgumentNullException(nameof(folders));
             }
 
             Document document = Document.Create(content, name, folders);
@@ -59,6 +72,8 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
             _updatedDocuments.Add(document.Id);
             return document;
         }
+
+        #region Project Factory
 
         public static Project Create(IProjectId projectId, IEnumerable<Document> documents)
         {
@@ -74,5 +89,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
 
             return new Project(projectId, documents);
         }
+
+        #endregion
     }
 }

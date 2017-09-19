@@ -13,7 +13,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         [Fact]
         public void ProjectCreate()
         {
-            // arrang
+            // arrange
             Mock<IProjectId> projectId = new Mock<IProjectId>(MockBehavior.Strict);
             Document document = Document.Create(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
@@ -30,19 +30,21 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         [Fact]
         public void ProjectUpdateDocument()
         {
-            // arrang
+            // arrange
             Mock<IProjectId> projectId = new Mock<IProjectId>(MockBehavior.Strict);
             Document originalDocument = Document.Create(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
             Project project = Project.Create(projectId.Object, new[] { originalDocument });
 
             // act
-            Document document = project.UpdateDocument(Guid.NewGuid().ToString(), )
+            Document document = project.UpdateDocument(Guid.NewGuid().ToString(), originalDocument.Name);
 
             // assert
             project.Id.Should().Be(projectId.Object);
             project.Documents.Should().HaveCount(1);
-            project.UpdatedDocumets.Should().HaveCount(0);
-            project.Documents.First().Should().Be(originalDocument);
+            project.UpdatedDocumets.Should().HaveCount(1);
+            project.Documents.First().Should().Be(document);
         }
+
+        
     }
 }
