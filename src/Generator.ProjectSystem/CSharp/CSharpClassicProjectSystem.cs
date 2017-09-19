@@ -30,7 +30,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 
         public bool CanHandle(IProjectId projectId)
         {
-            throw new System.NotImplementedException();
+            return projectId is CSharpClassicProjectId;
         }
 
         public Task CommitChangesAsync(Project project)
@@ -44,7 +44,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 
         public Task<Project> OpenAsync(string projectFileOrDirectoryName)
         {
-            CSharpClassicProjectId projectId = new CSharpClassicProjectId();
+            CSharpClassicProjectId projectId = new CSharpClassicProjectId(projectFileOrDirectoryName);
             HashSet<Document> documents = new HashSet<Document>();
 
             string projectDirectory = Path.GetDirectoryName(projectFileOrDirectoryName);

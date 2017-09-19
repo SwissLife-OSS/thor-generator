@@ -15,6 +15,10 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         protected override string ValidProject => TestProjects.ValidClassicProject;
 
         protected override IProjectSystem ProjectSystem { get; } = new CSharpClassicProjectSystem();
+
+        protected override IProjectId ValidProjectId => new CSharpClassicProjectId(Guid.NewGuid().ToString());
+
+        protected override IProjectId InvalidProjectId => new CSharpDirectoryProjectId(Guid.NewGuid().ToString());
     }
 
     public abstract class ProjectSystemTestBase
@@ -24,7 +28,25 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
         protected abstract IProjectSystem ProjectSystem { get; }
         protected abstract string ValidProject { get; }
+        protected abstract IProjectId ValidProjectId { get; }
+        protected abstract IProjectId InvalidProjectId { get; }
 
+        [Fact]
+        public async Task CanHandleValidProject()
+        {
+            // arrange
+            string tempDirectory = ExtractTestFiles(ValidProject);
+            string projectFile = Path.Combine(tempDirectory, "ClassLibrary1", "ClassLibrary1.csproj");
+
+            Directory.CreateDirectory(tempDirectory);
+            ZipUtils.Extract(TestProjects.ValidClassicProject, tempDirectory);
+
+            // act
+            bool result = ProjectSystem.CanHandle(projectFile);
+
+            // assert
+            result.Should().BeTrue();
+        }
 
         [Fact]
         public async Task OpenProject()
@@ -42,6 +64,20 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
             // assert
             project.Documents.Should().HaveCount(2);
             project.Documents.Any(t => t.Name == "IManyArgumentsEventSource.cs").Should().BeTrue();
+        }
+
+        [Fact]
+        public void CanHandleWithProjectId()
+        {
+            // act
+            bool resulta = ProjectSystem.CanHandle((IProjectId)null);
+            bool resultb = ProjectSystem.CanHandle(ValidProjectId);
+            bool resultc = ProjectSystem.CanHandle(InvalidProjectId);
+
+            // assert
+            resulta.Should().BeFalse("projectId is null");
+            resultb.Should().BeTrue("projectId is valid");
+            resultc.Should().BeFalse("projectId is invalid");
         }
 
         private string ExtractTestFiles(string resource)
