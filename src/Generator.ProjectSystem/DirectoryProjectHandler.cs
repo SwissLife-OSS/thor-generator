@@ -35,8 +35,7 @@ namespace ChilliCream.Logging.Generator
             foreach (DocumentId documentId in project.UpdatedDocumets)
             {
                 Document document = project.GetDocument(documentId);
-                string fileName = Path.Combine(project.Id.ToString(),
-                    Path.Combine(document.Folders), document.Name);
+                string fileName = document.CreateFilePath(project.Id.ToString());
                 string content = await document.GetContentAsync();
                 File.WriteAllText(fileName, content);
             }

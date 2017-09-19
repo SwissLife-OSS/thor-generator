@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,18 +20,8 @@ namespace ChilliCream.Logging.Generator
         private Document(string name, IEnumerable<string> folders,
             Func<CancellationToken, Task<string>> readDocumentAsync)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (readDocumentAsync == null)
-            {
-                throw new ArgumentNullException(nameof(readDocumentAsync));
-            }
-
             Name = name;
-            Folders = folders?.ToArray() ?? Array.Empty<string>();
+            Folders = folders.Where(t => !string.IsNullOrWhiteSpace(t)).ToArray();
             _readDocumentAsync = readDocumentAsync;
             Id = new DocumentId(name, folders);
         }
@@ -177,22 +166,7 @@ namespace ChilliCream.Logging.Generator
         /// </exception>
         public static Document Create(string content, string name, params string[] folders)
         {
-            if (string.IsNullOrWhiteSpace(content))
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (folders == null)
-            {
-                throw new ArgumentNullException(nameof(folders));
-            }
-
-            return new Document(name, folders, c => Task.FromResult(content));
+            return Create(content, name, (IEnumerable<string>)folders);
         }
 
         /// <summary>
@@ -257,22 +231,7 @@ namespace ChilliCream.Logging.Generator
         /// </exception>
         public static Document Create(Func<CancellationToken, Task<string>> readContentAsync, string name, params string[] folders)
         {
-            if (readContentAsync == null)
-            {
-                throw new ArgumentNullException(nameof(readContentAsync));
-            }
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (folders == null)
-            {
-                throw new ArgumentNullException(nameof(folders));
-            }
-
-            return new Document(name, folders, readContentAsync);
+            return Create(readContentAsync, name, (IEnumerable<string>)folders);
         }
 
         /// <summary>
@@ -333,22 +292,7 @@ namespace ChilliCream.Logging.Generator
         /// </exception>
         public static Document Create(Func<string> readDocument, string name, params string[] folders)
         {
-            if (readDocument == null)
-            {
-                throw new ArgumentNullException(nameof(readDocument));
-            }
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (folders == null)
-            {
-                throw new ArgumentNullException(nameof(folders));
-            }
-
-            return new Document(name, folders, c => Task.Run(readDocument, c));
+            return Create(readDocument, name, (IEnumerable<string>)folders);
         }
 
         /// <summary>
