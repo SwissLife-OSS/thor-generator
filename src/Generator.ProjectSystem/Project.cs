@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
+    /// <summary>
+    /// Represents a .net project.
+    /// </summary>
     public class Project
     {
         private readonly HashSet<DocumentId> _updatedDocuments = new HashSet<DocumentId>();
@@ -15,13 +18,43 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
             _documents = documents.Distinct().ToDictionary(t => t.Id);
         }
 
+        /// <summary>
+        /// Gets the project identifier.
+        /// </summary>
+        /// <value>The project identifier.</value>
         public IProjectId Id { get; }
+
+        /// <summary>
+        /// Gets the documents of this project.
+        /// </summary>
+        /// <value>The documents.</value>
         public IReadOnlyCollection<Document> Documents => _documents.Values;
+
+        /// <summary>
+        /// Gets the identifiers of the added and updated documets.
+        /// </summary>
+        /// <value>The identifiers of the added abd updated documets.</value>
         public IReadOnlyCollection<DocumentId> UpdatedDocumets => _updatedDocuments;
 
+        /// <summary>
+        /// Gets a document by its <paramref name="documentId"/>.
+        /// </summary>
+        /// <param name="documentId">The document identifier.</param>
+        /// <returns>
+        /// Returns a document that is associated with the specified <paramref name="documentId"/>.
+        /// </returns>
         public Document GetDocument(DocumentId documentId)
         {
-            return _documents[documentId];
+            if (documentId == null)
+            {
+                throw new ArgumentNullException(nameof(documentId));
+            }
+
+            if (_documents.ContainsKey(documentId))
+            {
+                return _documents[documentId];
+            }
+            return null;
         }
 
         /// <summary>
@@ -38,13 +71,13 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// <exception cref="ArgumentNullException">
         /// <paramref name="content" /> is <c>null</c>
         /// or
-        /// <paramref name="content" /> is <see cref="string.Empty">
+        /// <paramref name="content" /> is <see cref="string.Empty" />
         /// or
         /// <paramref name="content" /> consists of a whitespace
         /// or
         /// <paramref name="name" /> is <c>null</c>
         /// or
-        /// <paramref name="name" /> is <see cref="string.Empty">
+        /// <paramref name="name" /> is <see cref="string.Empty" />
         /// or
         /// <paramref name="name" /> consists of a whitespace
         /// or
@@ -62,7 +95,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if(folders == null)
+            if (folders == null)
             {
                 throw new ArgumentNullException(nameof(folders));
             }
@@ -75,6 +108,17 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
 
         #region Project Factory
 
+        /// <summary>
+        /// Creates a new project object.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="documents">The project documents.</param>
+        /// <returns>Returns a new project object.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="projectId"/> is <c>null</c>
+        /// or
+        /// <paramref name="documents"/> is <c>null</c>.
+        /// </exception>
         public static Project Create(IProjectId projectId, IEnumerable<Document> documents)
         {
             if (projectId == null)
