@@ -31,7 +31,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// <exception cref="ArgumentNullException">
         /// <paramref name="projects"/> is <c>null</c>.
         /// </exception>
-        public Solution Create(IEnumerable<Project> projects)
+        public static Solution Create(IEnumerable<Project> projects)
         {
             if (projects == null)
             {
