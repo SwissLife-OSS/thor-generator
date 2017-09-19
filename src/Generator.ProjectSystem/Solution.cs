@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
     public class Solution
     {

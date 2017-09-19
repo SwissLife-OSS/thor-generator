@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
     public interface IProjectHandler
     {

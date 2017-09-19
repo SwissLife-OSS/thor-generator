@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
     /// <summary>
     /// Provides extensions to the <see cref="Document"/>-object.

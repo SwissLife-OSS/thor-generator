@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>ChilliCream.Logging.Generator.ProjectSystem</AssemblyName>
-    <RootNamespace>ChilliCream.Logging.Generator</RootNamespace>
+    <AssemblyName>ChilliCream.Tracing.Generator.ProjectSystem</AssemblyName>
+    <RootNamespace>ChilliCream.Tracing.Generator.ProjectSystem</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

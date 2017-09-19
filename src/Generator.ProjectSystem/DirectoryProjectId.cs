@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
     public class DirectoryProjectId
         : IProjectId

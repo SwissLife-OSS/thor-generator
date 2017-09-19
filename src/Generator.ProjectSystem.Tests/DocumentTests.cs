@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ChilliCream.Logging.Generator;
 using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit;
 
-namespace Generator.ProjectSystem.Tests
+namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 {
     public class DocumentTests
     {
