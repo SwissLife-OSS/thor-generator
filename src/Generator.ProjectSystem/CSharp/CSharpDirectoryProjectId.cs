@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 {
-    public class DirectoryProjectId
+    public sealed class CSharpDirectoryProjectId
         : IProjectId
     {
         private string _directoryName;
 
-        public DirectoryProjectId(string directoryName)
+        public CSharpDirectoryProjectId(string directoryName)
         {
             if (directoryName == null)
             {
@@ -28,7 +28,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
                 return true;
             }
 
-            return (other is DirectoryProjectId p
+            return (other is CSharpDirectoryProjectId p
                 && p._directoryName.Equals(_directoryName));
         }
 

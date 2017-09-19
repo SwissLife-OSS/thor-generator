@@ -6,7 +6,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
     /// <summary>
     /// Represents a collection of .net projects.
     /// </summary>
-    public class Solution
+    public sealed class Solution
     {
         private HashSet<Project> _projects;
 

@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
-    public interface IProjectHandler
+    public interface IProjectSystem
     {
         bool CanHandle(string projectFileOrDirectoryName);
+
+        bool CanHandle(IProjectId projectId);
 
         Task<Project> OpenAsync(string projectFileOrDirectoryName);
 

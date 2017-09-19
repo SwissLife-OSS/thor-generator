@@ -7,7 +7,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
     /// <summary>
     /// Represents a .net project.
     /// </summary>
-    public class Project
+    public sealed class Project
     {
         private readonly HashSet<DocumentId> _updatedDocuments = new HashSet<DocumentId>();
         private readonly Dictionary<DocumentId, Document> _documents = new Dictionary<DocumentId, Document>();
