@@ -32,7 +32,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// will be added.
         /// </summary>
         /// <param name="content">The content.</param>
-        /// <param name="fileName">Name of the file.</param>
+        /// <param name="name">Name of the file.</param>
         /// <param name="folders">The folders.</param>
         /// <returns>Returns a new document object.</returns>
         /// <exception cref="ArgumentException">
@@ -40,7 +40,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// or
         /// The file name cannot be null or empty or consist only of a whitespace.
         /// </exception>
-        public Document UpdateDocument(string content, string fileName, IEnumerable<string> folders)
+        public Document UpdateDocument(string content, string name, IEnumerable<string> folders)
         {
             if (string.IsNullOrWhiteSpace(content))
             {
@@ -48,13 +48,13 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
                 throw new ArgumentException("The document content cannot be null or empty or consist only of a whitespace.", nameof(content));
             }
 
-            if (string.IsNullOrWhiteSpace(fileName))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 // Todo : resources
                 throw new ArgumentException("The file name cannot be null or empty or consist only of a whitespace.", nameof(fileName));
             }
 
-            Document document = Document.Create(content, fileName, folders);
+            Document document = Document.Create(content, name, folders);
             _documents[document.Id] = document;
             _updatedDocuments.Add(document.Id);
             return document;
