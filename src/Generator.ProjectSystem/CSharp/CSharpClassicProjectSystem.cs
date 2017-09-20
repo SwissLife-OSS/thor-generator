@@ -16,26 +16,8 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
     {
         private static readonly HashSet<string> _projectGuids = new HashSet<string>
         {
-            "{0BB0B76D-F56E-4EF3-B502-0AFDB8413EEF}"
+            "{FECA14C5-1B06-4400-8131-3ECE5BD78381}"
         };
-
-        public override bool CanHandle(string projectFileOrDirectoryName)
-        {
-            if (File.Exists(projectFileOrDirectoryName))
-            {
-                ProjectRootElement project = ProjectRootElement.Open(projectFileOrDirectoryName);
-                ProjectPropertyElement property = project.Properties.FirstOrDefault(p => p.Name == "ProjectGuid");
-                return (property != null
-                    && property.Value != null
-                    && _projectGuids.Contains(property.Value));
-            }
-            return false;
-        }
-
-        public override void CommitChanges(Project project)
-        {
-            throw new NotImplementedException();
-        }
 
         protected override IProjectId CreateProjectId(string projectFileOrDirectoryName)
         {
@@ -50,8 +32,8 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
         protected override IEnumerable<string> GetProjectFiles(string projectFileOrDirectoryName)
         {
             string projectDirectory = GetProjectDirectory(projectFileOrDirectoryName);
-            ProjectRootElement project = ProjectRootElement.Open(projectFileOrDirectoryName);
-            foreach (string include in project.Items
+            ProjectRootElement projectElement = ProjectRootElement.Open(projectFileOrDirectoryName);
+            foreach (string include in projectElement.Items
                 .Where(t => t.ItemType == "Compile")
                 .Select(t => t.Include).Distinct())
             {
@@ -61,6 +43,56 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                     yield return fileName;
                 }
             }
+        }
+
+        public override bool CanHandle(string projectFileOrDirectoryName)
+        {
+            if (string.IsNullOrEmpty(projectFileOrDirectoryName))
+            {
+                throw new ArgumentNullException(nameof(projectFileOrDirectoryName));
+            }
+
+            if (File.Exists(projectFileOrDirectoryName))
+            {
+                ProjectRootElement project = ProjectRootElement.Open(projectFileOrDirectoryName);
+                ProjectPropertyElement property = project.Properties.FirstOrDefault(p => p.Name == "ProjectGuid");
+                return (property != null
+                    && property.Value != null
+                    && _projectGuids.Contains(property.Value));
+            }
+            return false;
+        }
+
+
+
+        public override void CommitChanges(Project project)
+        {
+            CSharpClassicProjectId projectId = (CSharpClassicProjectId)project.Id;
+            string projectRootDirectory = Path.GetDirectoryName(projectId.FileName);
+            ProjectRootElement projectElement = ProjectRootElement.Open(projectId.FileName);
+            HashSet<string> projectFiles = new HashSet<string>(
+                GetProjectFiles(projectId.FileName));
+
+            foreach (DocumentId updatedDocumentId in project.UpdatedDocumets)
+            {
+                Document updatedDocument = project.GetDocument(updatedDocumentId);
+                string documentFileName = updatedDocument.CreateFilePath(projectRootDirectory);
+
+                // update project file
+                if (!projectFiles.Contains(documentFileName))
+                {
+                    string relativePath = updatedDocument.Folders.Any()
+                        ? string.Join("\\", updatedDocument.Folders) + "\\" + updatedDocument.Name
+                        : updatedDocument.Name;
+                    projectElement.AddItem("Compile", relativePath);
+                }
+
+                // update code file
+                File.WriteAllText(documentFileName, updatedDocument.GetContent());
+            }
+
+
+            throw new ArgumentNullException();
         }
     }
 }

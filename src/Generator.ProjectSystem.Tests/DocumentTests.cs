@@ -13,7 +13,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
     public class DocumentTests
     {
         [Fact]
-        public async Task DocumentWithStaticContent()
+        public void DocumentWithStaticContent()
         {
             // arrange
             string name = Guid.NewGuid().ToString();
@@ -21,7 +21,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
             // act
             Document document = Document.Create(content, name);
-            string retrievedContent = await document.GetContentAsync();
+            string retrievedContent = document.GetContent();
 
             // assert
             document.Id.Should().NotBeNull();
@@ -32,7 +32,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
-        public async Task DocumentWithStaticContentWithEnumerable()
+        public void DocumentWithStaticContentWithEnumerable()
         {
             // arrange
             string name = Guid.NewGuid().ToString();
@@ -40,7 +40,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
             // act
             Document document = Document.Create(content, name, Enumerable.Empty<string>());
-            string retrievedContent = await document.GetContentAsync();
+            string retrievedContent = document.GetContent();
 
             // assert
             document.Name.Should().Be(name);
@@ -83,79 +83,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
-        public async Task DocumentWithAsyncDelegateContent()
-        {
-            // arrange
-            string name = Guid.NewGuid().ToString();
-            string content = Guid.NewGuid().ToString();
-            Task<string> task = Task.FromResult(content);
-
-            // act
-            Document document = Document.Create(c => task, name);
-            string retrievedContent = await document.GetContentAsync();
-
-            // assert
-            document.Id.Should().NotBeNull();
-            document.Id.ToString().Should().Be(name);
-            document.Name.Should().Be(name);
-            document.Folders.Should().BeEmpty();
-            retrievedContent.Should().Be(content);
-        }
-
-        [Fact]
-        public async Task DocumentWithAsyncDelegateContentWithEnumerable()
-        {
-            // arrange
-            string name = Guid.NewGuid().ToString();
-            string content = Guid.NewGuid().ToString();
-            Task<string> task = Task.FromResult(content);
-
-            // act
-            Document document = Document.Create(c => task, name, Enumerable.Empty<string>());
-            string retrievedContent = await document.GetContentAsync();
-
-            // assert
-            document.Name.Should().Be(name);
-            document.Folders.Should().BeEmpty();
-            retrievedContent.Should().Be(content);
-        }
-
-        [Fact]
-        public void DocumentWithAsyncDelegateContentArgumentValidation()
-        {
-            // arrange
-            string name = Guid.NewGuid().ToString();
-            string content = Guid.NewGuid().ToString();
-            Task<string> task = Task.FromResult(content);
-
-            // act
-            Action a = () => Document.Create((Func<CancellationToken, Task<string>>)null, name);
-            Action b = () => Document.Create(ct => task, null);
-            Action c = () => Document.Create(ct => task, name, (string[])null);
-
-            Action d = () => Document.Create((Func<CancellationToken, Task<string>>)null, name, Enumerable.Empty<string>());
-            Action e = () => Document.Create(ct => task, null, Enumerable.Empty<string>());
-            Action f = () => Document.Create(ct => task, name, (IEnumerable<string>)null);
-
-            Action g = () => Document.Create(ct => task, name, Array.Empty<string>());
-            Action h = () => Document.Create(ct => task, name, Enumerable.Empty<string>());
-            Action i = () => Document.Create(ct => task, name, Guid.NewGuid().ToString());
-            Action j = () => Document.Create(ct => task, name, (IEnumerable<string>)new string[] { "a" });
-
-            // assert
-            a.ShouldThrow<ArgumentNullException>("a");
-            b.ShouldThrow<ArgumentNullException>("b");
-            c.ShouldThrow<ArgumentNullException>("c");
-            d.ShouldThrow<ArgumentNullException>("d");
-            e.ShouldThrow<ArgumentNullException>("e");
-            f.ShouldThrow<ArgumentNullException>("f");
-            g.ShouldNotThrow("g");
-            h.ShouldNotThrow("h");
-            i.ShouldNotThrow("i");
-            j.ShouldNotThrow("j");
-        }
-
-        [Fact]
         public async Task DocumentWithDelegateContent()
         {
             // arrange
@@ -165,7 +92,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
             // act
             Document document = Document.Create(func, name);
-            string retrievedContent = await document.GetContentAsync();
+            string retrievedContent = document.GetContent();
 
             // assert
             document.Id.Should().NotBeNull();
@@ -176,7 +103,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
-        public async Task DocumentWithDelegateContentWithEnumerable()
+        public void DocumentWithDelegateContentWithEnumerable()
         {
             // arrange
             string name = Guid.NewGuid().ToString();
@@ -185,7 +112,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
             // act
             Document document = Document.Create(func, name, Enumerable.Empty<string>());
-            string retrievedContent = await document.GetContentAsync();
+            string retrievedContent = document.GetContent();
 
             // assert
             document.Name.Should().Be(name);
@@ -329,7 +256,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
-        public async Task DocumentGetSyntaxRoot()
+        public void DocumentGetSyntaxRoot()
         {
             // arrange
             string name = Guid.NewGuid().ToString();
@@ -337,7 +264,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
             // act
             Document document = Document.Create(content, name);
-            Microsoft.CodeAnalysis.SyntaxNode root = await document.GetSyntaxRootAsync();
+            Microsoft.CodeAnalysis.SyntaxNode root = document.GetSyntaxRoot();
 
             // assert
             root.Should().NotBeNull();

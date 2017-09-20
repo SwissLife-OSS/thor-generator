@@ -11,18 +11,18 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
     /// <summary>
     /// This class represents a source code document of a project.
     /// </summary>
-    /// <seealso cref="IEquatable{ChilliCream.Logging.Generator.Document}" />
+    /// <seealso cref="IEquatable{Document}" />
     public sealed class Document
         : IEquatable<Document>
     {
-        private Func<CancellationToken, Task<string>> _readDocumentAsync;
+        private Func<string> _readDocument;
 
         private Document(string name, IEnumerable<string> folders,
-            Func<CancellationToken, Task<string>> readDocumentAsync)
+            Func<string> readDocument)
         {
             Name = name;
             Folders = folders.Where(t => !string.IsNullOrWhiteSpace(t)).ToArray();
-            _readDocumentAsync = readDocumentAsync;
+            _readDocument = readDocument;
             Id = new DocumentId(name, folders);
         }
 
@@ -45,47 +45,27 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         public IReadOnlyList<string> Folders { get; }
 
         /// <summary>
-        /// Gets the document content asynchronously.
-        /// </summary>
-        /// <returns>Returns a <see cref="String"/> representing the document content.</returns>
-        public Task<string> GetContentAsync()
-        {
-            return GetContentAsync(CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Gets the document content asynchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Returns a <see cref="String"/> representing the document content.</returns>
-        public async Task<string> GetContentAsync(CancellationToken cancellationToken)
-        {
-            return await _readDocumentAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the root node of the syntax tree asynchronously.
+        /// Gets the document content.
         /// </summary>
         /// <returns>
-        /// Returns the root node of the syntax tree asynchronously.
+        /// Returns a <see cref="String"/> representing the document content.
         /// </returns>
-        public Task<SyntaxNode> GetSyntaxRootAsync()
+        public string GetContent()
         {
-            return GetSyntaxRootAsync(CancellationToken.None);
+            return _readDocument();
         }
 
         /// <summary>
-        /// Gets the root node of the syntax tree asynchronously.
+        /// Gets the root node of the syntax tree.
         /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// Returns the root node of the syntax tree asynchronously.
+        /// Returns the root node of the syntax tree.
         /// </returns>
-        public async Task<SyntaxNode> GetSyntaxRootAsync(CancellationToken cancellationToken)
+        public SyntaxNode GetSyntaxRoot()
         {
-            string sourceText = await _readDocumentAsync(cancellationToken);
+            string sourceText = GetContent();
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceText);
-            return await syntaxTree.GetRootAsync();
+            return syntaxTree.GetRoot();
         }
 
         /// <summary>
@@ -208,68 +188,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
                 throw new ArgumentNullException(nameof(folders));
             }
 
-            return new Document(name, folders, c => Task.FromResult(content));
-        }
-
-        /// <summary>
-        /// Creates a new document object that specifies a asynchronous delegate to load the content of the document.
-        /// </summary>
-        /// <param name="readContentAsync">The asynchronous delegate to load the content of the document.</param>
-        /// <param name="name">The document name.</param>
-        /// <param name="folders">The document folder.</param>
-        /// <returns>Returns a new document object with a static content.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="readContentAsync"/> is <c>null</c>
-        /// or
-        /// <paramref name="name"/> is <c>null</c>
-        /// or
-        /// <paramref name="name"/> is <see cref="string.Empty"/>
-        /// or
-        /// <paramref name="name"/> is whitespace
-        /// or
-        /// <paramref name="folders"/> is <c>null</c>.
-        /// </exception>
-        public static Document Create(Func<CancellationToken, Task<string>> readContentAsync, string name, params string[] folders)
-        {
-            return Create(readContentAsync, name, (IEnumerable<string>)folders);
-        }
-
-        /// <summary>
-        /// Creates a new document object that specifies a asynchronous delegate to load the content of the document.
-        /// </summary>
-        /// <param name="readContentAsync">The asynchronous delegate to load the content of the document.</param>
-        /// <param name="name">The document name.</param>
-        /// <param name="folders">The document folder.</param>
-        /// <returns>Returns a new document object with a static content.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="readContentAsync"/> is <c>null</c>
-        /// or
-        /// <paramref name="name"/> is <c>null</c>
-        /// or
-        /// <paramref name="name"/> is <see cref="string.Empty"/>
-        /// or
-        /// <paramref name="name"/> is whitespace
-        /// or
-        /// <paramref name="folders"/> is <c>null</c>.
-        /// </exception>
-        public static Document Create(Func<CancellationToken, Task<string>> readContentAsync, string name, IEnumerable<string> folders)
-        {
-            if (readContentAsync == null)
-            {
-                throw new ArgumentNullException(nameof(readContentAsync));
-            }
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (folders == null)
-            {
-                throw new ArgumentNullException(nameof(folders));
-            }
-
-            return new Document(name, folders, readContentAsync);
+            return new Document(name, folders, () => content);
         }
 
         /// <summary>
@@ -330,7 +249,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
                 throw new ArgumentNullException(nameof(folders));
             }
 
-            return new Document(name, folders, c => Task.Run(readDocument, c));
+            return new Document(name, folders, readDocument);
         }
 
         #endregion

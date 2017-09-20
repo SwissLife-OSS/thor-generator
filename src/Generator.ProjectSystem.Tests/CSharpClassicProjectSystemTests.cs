@@ -49,6 +49,30 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
+        public void CanHandleWithProjectId()
+        {
+            // act
+            bool resulta = ProjectSystem.CanHandle(ValidProjectId);
+            bool resultb = ProjectSystem.CanHandle(InvalidProjectId);
+
+            // assert
+            resulta.Should().BeTrue("projectId is valid");
+            resultb.Should().BeFalse("projectId is invalid");
+        }
+
+        [Fact]
+        public void CanHandleArgumentValidation()
+        {
+            // act
+            Action a = () => ProjectSystem.CanHandle((IProjectId)null);
+            Action b = () => ProjectSystem.CanHandle((string)null);
+
+            // assert
+            a.ShouldThrow<ArgumentNullException>();
+            b.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
         public async void OpenProject()
         {
             // arrange
@@ -66,19 +90,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
             project.Documents.Any(t => t.Name == "IManyArgumentsEventSource.cs").Should().BeTrue();
         }
 
-        [Fact]
-        public void CanHandleWithProjectId()
-        {
-            // act
-            bool resulta = ProjectSystem.CanHandle((IProjectId)null);
-            bool resultb = ProjectSystem.CanHandle(ValidProjectId);
-            bool resultc = ProjectSystem.CanHandle(InvalidProjectId);
 
-            // assert
-            resulta.Should().BeFalse("projectId is null");
-            resultb.Should().BeTrue("projectId is valid");
-            resultc.Should().BeFalse("projectId is invalid");
-        }
 
         private string ExtractTestFiles(string resource)
         {
