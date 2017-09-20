@@ -88,11 +88,13 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                 }
 
                 // update code file
+                string directory = Path.GetDirectoryName(documentFileName);
+                if(!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
                 File.WriteAllText(documentFileName, updatedDocument.GetContent());
             }
-
-
-            throw new ArgumentNullException();
         }
     }
 }

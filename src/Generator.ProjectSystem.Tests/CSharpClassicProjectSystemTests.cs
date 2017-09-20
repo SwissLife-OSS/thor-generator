@@ -32,7 +32,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         protected abstract IProjectId InvalidProjectId { get; }
 
         [Fact]
-        public async Task CanHandleValidProject()
+        public void CanHandleValidProject()
         {
             // arrange
             string tempDirectory = ExtractTestFiles(ValidProject);
@@ -73,7 +73,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
-        public async void OpenProject()
+        public void OpenProject()
         {
             // arrange
             string tempDirectory = ExtractTestFiles(ValidProject);
@@ -90,7 +90,31 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
             project.Documents.Any(t => t.Name == "IManyArgumentsEventSource.cs").Should().BeTrue();
         }
 
+        [Fact]
+        public void CommitChanges()
+        {
+            // arrange
+            string tempDirectory = ExtractTestFiles(ValidProject);
+            string projectFile = Path.Combine(tempDirectory, "ClassLibrary1", "ClassLibrary1.csproj");
 
+            Directory.CreateDirectory(tempDirectory);
+            ZipUtils.Extract(TestProjects.ValidClassicProject, tempDirectory);
+
+            Project project = ProjectSystem.Open(projectFile);
+            project.Documents.Should().HaveCount(2);
+
+            // act
+            project.UpdateDocument("foo", "foo.cs", "a");
+            ProjectSystem.CommitChanges(project);
+
+            // assert
+            Project reloadedProject = ProjectSystem.Open(projectFile);
+
+            reloadedProject.Should().NotBe(project);
+            reloadedProject.Documents.Should().HaveCount(3);
+            reloadedProject.Documents.First(t => t.Name == "foo.cs")
+                .GetContent().Should().Be("foo");
+        }
 
         private string ExtractTestFiles(string resource)
         {
