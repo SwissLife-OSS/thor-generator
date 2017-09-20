@@ -2,12 +2,24 @@
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 {
+    /// <summary>
+    /// Represents a project identifier for <see cref="CSharpClassicProjectSystem"/> projects.
+    /// </summary>
+    /// <seealso cref="ChilliCream.Tracing.Generator.ProjectSystem.ProjectId" />
     public sealed class CSharpClassicProjectId
-        : IProjectId
+        : ProjectId
     {
         private string _fileName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CSharpClassicProjectId"/> class.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="fileName"/> is <c>null</c>.
+        /// </exception>
         public CSharpClassicProjectId(string fileName)
+            : base(fileName)
         {
             if (fileName == null)
             {
@@ -16,42 +28,10 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             _fileName = fileName;
         }
 
+        /// <summary>
+        /// Gets the project file name.
+        /// </summary>
+        /// <value>The project file name.</value>
         public string FileName => _fileName;
-
-        public bool Equals(IProjectId other)
-        {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            return (other is CSharpClassicProjectId p
-                && p._fileName.Equals(_fileName));
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-
-            return Equals(obj as IProjectId);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return _fileName;
-        }
     }
 }

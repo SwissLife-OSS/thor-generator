@@ -7,15 +7,19 @@ using Microsoft.Build.Construction;
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 {
+    /// <summary>
+    /// This project system provides functionality to load and alter clasic csharp projects.
+    /// </summary>
+    /// <seealso cref="ProjectSystem{CSharpClassicProjectId}" />
     public class CSharpClassicProjectSystem
-        : IProjectSystem
+        : ProjectSystem<CSharpClassicProjectId>
     {
         private static readonly HashSet<string> _projectGuids = new HashSet<string>
         {
             "{0BB0B76D-F56E-4EF3-B502-0AFDB8413EEF}"
         };
 
-        public bool CanHandle(string projectFileOrDirectoryName)
+        public override bool CanHandle(string projectFileOrDirectoryName)
         {
             if (File.Exists(projectFileOrDirectoryName))
             {
@@ -28,28 +32,24 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             return false;
         }
 
-        public bool CanHandle(IProjectId projectId)
+        public override void CommitChanges(Project project)
         {
-            return projectId is CSharpClassicProjectId;
+            throw new NotImplementedException();
         }
 
-        public Task CommitChangesAsync(Project project)
+        protected override IProjectId CreateProjectId(string projectFileOrDirectoryName)
         {
-
-
-
-
-            throw new System.NotImplementedException();
+            return new CSharpClassicProjectId(projectFileOrDirectoryName);
         }
 
-        public Task<Project> OpenAsync(string projectFileOrDirectoryName)
+        protected override string GetProjectDirectory(string projectFileOrDirectoryName)
         {
-            CSharpClassicProjectId projectId = new CSharpClassicProjectId(projectFileOrDirectoryName);
-            HashSet<Document> documents = new HashSet<Document>();
+            return Path.GetDirectoryName(projectFileOrDirectoryName);
+        }
 
-            string projectDirectory = Path.GetDirectoryName(projectFileOrDirectoryName);
-            int rootPathLength = projectDirectory.Length;
-
+        protected override IEnumerable<string> GetProjectFiles(string projectFileOrDirectoryName)
+        {
+            string projectDirectory = GetProjectDirectory(projectFileOrDirectoryName);
             ProjectRootElement project = ProjectRootElement.Open(projectFileOrDirectoryName);
             foreach (string include in project.Items
                 .Where(t => t.ItemType == "Compile")
@@ -58,11 +58,9 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                 string fileName = Path.Combine(projectDirectory, include);
                 if (File.Exists(fileName) && Path.GetExtension(fileName) == ".cs")
                 {
-                    documents.Add(ProjectSystemUtils.CreateDocument(fileName, rootPathLength));
+                    yield return fileName;
                 }
             }
-
-            return Task.FromResult(Project.Create(projectId, documents));
         }
     }
 }

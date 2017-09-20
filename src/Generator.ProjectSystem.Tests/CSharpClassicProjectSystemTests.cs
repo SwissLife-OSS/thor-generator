@@ -49,7 +49,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         }
 
         [Fact]
-        public async Task OpenProject()
+        public async void OpenProject()
         {
             // arrange
             string tempDirectory = ExtractTestFiles(ValidProject);
@@ -59,7 +59,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
             ZipUtils.Extract(TestProjects.ValidClassicProject, tempDirectory);
 
             // act
-            Project project = await ProjectSystem.OpenAsync(projectFile);
+            Project project = ProjectSystem.Open(projectFile);
 
             // assert
             project.Documents.Should().HaveCount(2);
