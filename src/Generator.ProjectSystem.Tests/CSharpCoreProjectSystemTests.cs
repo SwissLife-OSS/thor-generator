@@ -11,7 +11,11 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         protected override string ValidProject => TestProjects.ValidCoreProject;
         protected override int ValidProjectInitialFiles => 1;
 
-        protected override IProjectId ValidProjectId => new CSharpCoreProjectId(Guid.NewGuid().ToString());
         protected override IProjectId InvalidProjectId => new CSharpDirectoryProjectId(Guid.NewGuid().ToString());
+
+        protected override IProjectId CreateValidProjectId(string randomString)
+        {
+            return new CSharpCoreProjectId(randomString);
+        }
     }
 }

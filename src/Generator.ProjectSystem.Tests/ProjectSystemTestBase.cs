@@ -13,10 +13,97 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         private readonly List<string> _createdDirectories = new List<string>();
 
         protected abstract IProjectSystem ProjectSystem { get; }
+
         protected abstract string ValidProject { get; }
         protected abstract int ValidProjectInitialFiles { get; }
-        protected abstract IProjectId ValidProjectId { get; }
+
         protected abstract IProjectId InvalidProjectId { get; }
+        protected abstract IProjectId CreateValidProjectId(string randomString);
+
+        [Fact]
+        public void ProjectIdEquals()
+        {
+            // arrange
+            IProjectId ida1 = CreateValidProjectId("a");
+            IProjectId ida2 = CreateValidProjectId("a");
+            IProjectId idb = CreateValidProjectId("b");
+
+            // act
+            bool a = ida1.Equals(ida1);
+            bool b = ida1.Equals(ida2);
+            bool c = ida1.Equals(idb);
+            bool d = idb.Equals(ida1);
+            bool e = idb.Equals(null);
+            bool f = idb.Equals(InvalidProjectId);
+
+            bool g = ida1.Equals((object)ida1);
+            bool h = ida1.Equals((object)ida2);
+            bool i = ida1.Equals((object)idb);
+            bool j = idb.Equals((object)ida1);
+            bool k = idb.Equals((object)null);
+            bool l = idb.Equals((object)InvalidProjectId);
+
+            // assert
+            a.Should().BeTrue("a1 is equals to a1");
+            b.Should().BeTrue("a1 is equals to a2");
+            c.Should().BeFalse("a1 is not equals to b");
+            d.Should().BeFalse("b is not equals to a1");
+            e.Should().BeFalse("b is not equals to null");
+            f.Should().BeFalse("b is not equals to InvalidProjectId");
+
+            g.Should().BeTrue("(obj) a1 is equals to a1");
+            h.Should().BeTrue("(obj) a1 is equals to a2");
+            i.Should().BeFalse("(obj) a1 is not equals to b");
+            j.Should().BeFalse("(obj) b is not equals to a1");
+            k.Should().BeFalse("(obj) b is not equals to null");
+            l.Should().BeFalse("b is not equals to InvalidProjectId");
+        }
+
+        [InlineData("a")]
+        [InlineData("b")]
+        [InlineData("c")]
+        [Theory]
+        public void ProjectIdToString(string key)
+        {
+            // arrange
+            IProjectId id = CreateValidProjectId(key);
+
+            // act
+            string value = id.ToString();
+
+            // assert
+            value.Should().Be(key);
+        }
+
+        [Fact]
+        public void ProjectIdGetHashCode()
+        {
+            // arrange
+            IProjectId ida1 = CreateValidProjectId("a");
+            IProjectId ida2 = CreateValidProjectId("a");
+            IProjectId idb = CreateValidProjectId("b");
+
+            // act
+            int a1 = ida1.GetHashCode();
+            int a2 = ida2.GetHashCode();
+            int b = idb.GetHashCode();
+
+            // assert
+            a1.Should().Be(a2, "a1 hash should be equals to a2 hash");
+            a1.Should().NotBe(b, "a1 hash should not be equals to b hash");
+        }
+
+        [Fact]
+        public void ProjectIdConstructorArgumentValidation()
+        {
+            // act
+            Action a = () => CreateValidProjectId(null);
+            Action b = () => CreateValidProjectId(string.Empty);
+
+            // assert
+            a.ShouldThrow<ArgumentNullException>("key is null");
+            b.ShouldThrow<ArgumentNullException>("key is string.Empty");
+        }
 
         [Fact]
         public void CanHandleValidProject()
@@ -36,7 +123,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         public void CanHandleWithProjectId()
         {
             // act
-            bool resulta = ProjectSystem.CanHandle(ValidProjectId);
+            bool resulta = ProjectSystem.CanHandle(CreateValidProjectId(Guid.NewGuid().ToString("N")));
             bool resultb = ProjectSystem.CanHandle(InvalidProjectId);
 
             // assert
