@@ -43,12 +43,14 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
             // act
             Action a = () => Solution.Create(new[] { project });
             Action b = () => Solution.Create(Enumerable.Empty<Project>());
-            Action c = () => Solution.Create(null);
+            Action c = () => Solution.Create((IEnumerable<Project>)null);
+            Action d = () => Solution.Create((string)null);
 
             // assert
             a.ShouldNotThrow();
             b.ShouldNotThrow();
             c.ShouldThrow<ArgumentNullException>();
+            d.ShouldThrow<ArgumentNullException>();
         }
     }
 }
