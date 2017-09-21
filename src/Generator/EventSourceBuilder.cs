@@ -1,115 +1,80 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using ChilliCream.Logging.Generator.Analyzer;
-//using ChilliCream.Tracing.Generator.ProjectSystem;
+﻿using System;
+using System.Collections.Generic;
+using ChilliCream.Logging.Generator;
+using ChilliCream.Tracing.Generator.Analyzer;
+using ChilliCream.Tracing.Generator.ProjectSystem;
 
-//namespace ChilliCream.Logging.Generator
-//{
-//    public class EventSourceBuilder
-//    {
-//        private Solution _solution;
+namespace ChilliCream.Tracing.Generator
+{
+    public class EventSourceBuilder
+    {
+        public EventSourceBuilder(Project source, Project target)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
 
-//        public EventSourceBuilder(string solutionFile)
-//        {
-//            if (string.IsNullOrWhiteSpace(solutionFile))
-//            {
-//                throw new ArgumentNullException(nameof(solutionFile));
-//            }
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
 
-//            SolutionFile = solutionFile;
-//            _solution = Solution.Create(solutionFile);
-//        }
+            Source = source;
+            Target = target;
+        }
 
-//        public string SolutionFile { get; }
+        public Project Source { get; }
+        public Project Target { get; }
 
-//        public void Build()
-//        {
-//            foreach (Project project in _solution.Projects)
-//            {
-                
+        public void Build()
+        {
+            foreach (EventSourceFile eventSourceFile in FindEventSourceDefinitions())
+            {
+                EventSourceGenerator generator = new EventSourceGenerator(eventSourceFile.Definition);
+                Target.UpdateDocument(generator.CreateEventSource(),
+                    eventSourceFile.Document.Name, eventSourceFile.Document.Folders);
+            }
+        }
 
+        private IEnumerable<EventSourceFile> FindEventSourceDefinitions()
+        {
+            foreach (Document document in Source.Documents)
+            {
+                EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+                visitor.Visit(document.GetSyntaxRoot());
 
-//            }
+                if (visitor.EventSourceDefinition != null)
+                {
+                    yield return new EventSourceFile(document, visitor.EventSourceDefinition);
+                }
+            }
+        }
 
-//            _solution.CommitChanges();
-//        }
+        #region Nested Types
 
-//        private Solution CreateEventSources(Project project, IEnumerable<EventSourceFile> eventSourceFiles)
-//        {
-//            Project p = project;
+        private class EventSourceFile
+        {
+            public EventSourceFile(Document document, EventSourceDefinition definition)
+            {
+                if (document == null)
+                {
+                    throw new ArgumentNullException(nameof(document));
+                }
 
-//            foreach (EventSourceFile eventSourceFile in eventSourceFiles)
-//            {
-//                string folderPath = string.Join("\\", eventSourceFile.Folders);
-//                string documentName = eventSourceFile.Definition.ClassName + ".cs";
-//                SourceText source = GenerateEventSource(eventSourceFile.Definition);
+                if (definition == null)
+                {
+                    throw new ArgumentNullException(nameof(definition));
+                }
 
-//                Document document = p.Documents.FirstOrDefault
-//                    (t => string.Join("\\", t.Folders).Equals(folderPath) && t.Name == documentName);
+                Document = document;
+                Definition = definition;
+            }
 
-//                if (document == null)
-//                {
-//                    p = p.AddDocument(documentName, source, folders: eventSourceFile.Folders).Project;
-//                }
-//                else
-//                {
-//                    p = document.WithText(source).Project;
-//                }
-//            }
+            public Document Document { get; }
+            public EventSourceDefinition Definition { get; }
+        }
 
-//            return p.Solution;
-//        }
-
-//        private string GenerateEventSource(EventSourceDefinition definition)
-//        {
-//            EventSourceGenerator eventSourceGenerator = new EventSourceGenerator(definition);
-//            return eventSourceGenerator.CreateEventSource();
-//        }
-
-//        private ICollection<EventSourceFile> GetEventSourceDefinitions(Project project)
-//        {
-//            List<EventSourceFile> eventSourceFiles = new List<EventSourceFile>();
-//            foreach (Document document in project.Documents)
-//            {
-//                EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
-//                visitor.Visit(document.GetSyntaxRoot());
-
-//                if (visitor.EventSourceDefinition != null)
-//                {
-//                    eventSourceFiles.Add(new EventSourceFile(
-//                        document.Folders.ToArray(), visitor.EventSourceDefinition));
-//                }
-//            }
-//            return eventSourceFiles;
-//        }
-
-//        #region Nested Types
-
-//        private class EventSourceFile
-//        {
-//            public EventSourceFile(string[] folders, EventSourceDefinition definition)
-//            {
-//                if (folders == null)
-//                {
-//                    throw new ArgumentNullException(nameof(folders));
-//                }
-
-//                if (definition == null)
-//                {
-//                    throw new ArgumentNullException(nameof(definition));
-//                }
-
-//                Folders = folders;
-//                Definition = definition;
-//            }
-
-//            public EventSourceDefinition Definition { get; }
-//            public Document DefinitionDocument { get; set; }
-//        }
-
-//        #endregion
-//    }
-//}
+        #endregion
+    }
+}

@@ -6,7 +6,6 @@ using ChilliCream.Logging.Generator.Resources;
 using ChilliCream.Logging.Generator.Types;
 using ChilliCream.Tracing.Generator.Analyzer;
 using ChilliCream.Tracing.Generator.Models;
-using Microsoft.CodeAnalysis.CSharp;
 using Nustache.Core;
 
 namespace ChilliCream.Logging.Generator
