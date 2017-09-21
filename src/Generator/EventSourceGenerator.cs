@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ChilliCream.Logging.Generator.Analyzer;
-using ChilliCream.Logging.Generator.Models;
 using ChilliCream.Logging.Generator.Resources;
 using ChilliCream.Logging.Generator.Types;
-using Microsoft.CodeAnalysis;
+using ChilliCream.Tracing.Generator.Analyzer;
+using ChilliCream.Tracing.Generator.Models;
 using Microsoft.CodeAnalysis.CSharp;
 using Nustache.Core;
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
-namespace ChilliCream.Logging.Generator.Models
+namespace ChilliCream.Tracing.Generator.Models
 {
     internal class WriteCoreModel
     {

@@ -8,14 +8,14 @@ namespace Generator.CLI
     {
         static void Main(string[] args)
         {
-            DirectoryInfo directory = new DirectoryInfo(Environment.CurrentDirectory);
+            //DirectoryInfo directory = new DirectoryInfo(Environment.CurrentDirectory);
 
-            foreach (FileInfo file in directory.GetFiles("*.sln", SearchOption.AllDirectories))
-            {
-                Console.WriteLine(file.FullName);
-                EventSourceBuilder builder = new EventSourceBuilder(file.FullName);
-                builder.BuildAsync().Wait();
-            }
+            //foreach (FileInfo file in directory.GetFiles("*.sln", SearchOption.AllDirectories))
+            //{
+            //    Console.WriteLine(file.FullName);
+            //    EventSourceBuilder builder = new EventSourceBuilder(file.FullName);
+            //    builder.BuildAsync().Wait();
+            //}
         }
     }
 }

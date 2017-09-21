@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ChilliCream.Logging.Generator.Models;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Tracing.Generator.Models
 {
     internal class EventSourceModel
     {

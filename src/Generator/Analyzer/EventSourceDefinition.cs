@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace ChilliCream.Logging.Generator.Analyzer
+namespace ChilliCream.Tracing.Generator.Analyzer
 {
     public class EventSourceDefinition
     {
