@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -27,6 +28,11 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 
         public override bool CanHandle(string projectFileOrDirectoryName)
         {
+            if (string.IsNullOrEmpty(projectFileOrDirectoryName))
+            {
+                throw new ArgumentNullException(nameof(projectFileOrDirectoryName));
+            }
+
             if (File.Exists(projectFileOrDirectoryName))
             {
                 try
@@ -47,7 +53,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
 
         public override void CommitChanges(Project project)
         {
-            CSharpClassicProjectId projectId = (CSharpClassicProjectId)project.Id;
+            CSharpCoreProjectId projectId = (CSharpCoreProjectId)project.Id;
             string projectRootDirectory = Path.GetDirectoryName(projectId.FileName);
 
             foreach (DocumentId updatedDocumentId in project.UpdatedDocumets)

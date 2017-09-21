@@ -78,9 +78,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
             string tempDirectory = ExtractTestFiles(ValidProject);
             string projectFile = Path.Combine(tempDirectory, "ClassLibrary1", "ClassLibrary1.csproj");
 
-            Directory.CreateDirectory(tempDirectory);
-            ZipUtils.Extract(TestProjects.ValidClassicProject, tempDirectory);
-
             Project project = ProjectSystem.Open(projectFile);
             project.Documents.Should().HaveCount(ValidProjectInitialFiles);
 
