@@ -98,11 +98,9 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         {
             // act
             Action a = () => CreateValidProjectId(null);
-            Action b = () => CreateValidProjectId(string.Empty);
 
             // assert
             a.ShouldThrow<ArgumentNullException>("key is null");
-            b.ShouldThrow<ArgumentNullException>("key is string.Empty");
         }
 
         [Fact]
