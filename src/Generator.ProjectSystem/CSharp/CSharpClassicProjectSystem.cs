@@ -60,9 +60,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             {
                 ProjectRootElement project = ProjectRootElement.Open(projectFileOrDirectoryName);
                 ProjectPropertyElement property = project.Properties.FirstOrDefault(p => p.Name == "ProjectGuid");
-                return (property != null
-                    && property.Value != null
-                    && _projectGuids.Contains(property.Value));
+                return property != null && property.Value != null && _projectGuids.Contains(property.Value);
             }
             return false;
         }
