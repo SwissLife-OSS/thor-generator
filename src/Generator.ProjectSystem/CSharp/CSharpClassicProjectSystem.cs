@@ -63,8 +63,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             return false;
         }
 
-
-
         public override void CommitChanges(Project project)
         {
             CSharpClassicProjectId projectId = (CSharpClassicProjectId)project.Id;
