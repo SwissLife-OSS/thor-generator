@@ -10,11 +10,9 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
         public CSharpDirectoryProjectId(string directoryName)
             : base(directoryName)
         {
-            if (directoryName == null)
-            {
-                throw new ArgumentNullException(nameof(directoryName));
-            }
             _directoryName = directoryName;
         }
+
+        public string DirectoryName => _directoryName;
     }
 }

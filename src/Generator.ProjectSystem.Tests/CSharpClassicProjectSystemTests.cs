@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ChilliCream.Tracing.Generator.ProjectSystem.CSharp;
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
@@ -10,6 +11,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
         protected override string ValidProject => TestProjects.ValidClassicProject;
         protected override int ValidProjectInitialFiles => 2;
+        protected override string ValidProjectFileName { get; } = Path.Combine("ClassLibrary1", "ClassLibrary1.csproj");
 
         protected override IProjectId InvalidProjectId => new CSharpDirectoryProjectId(Guid.NewGuid().ToString());
 

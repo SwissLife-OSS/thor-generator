@@ -1,52 +1,43 @@
-﻿//using System.Collections.Generic;
-//using System.IO;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
-//namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
-//{
-//    public class CSharpDirectoryProjectSystem
-//        : IProjectSystem
-//    {
-//        public virtual bool CanHandle(string projectFileOrDirectoryName)
-//        {
-//            return Directory.Exists(projectFileOrDirectoryName);
-//        }
+namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
+{
+    public class CSharpDirectoryProjectSystem
+        : ProjectSystem<CSharpDirectoryProjectId>
+    {
+        protected override IProjectId CreateProjectId(string projectFileOrDirectoryName)
+        {
+            return new CSharpDirectoryProjectId(projectFileOrDirectoryName);
+        }
 
-//        public virtual bool CanHandle(IProjectId projectId)
-//        {
-//            return projectId is CSharpDirectoryProjectId;
-//        }
+        protected override string GetProjectDirectory(string projectFileOrDirectoryName)
+        {
+            return projectFileOrDirectoryName;
+        }
 
-//        protected virtual IProjectId CreateProjectId(string projectFileOrDirectoryName)
-//        {
-//            return new CSharpDirectoryProjectId(projectFileOrDirectoryName);
-//        }
+        protected override IEnumerable<string> GetProjectFiles(string projectFileOrDirectoryName)
+        {
+            return Directory.GetFiles(projectFileOrDirectoryName,
+                CSharpConstants.FileFilter, SearchOption.AllDirectories);
+        }
 
-//        public Task<Project> OpenAsync(string projectFileOrDirectoryName)
-//        {
-//            int rootPathLength = projectFileOrDirectoryName.Length;
-//            IProjectId projectId = CreateProjectId(projectFileOrDirectoryName);
-//            HashSet<Document> documents = new HashSet<Document>();
+        protected override string GetFileOrDirectoryName(IProjectId projectId)
+        {
+            return ((CSharpDirectoryProjectId)projectId).DirectoryName;
+        }
 
-//            foreach (string file in Directory.GetFiles(projectFileOrDirectoryName,
-//                "*.cs", SearchOption.AllDirectories))
-//            {
-//                documents.Add(ProjectSystemUtils.CreateDocument(file, rootPathLength));
-//            }
+        public override bool CanHandle(string projectFileOrDirectoryName)
+        {
+            if (string.IsNullOrEmpty(projectFileOrDirectoryName))
+            {
+                throw new ArgumentNullException(nameof(projectFileOrDirectoryName));
+            }
 
-//            return Task.FromResult(Project.Create(projectId, documents));
-//        }
-
-//        public async Task CommitChangesAsync(Project project)
-//        {
-//            foreach (DocumentId documentId in project.UpdatedDocumets)
-//            {
-//                Document document = project.GetDocument(documentId);
-//                string fileName = document.CreateFilePath(project.Id.ToString());
-//                string content = await document.GetContentAsync();
-//                File.WriteAllText(fileName, content);
-//            }
-//        }
-//    }
-//}
+            return Directory.Exists(projectFileOrDirectoryName);
+        }
+    }
+}

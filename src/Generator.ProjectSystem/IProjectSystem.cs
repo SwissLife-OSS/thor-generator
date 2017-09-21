@@ -20,6 +20,9 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// the specified project file or directory with code files; 
         /// otherwise, <c>false</c>.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="projectFileOrDirectoryName"/> is <c>null</c>.
+        /// </exception>
         bool CanHandle(string projectFileOrDirectoryName);
 
         /// <summary>
@@ -46,12 +49,18 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// <returns>
         /// Returns a project object from the given project file or directory of code files.
         /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="projectFileOrDirectoryName"/> is <c>null</c>.
+        /// </exception>
         Project Open(string projectFileOrDirectoryName);
 
         /// <summary>
         /// Commits changes made to the project object to the project file or directory of code files.
         /// </summary>
         /// <param name="project">The project.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="project"/> is <c>null</c>.
+        /// </exception>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="project"/> is <c>null</c>.
         /// </exception>

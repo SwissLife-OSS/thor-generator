@@ -16,6 +16,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
         protected abstract string ValidProject { get; }
         protected abstract int ValidProjectInitialFiles { get; }
+        protected abstract string ValidProjectFileName { get; }
 
         protected abstract IProjectId InvalidProjectId { get; }
         protected abstract IProjectId CreateValidProjectId(string randomString);
@@ -108,7 +109,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         {
             // arrange
             string tempDirectory = ExtractTestFiles(ValidProject);
-            string projectFile = Path.Combine(tempDirectory, "ClassLibrary1", "ClassLibrary1.csproj");
+            string projectFile = Path.Combine(tempDirectory, ValidProjectFileName);
 
             // act
             bool result = ProjectSystem.CanHandle(projectFile);
@@ -146,7 +147,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         {
             // arrange
             string tempDirectory = ExtractTestFiles(ValidProject);
-            string projectFile = Path.Combine(tempDirectory, "ClassLibrary1", "ClassLibrary1.csproj");
+            string projectFile = Path.Combine(tempDirectory, ValidProjectFileName);
 
             // act
             Project project = ProjectSystem.Open(projectFile);
@@ -161,7 +162,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
         {
             // arrange
             string tempDirectory = ExtractTestFiles(ValidProject);
-            string projectFile = Path.Combine(tempDirectory, "ClassLibrary1", "ClassLibrary1.csproj");
+            string projectFile = Path.Combine(tempDirectory, ValidProjectFileName);
 
             Project project = ProjectSystem.Open(projectFile);
             project.Documents.Should().HaveCount(ValidProjectInitialFiles);

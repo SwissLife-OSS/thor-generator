@@ -26,6 +26,11 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                 CSharpConstants.FileFilter, SearchOption.AllDirectories);
         }
 
+        protected override string GetFileOrDirectoryName(IProjectId projectId)
+        {
+            return ((CSharpCoreProjectId)projectId).FileName;
+        }
+
         public override bool CanHandle(string projectFileOrDirectoryName)
         {
             if (string.IsNullOrEmpty(projectFileOrDirectoryName))
@@ -49,26 +54,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                 }
             }
             return false;
-        }
-
-        public override void CommitChanges(Project project)
-        {
-            CSharpCoreProjectId projectId = (CSharpCoreProjectId)project.Id;
-            string projectRootDirectory = Path.GetDirectoryName(projectId.FileName);
-
-            foreach (DocumentId updatedDocumentId in project.UpdatedDocumets)
-            {
-                Document updatedDocument = project.GetDocument(updatedDocumentId);
-                string documentFileName = updatedDocument.CreateFilePath(projectRootDirectory);
-
-                // update code file
-                string directory = Path.GetDirectoryName(documentFileName);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                File.WriteAllText(documentFileName, updatedDocument.GetContent());
-            }
         }
     }
 }

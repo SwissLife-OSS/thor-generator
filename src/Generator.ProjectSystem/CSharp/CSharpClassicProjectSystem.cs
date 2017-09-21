@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Build.Construction;
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
@@ -45,6 +44,11 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             }
         }
 
+        protected override string GetFileOrDirectoryName(IProjectId projectId)
+        {
+            return ((CSharpClassicProjectId)projectId).FileName;
+        }
+
         public override bool CanHandle(string projectFileOrDirectoryName)
         {
             if (string.IsNullOrEmpty(projectFileOrDirectoryName))
@@ -63,13 +67,10 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             return false;
         }
 
-        public override void CommitChanges(Project project)
+        protected override void CommitChanges(Project project, string projectFileOrDirectoryName,
+            string projectRootDirectory, HashSet<string> projectFiles)
         {
-            CSharpClassicProjectId projectId = (CSharpClassicProjectId)project.Id;
-            string projectRootDirectory = Path.GetDirectoryName(projectId.FileName);
-            ProjectRootElement projectElement = ProjectRootElement.Open(projectId.FileName);
-            HashSet<string> projectFiles = new HashSet<string>(
-                GetProjectFiles(projectId.FileName));
+            ProjectRootElement projectElement = ProjectRootElement.Open(projectFileOrDirectoryName);
 
             foreach (DocumentId updatedDocumentId in project.UpdatedDocumets)
             {
@@ -80,19 +81,17 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                 if (!projectFiles.Contains(documentFileName))
                 {
                     string relativePath = updatedDocument.Folders.Any()
-                        ? string.Join("\\", updatedDocument.Folders) + "\\" + updatedDocument.Name
+                        ? string.Join("\\", updatedDocument.Folders) +
+                            "\\" + updatedDocument.Name
                         : updatedDocument.Name;
                     projectElement.AddItem("Compile", relativePath);
                 }
-
-                // update code file
-                string directory = Path.GetDirectoryName(documentFileName);
-                if(!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                File.WriteAllText(documentFileName, updatedDocument.GetContent());
             }
+
+            base.CommitChanges(project, projectFileOrDirectoryName,
+                projectRootDirectory, projectFiles);
+
+            projectElement.Save();
         }
     }
 }

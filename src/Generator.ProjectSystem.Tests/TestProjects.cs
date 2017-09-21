@@ -15,6 +15,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
 
         public static readonly string ValidClassicProject = Path.Combine(GetResourceDirectory(), "ValidClassicProject.zip");
         public static readonly string ValidCoreProject = Path.Combine(GetResourceDirectory(), "ValidCoreProject.zip");
-
+        public static readonly string ValidDirectoryProject = Path.Combine(GetResourceDirectory(), "ValidDirectoryProject.zip");
     }
 }

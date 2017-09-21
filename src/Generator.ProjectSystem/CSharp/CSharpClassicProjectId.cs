@@ -21,10 +21,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
         public CSharpClassicProjectId(string fileName)
             : base(fileName)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
             _fileName = fileName;
         }
 
