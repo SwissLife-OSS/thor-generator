@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
+namespace ChilliCream.Tracing.Generator.EventSourceDefinitions {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Logging.Generator.EventSourceDefinitions.EventSourceSamples", typeof(EventSourceSamples).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Tracing.Generator.EventSourceDefinitions.EventSourceSamples", typeof(EventSourceSamples).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChilliCream.Logging.Generator.EventSourceDefinitions;
-using ChilliCream.Tracing.Generator;
+﻿using System.Linq;
 using ChilliCream.Tracing.Generator.Tasks;
 using FluentAssertions;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace ChilliCream.Tracing.Generator

@@ -6,7 +6,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
     {
         public static void Extract(string zipFilePath, string targetDirectory)
         {
-            ZipFile.ExtractToDirectory(zipFilePath, targetDirectory, true);
+            ZipFile.ExtractToDirectory(zipFilePath, targetDirectory);
         }
     }
 }
