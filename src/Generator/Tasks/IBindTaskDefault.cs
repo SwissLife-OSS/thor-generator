@@ -4,6 +4,6 @@
         : IArgumentsBindable<TTask>
         where TTask : class, ITask
     {
-
+        IBindTaskName<TTask> WithName(string name);
     }
 }

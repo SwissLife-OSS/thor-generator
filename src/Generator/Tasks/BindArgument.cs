@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {
-    internal class BindArgument<TTask>
+    internal sealed class BindArgument<TTask>
         : IBindArgument<TTask>
         where TTask : class, ITask
     {
@@ -34,16 +32,33 @@ namespace ChilliCream.Tracing.Generator.Tasks
 
         public IBindAdditionalArgument<TTask> And()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(_argument.Value)
+                && !_argument.Position.HasValue)
+            {
+                throw new InvalidOperationException("You have to specify a position or argument name first.");
+            }
+
+            return new BindAdditionalArgument<TTask>(_task);
         }
 
         public IBindArgument<TTask> Mandatory()
         {
-            throw new NotImplementedException();
+            _argument.IsMandatory = true;
+            return this;
         }
 
-        public IBindArgument<TTask> Position(int porition)
+        public IBindArgument<TTask> Position(int position)
         {
+            if (position < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(position), position, "The position cannot be below zero.");
+            }
+
+            if (!_task.PositionalArguments.Contains(_argument))
+            {
+                _task.PositionalArguments.Add(_argument);
+            }
+
             return this;
         }
 
@@ -70,6 +85,11 @@ namespace ChilliCream.Tracing.Generator.Tasks
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException(nameof(name));
+            }
+
+            if (key < 97 || key > 122)
+            {
+                throw new ArgumentException("The key must be between a and z.", nameof(name));
             }
 
             if (_argument.Name != null)

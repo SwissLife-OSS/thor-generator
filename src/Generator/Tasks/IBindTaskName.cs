@@ -4,6 +4,6 @@
         : IArgumentsBindable<TTask>
         where TTask : class, ITask
     {
-
+        IBindTaskDefault<TTask> AsDefault();
     }
 }

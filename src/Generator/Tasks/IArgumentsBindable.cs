@@ -7,6 +7,6 @@ namespace ChilliCream.Tracing.Generator.Tasks
         : IFluent
         where TTask : class, ITask
     {
-        IBindArgument<TTask> Argument(Expression<Func<TTask, object>> property);
+        IBindArgument<TTask> Argument<TProperty>(Expression<Func<TTask, TProperty>> property);
     }
 }

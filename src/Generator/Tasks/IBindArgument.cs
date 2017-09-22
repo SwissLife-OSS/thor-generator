@@ -6,7 +6,7 @@
     {
         IBindArgument<TTask> WithName(string name);
         IBindArgument<TTask> WithName(string name, char key);
-        IBindArgument<TTask> Position(int porition);
+        IBindArgument<TTask> Position(int position);
         IBindArgument<TTask> Mandatory();
         IBindAdditionalArgument<TTask> And();
     }
