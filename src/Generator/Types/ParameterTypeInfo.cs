@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 
-namespace ChilliCream.Logging.Generator.Types
+namespace ChilliCream.Tracing.Generator.Types
 {
     internal class ParameterTypeInfo<T>
         : IParameterTypeInfo
     {
-        private readonly HashSet<string> _names;
+        private readonly List<string> _names;
 
         public ParameterTypeInfo(int size)
         {
-            _names = new HashSet<string>
+            _names = new List<string>
             {
                 typeof(T).Name,
                 typeof(T).FullName
@@ -41,7 +39,7 @@ namespace ChilliCream.Logging.Generator.Types
                 throw new ArgumentNullException(nameof(size));
             }
 
-            _names = new HashSet<string>
+            _names = new List<string>
             {
                 alias,
                 typeof(T).Name,
@@ -62,60 +60,9 @@ namespace ChilliCream.Logging.Generator.Types
 
         public string Operator { get; internal set; }
 
-        public bool IsType(string typeName)
+        public IEnumerable<string> GetNames()
         {
-            if (typeName == null)
-            {
-                return false;
-            }
-            return _names.Contains(typeName, StringComparer.Ordinal);
-        }
-    }
-
-    internal static class ParameterTypeInfo
-    {
-        private static readonly IParameterTypeInfo[] _parameterTypeInfos
-            = new IParameterTypeInfo[]
-        {
-            new ParameterTypeInfo<string>("string", "((b.Length + 1) * 2)")
-            {
-                IsString = true,
-                Operator = null
-            },
-
-            new ParameterTypeInfo<long>("long", sizeof(long)),
-            new ParameterTypeInfo<int>("int", sizeof(int)),
-            new ParameterTypeInfo<short>("short", sizeof(short)),
-
-            new ParameterTypeInfo<ulong>("ulong", sizeof(ulong)),
-            new ParameterTypeInfo<uint>("uint", sizeof(uint)),
-            new ParameterTypeInfo<ushort>("ushort", sizeof(ushort)),
-
-            new ParameterTypeInfo<float>("float", sizeof(float)),
-            new ParameterTypeInfo<double>("double", sizeof(double)),
-
-            new ParameterTypeInfo<char>("char", sizeof(char)),
-            new ParameterTypeInfo<byte>("byte", sizeof(byte)),
-            new ParameterTypeInfo<sbyte>("sbyte", sizeof(sbyte)),
-            new ParameterTypeInfo<decimal>("decimal", sizeof(decimal)),
-            new ParameterTypeInfo<bool>("bool", sizeof(bool)),
-
-            new ParameterTypeInfo<Guid>(Marshal.SizeOf(typeof(Guid)))
-        };
-
-        public static bool TryGet(string typeName,
-            out IParameterTypeInfo parameterTypeInfo)
-        {
-            if (typeName != null)
-            {
-                string localTypeName = typeName.Trim();
-                parameterTypeInfo = _parameterTypeInfos
-                    .FirstOrDefault(t => t.IsType(localTypeName));
-                return parameterTypeInfo != null;
-            }
-
-            parameterTypeInfo = null;
-            return false;
+            return _names;
         }
     }
 }

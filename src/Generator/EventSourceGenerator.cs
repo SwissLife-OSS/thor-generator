@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ChilliCream.Logging.Generator.Types;
 using ChilliCream.Tracing.Generator.Analyzer;
 using ChilliCream.Tracing.Generator.Models;
 using ChilliCream.Tracing.Generator.Resources;
+using ChilliCream.Tracing.Generator.Types;
 using Nustache.Core;
 
 namespace ChilliCream.Logging.Generator
@@ -167,7 +167,7 @@ namespace ChilliCream.Logging.Generator
         private string GetWriteMethodParameterType(string typeName)
         {
             IParameterTypeInfo typeInfo;
-            if (!ParameterTypeInfo.TryGet(typeName, out typeInfo))
+            if (!ParameterTypeLookup.TryGet(typeName, out typeInfo))
             {
                 throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
             }
@@ -177,7 +177,7 @@ namespace ChilliCream.Logging.Generator
         private void AddTypeDetails(EventParameterModel eventParameterModel)
         {
             IParameterTypeInfo typeInfo;
-            if (!ParameterTypeInfo.TryGet(eventParameterModel.Type, out typeInfo))
+            if (!ParameterTypeLookup.TryGet(eventParameterModel.Type, out typeInfo))
             {
                 throw new ArgumentException("The specified type is not allowed.", nameof(eventParameterModel));
             }
