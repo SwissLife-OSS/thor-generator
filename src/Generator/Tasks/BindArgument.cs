@@ -58,7 +58,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
             if (_task.PositionalArguments.Where(t => t != _argument)
                 .Any(t => t.Position == position))
             {
-                throw new ArgumentException("There is already an argument defined at this position.",  nameof(position));
+                throw new ArgumentException("There is already an argument defined at this position.", nameof(position));
             }
 
             _argument.Position = position;
