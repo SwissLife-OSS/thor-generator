@@ -20,7 +20,10 @@ namespace ChilliCream.Tracing.Generator.Tasks
             }
 
             _tasks = tasks;
-            _task = new TaskDefinition();
+            _task = new TaskDefinition
+            {
+                TaskType = typeof(TTask)
+            };
 
             _tasks.Add(_task);
         }

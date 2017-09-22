@@ -54,6 +54,8 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 throw new ArgumentOutOfRangeException(nameof(position), position, "The position cannot be below zero.");
             }
 
+            _argument.Position = position;
+
             if (!_task.PositionalArguments.Contains(_argument))
             {
                 _task.PositionalArguments.Add(_argument);
