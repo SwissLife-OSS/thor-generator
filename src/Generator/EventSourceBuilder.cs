@@ -33,8 +33,13 @@ namespace ChilliCream.Tracing.Generator
             foreach (EventSourceFile eventSourceFile in FindEventSourceDefinitions())
             {
                 EventSourceGenerator generator = new EventSourceGenerator(eventSourceFile.Definition);
+
+                string newName = eventSourceFile.Document.Name.StartsWith("I")
+                    ? eventSourceFile.Document.Name.Substring(1)
+                    : string.Concat(eventSourceFile.Document.Name, "Impl");
+
                 Target.UpdateDocument(generator.CreateEventSource(),
-                    eventSourceFile.Document.Name, eventSourceFile.Document.Folders);
+                    newName, eventSourceFile.Document.Folders);
             }
         }
 
