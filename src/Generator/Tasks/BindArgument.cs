@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace ChilliCream.Tracing.Generator.Tasks
@@ -32,7 +33,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
 
         public IBindAdditionalArgument<TTask> And()
         {
-            if (string.IsNullOrEmpty(_argument.Value)
+            if (string.IsNullOrEmpty(_argument.Name)
                 && !_argument.Position.HasValue)
             {
                 throw new InvalidOperationException("You have to specify a position or argument name first.");
@@ -52,6 +53,12 @@ namespace ChilliCream.Tracing.Generator.Tasks
             if (position < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(position), position, "The position cannot be below zero.");
+            }
+
+            if (_task.PositionalArguments.Where(t => t != _argument)
+                .Any(t => t.Position == position))
+            {
+                throw new ArgumentException("There is already an argument defined at this position.",  nameof(position));
             }
 
             _argument.Position = position;

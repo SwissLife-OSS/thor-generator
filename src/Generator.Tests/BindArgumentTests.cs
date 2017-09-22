@@ -178,10 +178,171 @@ namespace ChilliCream.Tracing.Generator
 
             bindArgument
                 = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+                    typeof(CreateSolutionEventSources).GetProperties().Last());
 
             // act
             Action a = () => bindArgument.Position(1);
+
+            // assert
+            a.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void Mandatory()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+            string name = Guid.NewGuid().ToString();
+
+            // act
+            bindArgument.WithName(name).Mandatory();
+
+            // assert
+            task.Arguments.Should().HaveCount(1);
+            task.Arguments[name].IsMandatory.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ConstructorArgumentValidation()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+
+            // act
+            Action a = () => new BindArgument<CreateSolutionEventSources>(task,
+                typeof(CreateSolutionEventSources).GetProperties().First());
+            Action b = () => new BindArgument<CreateSolutionEventSources>(null,
+                typeof(CreateSolutionEventSources).GetProperties().First());
+            Action c = () => new BindArgument<CreateSolutionEventSources>(task, null);
+
+            // assert
+            a.ShouldNotThrow();
+            b.ShouldThrow<ArgumentNullException>();
+            c.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void And()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+            string name = Guid.NewGuid().ToString();
+
+            // act
+            bindArgument.WithName(Guid.NewGuid().ToString())
+                .And()
+                .Argument(t => t.Recursive)
+                .WithName(name);
+
+            // assert
+            task.Arguments.Should().HaveCount(2);
+            task.Arguments.ContainsKey(name).Should().BeTrue();
+        }
+
+        [Fact]
+        public void AndWithPosition()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+            string name = Guid.NewGuid().ToString();
+
+            // act
+            bindArgument.Position(0)
+                .And()
+                .Argument(t => t.Recursive)
+                .WithName(name);
+
+            // assert
+            task.Arguments.Should().HaveCount(1);
+            task.Arguments.ContainsKey(name).Should().BeTrue();
+            task.PositionalArguments.Should().HaveCount(1);
+            task.PositionalArguments.First()
+                .Position.Should().Be(0);
+            task.PositionalArguments.First()
+                .Should().NotBe(task.Arguments.Values.First());
+        }
+
+        [Fact]
+        public void AndWithDuplicateProperty()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperty("Recursive"));
+            string name = Guid.NewGuid().ToString();
+
+            // act
+            Action a = () => bindArgument.WithName(Guid.NewGuid().ToString())
+                .And()
+                .Argument(t => t.Recursive)
+                .WithName(name);
+
+            // assert
+            a.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void AndWithDuplicateName()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+            string name = Guid.NewGuid().ToString();
+
+            // act
+            Action a = () => bindArgument.WithName(name)
+                .And()
+                .Argument(t => t.Recursive)
+                .WithName(name);
+
+            // assert
+            a.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void AndWithDuplicateKey()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+
+            // act
+            Action a = () => bindArgument.WithName(Guid.NewGuid().ToString(), 'a')
+                .And()
+                .Argument(t => t.Recursive)
+                .WithName(Guid.NewGuid().ToString(), 'a');
+
+            // assert
+            a.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void AndWithUnspecifiedArument()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+
+            // act
+            Action a = () => bindArgument
+                .And()
+                .Argument(t => t.Recursive);
 
             // assert
             a.ShouldThrow<InvalidOperationException>();
