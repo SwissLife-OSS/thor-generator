@@ -61,6 +61,15 @@ namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [&quot;a a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;x&quot;,&quot;--zzz&quot;,&quot;-x&quot;,&quot;s&quot;,&quot;-y-&quot;,&quot;--aaa&quot;,&quot;s&quot;,&quot;s&quot;,&quot;-z&quot;,&quot;s s&quot;].
+        /// </summary>
+        internal static string Arguments {
+            get {
+                return ResourceManager.GetString("Arguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to using System;
         ///using System.Diagnostics.Tracing;
         ///using System.Text;
@@ -97,10 +106,9 @@ namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
         ///            Message = &quot;Simple is called {0}.&quot;, 
         ///            Version = 1)]
         ///        void Simple(string a, short b, int c, long d, ushort e, 
-        ///            unit f, uint g, decimal, h, bool i, double j);
+        ///            unit f, ulong g, decimal, System.Boolean h, bool i, double j);
         ///    }
-        ///}
-        ///.
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ManyArgumentsEventSource {
             get {
@@ -136,9 +144,9 @@ namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
         ///   Looks up a localized string similar to using System;
         ///using System.Diagnostics.Tracing;
         ///
-        ///namespace FooNamespace
+        ///namespace TwoEventsNamespace
         ///{
-        ///    [EventSourceDefinition(Name = &quot;Mock&quot;)]
+        ///    [EventSourceDefinition(Name = &quot;TwoEvents&quot;)]
         ///    public interface ITwoEventsEventSource
         ///    {
         ///        [Event(1, 
@@ -151,7 +159,7 @@ namespace ChilliCream.Logging.Generator.EventSourceDefinitions {
         ///            Level = EventLevel.Informational, 
         ///            Message = &quot;Simple is called {0}.&quot;, 
         ///            Version = 2)]
-        ///        void B(str [rest of string was truncated]&quot;;.
+        ///        [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TwoEventsEventSource {
             get {
