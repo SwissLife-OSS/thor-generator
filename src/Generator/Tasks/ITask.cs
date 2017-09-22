@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 
 namespace ChilliCream.Tracing.Generator.Tasks
@@ -46,6 +43,31 @@ namespace ChilliCream.Tracing.Generator.Tasks
             if (solution.Projects.Any(t => t.UpdatedDocumets.Any()))
             {
                 solution.CommitChanges();
+            }
+        }
+    }
+
+    public class CreateProjectEventSources
+        : ITask
+    {
+
+        public string SourceProject { get; set; }
+        public string TargetProject { get; set; }
+
+        public void Execute()
+        {
+            if (string.IsNullOrEmpty(TargetProject))
+            {
+                TargetProject = SourceProject;
+            }
+
+            if (Project.TryParse(SourceProject, out Project source)
+                && Project.TryParse(TargetProject, out Project target))
+            {
+                EventSourceBuilder eventSourceBuilder = new EventSourceBuilder(source, target);
+                eventSourceBuilder.Build();
+
+                target.CommitChanges();
             }
         }
     }

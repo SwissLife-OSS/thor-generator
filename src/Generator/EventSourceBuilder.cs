@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ChilliCream.Logging.Generator;
 using ChilliCream.Tracing.Generator.Analyzer;
 using ChilliCream.Tracing.Generator.ProjectSystem;

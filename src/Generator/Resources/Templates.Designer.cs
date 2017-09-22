@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ChilliCream.Logging.Generator.Resources {
+namespace ChilliCream.Tracing.Generator.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ChilliCream.Logging.Generator.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Logging.Generator.Resources.Templates", typeof(Templates).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Tracing.Generator.Resources.Templates", typeof(Templates).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using ChilliCream.Tracing.Generator.ProjectSystem.CSharp;
 
 namespace ChilliCream.Tracing.Generator.ProjectSystem
 {
@@ -10,12 +13,13 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
     public sealed class Project
     {
         private readonly HashSet<DocumentId> _updatedDocuments = new HashSet<DocumentId>();
-        private readonly Dictionary<DocumentId, Document> _documents = new Dictionary<DocumentId, Document>();
+        private ImmutableDictionary<DocumentId, Document> _documents;
 
         private Project(IProjectId projectId, IEnumerable<Document> documents)
         {
             Id = projectId;
-            _documents = documents.Distinct().ToDictionary(t => t.Id);
+            _documents = documents.Distinct().ToImmutableDictionary(t => t.Id);
+            Documents = new ReadOnlyDocumentCollection(_documents);
         }
 
         /// <summary>
@@ -28,7 +32,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
         /// Gets the documents of this project.
         /// </summary>
         /// <value>The documents.</value>
-        public IReadOnlyCollection<Document> Documents => _documents.Values;
+        public IReadOnlyCollection<Document> Documents { get; private set; }
 
         /// <summary>
         /// Gets the identifiers of the added and updated documets.
@@ -101,9 +105,21 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
             }
 
             Document document = Document.Create(content, name, folders);
-            _documents[document.Id] = document;
+
+            // todo: remove and that add due to equality. this issue will be fixed later.
+            _documents = _documents.Remove(document.Id).Add(document.Id, document);
             _updatedDocuments.Add(document.Id);
+            Documents = new ReadOnlyDocumentCollection(_documents);
+
             return document;
+        }
+
+        /// <summary>
+        /// Commits changes to the file system.
+        /// </summary>
+        public void CommitChanges()
+        {
+            CSharpProjectSystems.TryCommitChanges(this);
         }
 
         #region Project Factory
@@ -132,6 +148,43 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
             }
 
             return new Project(projectId, documents);
+        }
+
+        public static bool TryParse(string fileOrDirectoryName, out Project project)
+        {
+            if (string.IsNullOrEmpty(fileOrDirectoryName))
+            {
+                throw new ArgumentNullException(nameof(fileOrDirectoryName));
+            }
+
+            return CSharpProjectSystems.TryOpenProject(fileOrDirectoryName, out project);
+        }
+
+        #endregion
+
+        #region Nested Types
+
+        private class ReadOnlyDocumentCollection
+            : IReadOnlyCollection<Document>
+        {
+            private readonly ImmutableDictionary<DocumentId, Document> _documents;
+
+            public ReadOnlyDocumentCollection(ImmutableDictionary<DocumentId, Document> documents)
+            {
+                _documents = documents;
+            }
+
+            public int Count => _documents.Count();
+
+            public IEnumerator<Document> GetEnumerator()
+            {
+                return _documents.Values.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
         }
 
         #endregion

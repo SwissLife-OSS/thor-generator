@@ -80,6 +80,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
                 }
             }
             return new Solution(projects);
-        }
+        }        
     }
 }
