@@ -108,7 +108,6 @@ namespace ChilliCream.Tracing.Generator
             d.ShouldThrow<ArgumentNullException>();
         }
 
-
         [Fact]
         public void WithNameAndKeyKeyValidation()
         {
@@ -125,5 +124,67 @@ namespace ChilliCream.Tracing.Generator
             }
         }
 
+        [InlineData(20)]
+        [InlineData(10)]
+        [InlineData(3)]
+        [InlineData(1)]
+        [InlineData(0)]
+        [Theory]
+        public void Position(int position)
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+
+            // act
+            bindArgument.Position(position);
+
+            // assert
+            task.PositionalArguments
+                .Should().HaveCount(1);
+            task.PositionalArguments
+                .Any(t => t.Position == position)
+                .Should().BeTrue();
+            task.Arguments.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void PositionArgumentValidation()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+
+            // act
+            Action a = () => bindArgument.Position(-1);
+
+            // assert
+            a.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void DuplicatePosition()
+        {
+            // arrange
+            TaskDefinition task = new TaskDefinition();
+            BindArgument<CreateSolutionEventSources> bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+            bindArgument.Position(1);
+
+            bindArgument
+                = new BindArgument<CreateSolutionEventSources>(task,
+                    typeof(CreateSolutionEventSources).GetProperties().First());
+
+            // act
+            Action a = () => bindArgument.Position(1);
+
+            // assert
+            a.ShouldThrow<InvalidOperationException>();
+        }
     }
 }
