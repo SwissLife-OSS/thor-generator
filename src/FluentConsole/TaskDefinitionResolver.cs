@@ -34,7 +34,7 @@ namespace ChilliCream.FluentConsole
             }
 
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            ILookup<int, TaskDefinition> taskLookup = _taskDefinitions.ToLookup(t => t.Name.Length);
+            ILookup<int, TaskDefinition> taskLookup = _taskDefinitions.ToLookup(t => t.Name?.Length ?? 0);
             int maxNameParts = _taskDefinitions.Select(t => t.Name?.Length ?? 0).Max();
             int maxPositionalParameters = arguments.Count(t => string.IsNullOrEmpty(t.Name));
             maxNameParts = maxPositionalParameters < maxNameParts ? maxPositionalParameters : maxNameParts;
@@ -58,6 +58,13 @@ namespace ChilliCream.FluentConsole
                         return true;
                     }
                 }
+            }
+
+            TaskDefinition[] defaultTaskDefinitions = _taskDefinitions.Where(t => t.IsDefault).ToArray();
+            if (defaultTaskDefinitions.Any())
+            {
+                resolvedTaskDefinitions = new ResolvedTaskDefinitions(defaultTaskDefinitions, 0);
+                return true;
             }
 
             resolvedTaskDefinitions = null;

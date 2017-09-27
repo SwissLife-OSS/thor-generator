@@ -30,11 +30,6 @@ namespace ChilliCream.FluentConsole
 
         public IBindTaskDefault<TTask> AsDefault()
         {
-            if (_tasks.Any(t => t.IsDefault))
-            {
-                throw new InvalidOperationException("There is already a default task.");
-            }
-
             _task.IsDefault = true;
             return new BindTaskDefault<TTask>(_tasks, _task);
         }
