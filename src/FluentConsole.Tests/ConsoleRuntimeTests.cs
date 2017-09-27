@@ -16,23 +16,23 @@ namespace ChilliCream.FluentConsole
         public void RunTask(string arguments, string expectedResult)
         {
             // arrange
-            MockConsole mockConsole = new MockConsole();
-            ConsoleRuntime consoleRuntime = new ConsoleRuntime();
-            BindTasks(consoleRuntime);
-
+            MockConsole console = new MockConsole();
+            ConsoleRuntime consoleRuntime = CreateRuntime(console);
             string[] args = JsonConvert.DeserializeObject<string[]>(arguments);
 
             // act
-            consoleRuntime.Run(mockConsole, args);
+            consoleRuntime.Run(args);
 
             // assert
-            mockConsole.Messages.Should().HaveCount(1);
-            mockConsole.Messages[0].Should().Be(expectedResult);
+            console.Messages.Should().HaveCount(1);
+            console.Messages[0].Should().Be(expectedResult);
         }
 
-        private void BindTasks(ConsoleRuntime consoleRuntime)
+        private ConsoleRuntime CreateRuntime(IConsole console)
         {
-            consoleRuntime.Bind<MockTask1>()
+            ConsoleConfiguration configuration = new ConsoleConfiguration();
+
+            configuration.Bind<MockTask1>()
                 .WithName("a")
                 .Argument(t => t.FileOrDirectoryName)
                 .WithName("file", 'f')
@@ -40,7 +40,7 @@ namespace ChilliCream.FluentConsole
                 .Argument(t => t.Recursive)
                 .WithName("recursive", 'r');
 
-            consoleRuntime.Bind<MockTask2>()
+            configuration.Bind<MockTask2>()
                 .WithName("a")
                 .Argument(t => t.FileOrDirectoryName)
                 .WithName("file", 'f')
@@ -52,7 +52,7 @@ namespace ChilliCream.FluentConsole
                 .Argument(t => t.Property2)
                 .WithName("property2", 'y');
 
-            consoleRuntime.Bind<MockTask2>()
+            configuration.Bind<MockTask2>()
                 .WithName("a")
                 .Argument(t => t.FileOrDirectoryName)
                 .WithName("file", 'f')
@@ -64,11 +64,13 @@ namespace ChilliCream.FluentConsole
                 .WithName("property2", 'y')
                 .Mandatory();
 
-            consoleRuntime.Bind<MockTask3>()
+            configuration.Bind<MockTask3>()
                 .WithName("a", "b");
 
-            consoleRuntime.Bind<MockTask4>()
+            configuration.Bind<MockTask4>()
                 .WithName("a", "b", "c");
+
+            return configuration.CreateRuntime(console);
         }
     }
 }

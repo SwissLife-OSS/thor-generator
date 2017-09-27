@@ -3,12 +3,13 @@ using ChilliCream.Tracing.Generator.ProjectSystem;
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {
-    public class CreateProjectEventSources
+    public sealed class CreateProjectEventSources
         : ITask
     {
 
         public string SourceProject { get; set; }
         public string TargetProject { get; set; }
+        public string TemplateName { get; set; }
 
         public void Execute()
         {

@@ -121,13 +121,5 @@ namespace ChilliCream.FluentConsole
 
             return task != null;
         }
-
-
-        private class CompatibleTaskDefinition
-        {
-            public TaskDefinition TaskDefinition { get; set; }
-            public Dictionary<ArgumentDefinition, Argument> Arguments { get; set; }
-        }
-
     }
 }
