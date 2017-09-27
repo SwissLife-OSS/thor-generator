@@ -16,8 +16,8 @@ namespace ChilliCream.FluentConsole
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
 
             // act
-            Action a = () => new BindTask<CreateSolutionEventSources>(taskDefinitions);
-            Action b = () => new BindTask<CreateSolutionEventSources>(null);
+            Action a = () => new BindTask<MockTask1>(taskDefinitions);
+            Action b = () => new BindTask<MockTask1>(null);
 
             // assert
             a.ShouldNotThrow();
@@ -29,7 +29,7 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
 
             // act
             bindTask.AsDefault();
@@ -44,7 +44,7 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -61,8 +61,8 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            new BindTask<CreateSolutionEventSources>(taskDefinitions).AsDefault();
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            new BindTask<MockTask1>(taskDefinitions).AsDefault();
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
 
             // act
             Action a = () => bindTask.AsDefault();
@@ -78,7 +78,7 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -94,7 +94,7 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -111,7 +111,7 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
 
             // act
             Action a = () => bindTask.WithName((string)null);
@@ -126,8 +126,8 @@ namespace ChilliCream.FluentConsole
             // arrange
             string name = Guid.NewGuid().ToString();
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            new BindTask<CreateSolutionEventSources>(taskDefinitions).WithName(name);
-            BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
+            new BindTask<MockTask1>(taskDefinitions).WithName(name);
+            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
 
             // act
             Action a = () => bindTask.WithName(name);

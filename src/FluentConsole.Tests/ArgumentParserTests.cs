@@ -13,7 +13,7 @@ namespace ChilliCream.FluentConsole
             string[] args = ArgumentParserTestConstants.DefaultArguments;
 
             // act
-            Argument[] arguments = ArgumentParser.Parser(args).ToArray();
+            Argument[] arguments = ArgumentParser.Parse(args).ToArray();
 
             // assert
             arguments[0].Name.Should().BeNullOrEmpty("argument 0 have no name");

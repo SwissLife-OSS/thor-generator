@@ -47,11 +47,6 @@ namespace ChilliCream.FluentConsole
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_tasks.Any(t => string.Equals(t.Key, name, StringComparison.OrdinalIgnoreCase)))
-            {
-                throw new ArgumentException("There is alread a task with the specified name.", nameof(name));
-            }
-
             _task.Key = name;
             _task.Name = new[] { name };
             return new BindTaskName<TTask>(_tasks, _task);
@@ -64,14 +59,7 @@ namespace ChilliCream.FluentConsole
                 throw new ArgumentNullException(nameof(name));
             }
 
-            string key = string.Join("-", name);
-
-            if (_tasks.Any(t => string.Equals(t.Key, key, StringComparison.OrdinalIgnoreCase)))
-            {
-                throw new ArgumentException("There is alread a task with the specified name.", nameof(name));
-            }
-
-            _task.Key = key;
+            _task.Key = string.Join("-", name);
             _task.Name = name;
             return new BindTaskName<TTask>(_tasks, _task);
         }

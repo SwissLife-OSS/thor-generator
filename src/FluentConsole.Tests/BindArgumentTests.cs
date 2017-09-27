@@ -14,9 +14,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -31,9 +31,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -50,9 +50,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -68,9 +68,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
             char key = 'h';
 
@@ -88,9 +88,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
             char key = 'h';
 
@@ -111,9 +111,9 @@ namespace ChilliCream.FluentConsole
         public void WithNameAndKeyKeyValidation()
         {
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             for (int i = 97; i < 123; i++)
@@ -133,9 +133,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
 
             // act
             bindArgument.Position(position);
@@ -154,9 +154,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
 
             // act
             Action a = () => bindArgument.Position(-1);
@@ -170,14 +170,14 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             bindArgument.Position(1);
 
             bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().Last());
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().Last());
 
             // act
             Action a = () => bindArgument.Position(1);
@@ -191,9 +191,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -211,11 +211,11 @@ namespace ChilliCream.FluentConsole
             TaskDefinition task = new TaskDefinition();
 
             // act
-            Action a = () => new BindArgument<CreateSolutionEventSources>(task,
-                typeof(CreateSolutionEventSources).GetProperties().First());
-            Action b = () => new BindArgument<CreateSolutionEventSources>(null,
-                typeof(CreateSolutionEventSources).GetProperties().First());
-            Action c = () => new BindArgument<CreateSolutionEventSources>(task, null);
+            Action a = () => new BindArgument<MockTask1>(task,
+                typeof(MockTask1).GetProperties().First());
+            Action b = () => new BindArgument<MockTask1>(null,
+                typeof(MockTask1).GetProperties().First());
+            Action c = () => new BindArgument<MockTask1>(task, null);
 
             // assert
             a.ShouldNotThrow();
@@ -228,9 +228,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -249,9 +249,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -275,9 +275,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperty("Recursive"));
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperty("Recursive"));
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -295,9 +295,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
             string name = Guid.NewGuid().ToString();
 
             // act
@@ -315,9 +315,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
 
             // act
             Action a = () => bindArgument.WithName(Guid.NewGuid().ToString(), 'a')
@@ -334,9 +334,9 @@ namespace ChilliCream.FluentConsole
         {
             // arrange
             TaskDefinition task = new TaskDefinition();
-            BindArgument<CreateSolutionEventSources> bindArgument
-                = new BindArgument<CreateSolutionEventSources>(task,
-                    typeof(CreateSolutionEventSources).GetProperties().First());
+            BindArgument<MockTask1> bindArgument
+                = new BindArgument<MockTask1>(task,
+                    typeof(MockTask1).GetProperties().First());
 
             // act
             Action a = () => bindArgument

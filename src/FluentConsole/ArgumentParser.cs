@@ -5,7 +5,7 @@ namespace ChilliCream.FluentConsole
 {
     public static class ArgumentParser
     {
-        public static IEnumerable<Argument> Parser(string[] args)
+        public static IEnumerable<Argument> Parse(string[] args)
         {
             if (args == null)
             {
