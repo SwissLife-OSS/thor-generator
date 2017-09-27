@@ -9,7 +9,7 @@ namespace ChilliCream.Tracing.Generator
 {
     public class EventSourceBuilder
     {
-        public EventSourceBuilder(Project source, Project target)
+        public EventSourceBuilder(Project source, Project target, string templateContent)
         {
             if (source == null)
             {
@@ -21,18 +21,25 @@ namespace ChilliCream.Tracing.Generator
                 throw new ArgumentNullException(nameof(target));
             }
 
+            if (string.IsNullOrEmpty(templateContent))
+            {
+                throw new ArgumentNullException(nameof(templateContent));
+            }
+
             Source = source;
             Target = target;
+            TemplateContent = templateContent;
         }
 
         public Project Source { get; }
         public Project Target { get; }
+        public string TemplateContent { get; }
 
         public void Build()
         {
             foreach (EventSourceFile eventSourceFile in FindEventSourceDefinitions())
             {
-                EventSourceGenerator generator = new EventSourceGenerator(eventSourceFile.Definition);
+                EventSourceGenerator generator = new EventSourceGenerator(eventSourceFile.Definition, TemplateContent);
 
                 string newName = eventSourceFile.Document.Name.StartsWith("I")
                     ? eventSourceFile.Document.Name.Substring(1)

@@ -14,24 +14,29 @@ namespace ChilliCream.Logging.Generator
     {
         private static readonly WriteMethod _defaultWriteMethod = new WriteMethod(new[] { "string" });
         private readonly EventSourceDefinition _eventSourceDefinition;
-        private readonly string _templateCode;
+        private readonly string _templateContent;
 
-        public EventSourceGenerator(EventSourceDefinition eventSourceDefinition)
+        public EventSourceGenerator(EventSourceDefinition eventSourceDefinition, string templateContent)
         {
             if (eventSourceDefinition == null)
             {
                 throw new ArgumentNullException(nameof(eventSourceDefinition));
             }
 
+            if (string.IsNullOrEmpty(templateContent))
+            {
+                throw new ArgumentNullException(nameof(templateContent));
+            }
+
             _eventSourceDefinition = eventSourceDefinition;
-            _templateCode = Encoding.UTF8.GetString(Templates.EventSourceBase);
+            _templateContent = templateContent;
         }
 
         public string CreateEventSource()
         {
             // generate event source
             EventSourceModel eventSourceModel = CreateGeneratorModel();
-            string sourceCode = Render.StringToString(_templateCode, eventSourceModel,
+            string sourceCode = Render.StringToString(_templateContent, eventSourceModel,
                 renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
 
             // reformat methods

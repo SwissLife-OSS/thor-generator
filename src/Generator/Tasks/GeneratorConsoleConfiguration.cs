@@ -54,11 +54,6 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 .Position(0)
                 .Mandatory()
                 .And()
-                .Argument(t => t.Language)
-                .WithName("language", 'l')
-                .Position(1)
-                .Mandatory()
-                .And()
                 .Argument(t => t.Name)
                 .WithName("name", 'n');
         }

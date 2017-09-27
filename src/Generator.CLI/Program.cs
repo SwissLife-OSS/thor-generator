@@ -1,16 +1,15 @@
-﻿using ChilliCream.FluentConsole;
-using ChilliCream.Tracing.Generator.Tasks;
+﻿using ChilliCream.Tracing.Generator.Tasks;
 
-namespace Generator.CLI
+namespace ChilliCream.Tracing.Generator.CLI
 {
     class Program
     {
         static void Main(string[] args)
         {
-            GeneratorConsoleConfiguration consoleConfiguration 
+            GeneratorConsoleConfiguration configuration
                 = new GeneratorConsoleConfiguration();
 
-            consoleConfiguration
+            configuration
                 .CreateRuntime()
                 .Run(args);
         }
