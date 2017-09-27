@@ -119,23 +119,5 @@ namespace ChilliCream.FluentConsole
             // assert
             a.ShouldThrow<ArgumentNullException>();
         }
-
-        [Fact]
-        public void WithNameDuplicateName()
-        {
-            // arrange
-            string name = Guid.NewGuid().ToString();
-            List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            new BindTask<MockTask1>(taskDefinitions).WithName(name);
-            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
-
-            // act
-            Action a = () => bindTask.WithName(name);
-            Action b = () => bindTask.AsDefault().WithName(name);
-
-            // assert
-            a.ShouldThrow<ArgumentException>();
-            b.ShouldThrow<ArgumentException>();
-        }
     }
 }

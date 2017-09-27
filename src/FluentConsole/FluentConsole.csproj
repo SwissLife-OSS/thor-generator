@@ -5,5 +5,14 @@
     <AssemblyName>ChilliCream.FluentConsole</AssemblyName>
     <RootNamespace>ChilliCream.FluentConsole</RootNamespace>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\ChilliCream.FluentConsole.xml</DocumentationFile>
+  </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>Full</DebugType>
+    <DocumentationFile>bin\Debug\netstandard2.0\ChilliCream.FluentConsole.xml</DocumentationFile>
+  </PropertyGroup>
+  
 </Project>

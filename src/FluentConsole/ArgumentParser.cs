@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChilliCream.FluentConsole
 {
-    public static class ArgumentParser
+    internal static class ArgumentParser
     {
         public static IEnumerable<Argument> Parse(string[] args)
         {

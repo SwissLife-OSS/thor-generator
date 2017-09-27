@@ -6,38 +6,39 @@ namespace ChilliCream.FluentConsole
 {
     internal sealed class TaskDefinitionResolver
     {
-        private readonly IList<TaskDefinition> _tasks;
+        private readonly IList<TaskDefinition> _taskDefinitions;
 
-        public TaskDefinitionResolver(IList<TaskDefinition> tasks)
+        public TaskDefinitionResolver(IList<TaskDefinition> taskDefinitions)
         {
-            if (tasks == null)
+            if (taskDefinitions == null)
             {
-                throw new ArgumentNullException(nameof(tasks));
+                throw new ArgumentNullException(nameof(taskDefinitions));
             }
 
-            _tasks = tasks;
+            _taskDefinitions = taskDefinitions;
         }
 
         public bool TryResolve(Argument[] arguments,
            out ResolvedTaskDefinitions resolvedTaskDefinitions)
         {
-            if (_tasks.Count == 0)
+            if (_taskDefinitions.Count == 0)
             {
                 resolvedTaskDefinitions = null;
                 return false;
             }
 
-            if (_tasks.Count == 1 && _tasks[0].IsDefault)
+            if (_taskDefinitions.Count == 1 && _taskDefinitions[0].IsDefault)
             {
-                resolvedTaskDefinitions = new ResolvedTaskDefinitions(new[] { _tasks[0] });
+                resolvedTaskDefinitions = new ResolvedTaskDefinitions(new[] { _taskDefinitions[0] });
                 return true;
             }
 
             List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            ILookup<int, TaskDefinition> taskLookup = _tasks.ToLookup(t => t.Name.Length);
-            int maxNameParts = _tasks.Select(t => t.Name?.Length ?? 0).Max();
+            ILookup<int, TaskDefinition> taskLookup = _taskDefinitions.ToLookup(t => t.Name.Length);
+            int maxNameParts = _taskDefinitions.Select(t => t.Name?.Length ?? 0).Max();
             int maxPositionalParameters = arguments.Count(t => string.IsNullOrEmpty(t.Name));
             maxNameParts = maxPositionalParameters < maxNameParts ? maxPositionalParameters : maxNameParts;
+
             for (int i = maxNameParts - 1; i >= 0; i--)
             {
                 if (TryCreateName(arguments, i + 1, out string name))

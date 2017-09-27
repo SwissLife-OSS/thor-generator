@@ -1,6 +1,6 @@
 ﻿namespace ChilliCream.FluentConsole
 {
-    public sealed class Argument
+    internal sealed class Argument
     {
         public string Name { get; set; }
         public int Position { get; set; }
