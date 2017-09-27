@@ -7,14 +7,13 @@ namespace ChilliCream.FluentConsole
     public class ConsoleRuntimeTests
     {
 
-        [InlineData("[\"a\", \"-f test1\"]", "task1: test1")]
-        [InlineData("[\"a\", \"-f test2\", \"-r\"]", "task1: test2")]
-        [InlineData("[\"a\", \"-f\", \"--property1 prop1\"]", "task2: prop1")]
-        [InlineData("[\"a\", \"--property2 prop2\"]", "task2: prop2")]
+        [InlineData("[\"a\", \"-f\", \"test1\"]", "task1: test1")]
+        [InlineData("[\"a\", \"-f\", \"test2\", \"-r\"]", "task1: test2")]
+        [InlineData("[\"a\", \"--property2\", \"prop2\"]", "task2: prop2")]
         [InlineData("[\"a\", \"b\"]", "task3")]
         [InlineData("[\"a\", \"b\", \"c\"]", "task4")]
         [Theory]
-        public void TaskVariants(string arguments, string expectedResult)
+        public void RunTask(string arguments, string expectedResult)
         {
             // arrange
             MockConsole mockConsole = new MockConsole();

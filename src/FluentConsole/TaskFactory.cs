@@ -78,7 +78,7 @@ namespace ChilliCream.FluentConsole
                 }
             }
 
-            if (taskDefinition.AllArguments.Except(providedArguments).Any())
+            if (taskDefinition.MandatoryArguments.Except(providedArguments).Any())
             {
                 initializeTaskProperties = null;
                 return false;

@@ -10,11 +10,13 @@ namespace ChilliCream.FluentConsole
         public string Key { get; set; }
         public string[] Name { get; set; }
         public bool IsDefault { get; set; }
-        public List<ArgumentDefinition> PositionalArguments { get; } 
+        public List<ArgumentDefinition> PositionalArguments { get; }
             = new List<ArgumentDefinition>();
         public Dictionary<string, ArgumentDefinition> Arguments { get; }
             = new Dictionary<string, ArgumentDefinition>(StringComparer.OrdinalIgnoreCase);
-        public IEnumerable<ArgumentDefinition> AllArguments 
+        public IEnumerable<ArgumentDefinition> AllArguments
             => Arguments.Values.Concat(PositionalArguments).Distinct();
+        public IEnumerable<ArgumentDefinition> MandatoryArguments
+          => AllArguments.Where(t => t.IsMandatory);
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
@@ -10,15 +8,14 @@ namespace ChilliCream.FluentConsole
 {
     public class TaskDefinitionResolverTests
     {
-
-        [InlineData("[\"a\", \"-f test1\"]", 3, 1)]
-        [InlineData("[\"a\", \"-f test2\", \"-r\"]", 3, 1)]
+        [InlineData("[\"a\", \"-f\", \"test1\"]", 3, 1)]
+        [InlineData("[\"a\", \"-f\", \"test2\", \"-r\"]", 3, 1)]
         [InlineData("[\"a\", \"-f\", \"--property1 prop1\"]", 3, 1)]
         [InlineData("[\"a\", \"--property2 prop2\"]", 3, 1)]
         [InlineData("[\"a\", \"b\"]", 1, 2)]
         [InlineData("[\"a\", \"b\", \"c\"]", 1, 3)]
         [Theory]
-        public void TaskVariants(string args, int expectedTaskCount, int expectedArgumentCount)
+        public void TryResolve(string args, int expectedTaskCount, int expectedArgumentCount)
         {
             // arrange
             IList<TaskDefinition> taskDefinitions = CreateTaskDefinitions();
