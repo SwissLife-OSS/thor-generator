@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace ChilliCream.FluentConsole
 {
     internal sealed class ArgumentDefinition
     {

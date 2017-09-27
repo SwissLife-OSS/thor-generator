@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace ChilliCream.FluentConsole
 {
     public interface IArgumentsBindable<TTask>
         : IFluent

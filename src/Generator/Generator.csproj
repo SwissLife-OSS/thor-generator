@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FluentConsole\FluentConsole.csproj" />
     <ProjectReference Include="..\Generator.ProjectSystem\Generator.ProjectSystem.csproj" />
   </ItemGroup>
 

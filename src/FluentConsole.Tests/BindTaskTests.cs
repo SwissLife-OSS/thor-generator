@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using ChilliCream.Tracing.Generator.Tasks;
 using FluentAssertions;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.FluentConsole
 {
     public class BindTaskTests
     {
@@ -53,7 +53,7 @@ namespace ChilliCream.Tracing.Generator
             // assert
             taskDefinitions.Should().HaveCount(1);
             taskDefinitions[0].IsDefault.Should().BeTrue();
-            taskDefinitions[0].Name.Should().Be(name);
+            taskDefinitions[0].Name.First().Should().Be(name);
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace ChilliCream.Tracing.Generator
 
             // assert
             taskDefinitions.Should().HaveCount(1);
-            taskDefinitions[0].Name.Should().Be(name);
+            taskDefinitions[0].Name.First().Should().Be(name);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace ChilliCream.Tracing.Generator
             // assert
             taskDefinitions.Should().HaveCount(1);
             taskDefinitions[0].IsDefault.Should().BeTrue();
-            taskDefinitions[0].Name.Should().Be(name);
+            taskDefinitions[0].Name.First().Should().Be(name);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace ChilliCream.Tracing.Generator
             BindTask<CreateSolutionEventSources> bindTask = new BindTask<CreateSolutionEventSources>(taskDefinitions);
 
             // act
-            Action a = () => bindTask.WithName(null);
+            Action a = () => bindTask.WithName((string)null);
 
             // assert
             a.ShouldThrow<ArgumentNullException>();
@@ -137,7 +137,5 @@ namespace ChilliCream.Tracing.Generator
             a.ShouldThrow<ArgumentException>();
             b.ShouldThrow<ArgumentException>();
         }
-
-
     }
 }

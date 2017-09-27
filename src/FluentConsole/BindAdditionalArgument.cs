@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace ChilliCream.FluentConsole
 {
     internal sealed class BindAdditionalArgument<TTask>
         : IBindAdditionalArgument<TTask>

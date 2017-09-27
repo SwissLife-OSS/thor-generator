@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
-using ChilliCream.Tracing.Generator.ProjectSystem;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace ChilliCream.FluentConsole
 {
     public interface ITask
     {

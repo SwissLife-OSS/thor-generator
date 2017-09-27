@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace ChilliCream.FluentConsole
 {
     internal sealed class BindTask<TTask>
         : IBindTask<TTask>
@@ -46,11 +46,31 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_tasks.Any(t => string.Equals(t.Name, name, StringComparison.OrdinalIgnoreCase)))
+            if (_tasks.Any(t => string.Equals(t.Key, name, StringComparison.OrdinalIgnoreCase)))
             {
                 throw new ArgumentException("There is alread a task with the specified name.", nameof(name));
             }
 
+            _task.Key = name;
+            _task.Name = new[] { name };
+            return new BindTaskName<TTask>(_tasks, _task);
+        }
+
+        public IBindTaskName<TTask> WithName(params string[] name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            string key = string.Join("-", name);
+
+            if (_tasks.Any(t => string.Equals(t.Key, key, StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new ArgumentException("There is alread a task with the specified name.", nameof(name));
+            }
+
+            _task.Key = key;
             _task.Name = name;
             return new BindTaskName<TTask>(_tasks, _task);
         }

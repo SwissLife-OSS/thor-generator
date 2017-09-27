@@ -1,4 +1,4 @@
-﻿namespace ChilliCream.Tracing.Generator.Tasks
+﻿namespace ChilliCream.FluentConsole
 {
     public interface IBindAdditionalArgument<TTask>
         : IArgumentsBindable<TTask>

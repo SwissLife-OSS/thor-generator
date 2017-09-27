@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace ChilliCream.FluentConsole
 {
     internal sealed class BindArgument<TTask>
         : IBindArgument<TTask>

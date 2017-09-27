@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
-using ChilliCream.Logging.Generator;
+﻿using ChilliCream.FluentConsole;
 using ChilliCream.Tracing.Generator.Tasks;
-using Newtonsoft.Json;
 
 namespace Generator.CLI
 {

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ChilliCream.Tracing.Generator.Tasks;
 using FluentAssertions;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.FluentConsole
 {
     public class BindArgumentTests
     {

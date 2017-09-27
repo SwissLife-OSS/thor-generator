@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using ChilliCream.FluentConsole;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 
 namespace ChilliCream.Tracing.Generator.Tasks

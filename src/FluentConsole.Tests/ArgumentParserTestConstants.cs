@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.FluentConsole
 {
     public static class ArgumentParserTestConstants
     {

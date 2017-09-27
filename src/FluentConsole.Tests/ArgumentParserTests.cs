@@ -1,9 +1,8 @@
 ﻿using System.Linq;
-using ChilliCream.Tracing.Generator.Tasks;
 using FluentAssertions;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.FluentConsole
 {
     public class ArgumentParserTests
     {
