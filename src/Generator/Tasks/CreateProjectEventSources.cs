@@ -7,21 +7,28 @@ namespace ChilliCream.Tracing.Generator.Tasks
     public sealed class CreateProjectEventSources
         : ITask
     {
-        private string _templateDirectory;
+        private readonly IConsole _console;
+        private readonly string _templateDirectory;
 
-        public CreateProjectEventSources()
-            : this(ConsoleEnvironment.TemplateDirectory)
+        public CreateProjectEventSources(IConsole console)
+            : this(console, ConsoleEnvironment.TemplateDirectory)
         { }
 
-        public CreateProjectEventSources(string templateDirectory)
+        public CreateProjectEventSources(IConsole console, string templateDirectory)
         {
+            if (console == null)
+            {
+                throw new ArgumentNullException(nameof(console));
+            }
+
             if (string.IsNullOrEmpty(templateDirectory))
             {
                 throw new ArgumentNullException(nameof(templateDirectory));
             }
+
+            _console = console;
             _templateDirectory = templateDirectory;
         }
-
 
         public string SourceProject { get; set; }
         public string TargetProject { get; set; }
@@ -34,6 +41,9 @@ namespace ChilliCream.Tracing.Generator.Tasks
             {
                 TargetProject = SourceProject;
             }
+
+            SourceProject = _console.GetFullPath(SourceProject);
+            TargetProject = _console.GetFullPath(TargetProject);
 
             if (Project.TryParse(SourceProject, out Project source)
                 && Project.TryParse(TargetProject, out Project target))

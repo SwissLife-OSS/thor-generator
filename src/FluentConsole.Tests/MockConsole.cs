@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ChilliCream.FluentConsole
 {
@@ -8,6 +6,11 @@ namespace ChilliCream.FluentConsole
         : IConsole
     {
         public readonly List<string> Messages = new List<string>();
+
+        public string GetFullPath(string fileOrDirectory)
+        {
+            return fileOrDirectory;
+        }
 
         public void Write(string s)
         {

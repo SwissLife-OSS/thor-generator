@@ -54,24 +54,7 @@ namespace ChilliCream.FluentConsole
             taskDefinitions.Should().HaveCount(1);
             taskDefinitions[0].IsDefault.Should().BeTrue();
             taskDefinitions[0].Name.First().Should().Be(name);
-        }
-
-        [Fact]
-        public void AsDefaultDuplicate()
-        {
-            // arrange
-            List<TaskDefinition> taskDefinitions = new List<TaskDefinition>();
-            new BindTask<MockTask1>(taskDefinitions).AsDefault();
-            BindTask<MockTask1> bindTask = new BindTask<MockTask1>(taskDefinitions);
-
-            // act
-            Action a = () => bindTask.AsDefault();
-            Action b = () => bindTask.WithName("foo").AsDefault();
-
-            // assert
-            a.ShouldThrow<InvalidOperationException>();
-            b.ShouldThrow<InvalidOperationException>();
-        }
+        }       
 
         [Fact]
         public void WithName()

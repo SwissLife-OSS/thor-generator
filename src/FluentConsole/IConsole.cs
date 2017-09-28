@@ -3,5 +3,7 @@
     public interface IConsole
     {
         void Write(string s);
+
+        string GetFullPath(string fileOrDirectory);
     }
 }

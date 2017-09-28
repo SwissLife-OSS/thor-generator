@@ -8,18 +8,26 @@ namespace ChilliCream.Tracing.Generator.Tasks
     public sealed class ExportTemplate
         : ITask
     {
-        private string _templateDirectory;
+        private readonly IConsole _console;
+        private readonly string _templateDirectory;
 
-        public ExportTemplate()
-            : this(ConsoleEnvironment.TemplateDirectory)
+        public ExportTemplate(IConsole console)
+            : this(console, ConsoleEnvironment.TemplateDirectory)
         { }
 
-        public ExportTemplate(string templateDirectory)
+        public ExportTemplate(IConsole console, string templateDirectory)
         {
+            if (console == null)
+            {
+                throw new ArgumentNullException(nameof(console));
+            }
+
             if (string.IsNullOrEmpty(templateDirectory))
             {
                 throw new ArgumentNullException(nameof(templateDirectory));
             }
+
+            _console = console;
             _templateDirectory = templateDirectory;
         }
 
@@ -29,6 +37,8 @@ namespace ChilliCream.Tracing.Generator.Tasks
 
         public void Execute()
         {
+            FileName = _console.GetFullPath(FileName);
+
             string templateContent = TemplateResolver.Resolve(_templateDirectory, Name, Language);
             if (!string.IsNullOrEmpty(templateContent))
             {

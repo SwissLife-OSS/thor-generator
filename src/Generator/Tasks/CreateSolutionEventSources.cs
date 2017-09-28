@@ -9,18 +9,26 @@ namespace ChilliCream.Tracing.Generator.Tasks
     public sealed class CreateSolutionEventSources
         : ITask
     {
-        private string _templateDirectory;
+        private readonly IConsole _console;
+        private readonly string _templateDirectory;
 
-        public CreateSolutionEventSources()
-            : this(ConsoleEnvironment.TemplateDirectory)
+        public CreateSolutionEventSources(IConsole console)
+            : this(console, ConsoleEnvironment.TemplateDirectory)
         { }
 
-        public CreateSolutionEventSources(string templateDirectory)
+        public CreateSolutionEventSources(IConsole console, string templateDirectory)
         {
+            if (console == null)
+            {
+                throw new ArgumentNullException(nameof(console));
+            }
+
             if (string.IsNullOrEmpty(templateDirectory))
             {
                 throw new ArgumentNullException(nameof(templateDirectory));
             }
+
+            _console = console;
             _templateDirectory = templateDirectory;
         }
 
@@ -31,6 +39,8 @@ namespace ChilliCream.Tracing.Generator.Tasks
 
         public void Execute()
         {
+            FileOrDirectoryName = _console.GetFullPath(FileOrDirectoryName);
+
             if (Directory.Exists(FileOrDirectoryName))
             {
                 string[] solutionFileNames = Directory.GetFiles(FileOrDirectoryName, "*.sln",
