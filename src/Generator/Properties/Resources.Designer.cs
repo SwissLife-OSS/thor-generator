@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ChilliCream.Tracing.Generator.Resources {
+namespace ChilliCream.Tracing.Generator.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace ChilliCream.Tracing.Generator.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Templates {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Templates() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace ChilliCream.Tracing.Generator.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Tracing.Generator.Resources.Templates", typeof(Templates).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ChilliCream.Tracing.Generator.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,12 +61,65 @@ namespace ChilliCream.Tracing.Generator.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized string similar to The provided file or directory &apos;{0}&apos; does not exist..
         /// </summary>
-        internal static byte[] EventSourceBase {
+        internal static string FileOrDirectoryNotExists {
             get {
-                object obj = ResourceManager.GetObject("EventSourceBase", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("FileOrDirectoryNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No file or directory name was provided..
+        /// </summary>
+        internal static string NoFileOrDirectoryName {
+            get {
+                return ResourceManager.GetString("NoFileOrDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No source project was provided..
+        /// </summary>
+        internal static string NoSourceProject {
+            get {
+                return ResourceManager.GetString("NoSourceProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No template file was provided..
+        /// </summary>
+        internal static string NoTemplateFile {
+            get {
+                return ResourceManager.GetString("NoTemplateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No template name was provided..
+        /// </summary>
+        internal static string NoTemplateName {
+            get {
+                return ResourceManager.GetString("NoTemplateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified template file &apos;{0}&apos; does not exist..
+        /// </summary>
+        internal static string TemplateFileNotExists {
+            get {
+                return ResourceManager.GetString("TemplateFileNotExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A template with the specified name &apos;{0}&apos; could not be found..
+        /// </summary>
+        internal static string TemplateNotExists {
+            get {
+                return ResourceManager.GetString("TemplateNotExists", resourceCulture);
             }
         }
     }

@@ -29,7 +29,7 @@ namespace ChilliCream.FluentConsole
             CreateTask(args)?.Execute();
         }
 
-        public ITask CreateTask(string[] args)
+        public ICommandLineTask CreateTask(string[] args)
         {
             Argument[] arguments = ArgumentParser.Parse(args).ToArray();
             if (arguments.Any())
@@ -39,7 +39,7 @@ namespace ChilliCream.FluentConsole
                     TaskFactory taskFactory = new TaskFactory(
                         resolvedTaskDefinitions.TaskDefinitions,
                         arguments.Skip(resolvedTaskDefinitions.ArgumentCount));
-                    if (taskFactory.TryCreate(_console, out ITask task))
+                    if (taskFactory.TryCreate(_console, out ICommandLineTask task))
                     {
                         return task;
                     }

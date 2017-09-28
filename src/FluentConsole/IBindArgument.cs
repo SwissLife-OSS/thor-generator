@@ -2,7 +2,7 @@
 {
     public interface IBindArgument<TTask>
         : IFluent
-        where TTask : class, ITask
+        where TTask : class, ICommandLineTask
     {
         IBindArgument<TTask> WithName(string name);
         IBindArgument<TTask> WithName(string name, char key);

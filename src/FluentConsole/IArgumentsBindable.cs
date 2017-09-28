@@ -5,7 +5,7 @@ namespace ChilliCream.FluentConsole
 {
     public interface IArgumentsBindable<TTask>
         : IFluent
-        where TTask : class, ITask
+        where TTask : class, ICommandLineTask
     {
         IBindArgument<TTask> Argument<TProperty>(Expression<Func<TTask, TProperty>> property);
     }

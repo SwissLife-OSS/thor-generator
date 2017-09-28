@@ -5,5 +5,7 @@
         void Write(string s);
 
         string GetFullPath(string fileOrDirectory);
+
+        void Error(string message);
     }
 }

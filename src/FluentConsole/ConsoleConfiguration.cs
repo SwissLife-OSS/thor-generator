@@ -7,7 +7,7 @@ namespace ChilliCream.FluentConsole
         private readonly List<TaskDefinition> _taskDefinitions = new List<TaskDefinition>();
 
         public IBindTask<TTask> Bind<TTask>()
-            where TTask : class, ITask
+            where TTask : class, ICommandLineTask
         {
             return new BindTask<TTask>(_taskDefinitions);
         }

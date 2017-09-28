@@ -26,11 +26,11 @@ namespace ChilliCream.FluentConsole
             _arguments = arguments.ToArray();
         }
 
-        public bool TryCreate(IConsole console, out ITask task)
+        public bool TryCreate(IConsole console, out ICommandLineTask task)
         {
             foreach (TaskDefinition taskDefinition in _taskDefinitions)
             {
-                if (TryResolveCompatibleTaskDefinition(taskDefinition, out Action<ITask> initializeTaskProperties)
+                if (TryResolveCompatibleTaskDefinition(taskDefinition, out Action<ICommandLineTask> initializeTaskProperties)
                     && TryCreateTaskInstance(console, taskDefinition.TaskType, out task))
                 {
                     initializeTaskProperties(task);
@@ -42,10 +42,10 @@ namespace ChilliCream.FluentConsole
             return false;
         }
 
-        private bool TryResolveCompatibleTaskDefinition(TaskDefinition taskDefinition, out Action<ITask> initializeTaskProperties)
+        private bool TryResolveCompatibleTaskDefinition(TaskDefinition taskDefinition, out Action<ICommandLineTask> initializeTaskProperties)
         {
             HashSet<ArgumentDefinition> providedArguments = new HashSet<ArgumentDefinition>();
-            List<Action<ITask>> taskPropertyInitializers = new List<Action<ITask>>();
+            List<Action<ICommandLineTask>> taskPropertyInitializers = new List<Action<ICommandLineTask>>();
 
             foreach (Argument argument in _arguments)
             {
@@ -86,7 +86,7 @@ namespace ChilliCream.FluentConsole
 
             initializeTaskProperties = t =>
             {
-                foreach (Action<ITask> action in taskPropertyInitializers)
+                foreach (Action<ICommandLineTask> action in taskPropertyInitializers)
                 {
                     action(t);
                 }
@@ -94,7 +94,7 @@ namespace ChilliCream.FluentConsole
             return true;
         }
 
-        private bool TryCreateTaskInstance(IConsole console, Type taskType, out ITask task)
+        private bool TryCreateTaskInstance(IConsole console, Type taskType, out ICommandLineTask task)
         {
             task = null;
 
@@ -110,13 +110,13 @@ namespace ChilliCream.FluentConsole
 
             if (constructor != null)
             {
-                task = (ITask)constructor.Invoke(new object[] { console });
+                task = (ICommandLineTask)constructor.Invoke(new object[] { console });
             }
 
             if (task == null)
             {
                 constructor = taskType.GetConstructors().FirstOrDefault(t => t.GetParameters().Length == 0);
-                task = (ITask)constructor.Invoke(Array.Empty<object>());
+                task = (ICommandLineTask)constructor.Invoke(Array.Empty<object>());
             }
 
             return task != null;

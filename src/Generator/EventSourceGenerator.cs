@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using ChilliCream.Tracing.Generator.Analyzer;
 using ChilliCream.Tracing.Generator.Models;
-using ChilliCream.Tracing.Generator.Resources;
 using ChilliCream.Tracing.Generator.Types;
 using Nustache.Core;
 

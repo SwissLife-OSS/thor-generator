@@ -117,8 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="EventSourceBase" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>eventsourcebase.mustache;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="FileOrDirectoryNotExists" xml:space="preserve">
+    <value>The provided file or directory '{0}' does not exist.</value>
+  </data>
+  <data name="NoFileOrDirectoryName" xml:space="preserve">
+    <value>No file or directory name was provided.</value>
+  </data>
+  <data name="NoSourceProject" xml:space="preserve">
+    <value>No source project was provided.</value>
+  </data>
+  <data name="NoTemplateFile" xml:space="preserve">
+    <value>No template file was provided.</value>
+  </data>
+  <data name="NoTemplateName" xml:space="preserve">
+    <value>No template name was provided.</value>
+  </data>
+  <data name="TemplateFileNotExists" xml:space="preserve">
+    <value>The specified template file '{0}' does not exist.</value>
+  </data>
+  <data name="TemplateNotExists" xml:space="preserve">
+    <value>A template with the specified name '{0}' could not be found.</value>
   </data>
 </root>

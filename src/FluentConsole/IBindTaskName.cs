@@ -2,7 +2,7 @@
 {
     public interface IBindTaskName<TTask>
         : IArgumentsBindable<TTask>
-        where TTask : class, ITask
+        where TTask : class, ICommandLineTask
     {
         IBindTaskDefault<TTask> AsDefault();
     }

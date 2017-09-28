@@ -8,7 +8,7 @@ namespace ChilliCream.FluentConsole
 {
     internal sealed class BindTaskDefault<TTask>
         : IBindTaskDefault<TTask>
-        where TTask : class, ITask
+        where TTask : class, ICommandLineTask
     {
         private readonly ICollection<TaskDefinition> _tasks;
         private readonly TaskDefinition _task;

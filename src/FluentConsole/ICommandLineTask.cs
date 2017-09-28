@@ -1,10 +1,8 @@
 ﻿using System.IO;
-using System.Linq;
-
 namespace ChilliCream.FluentConsole
 {
-    public interface ITask
+    public interface ICommandLineTask
     {
-        void Execute();
+        int Execute();
     }
 }

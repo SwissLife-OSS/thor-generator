@@ -6,6 +6,12 @@ namespace ChilliCream.FluentConsole
         : IConsole
     {
         public readonly List<string> Messages = new List<string>();
+        public readonly List<string> Errors = new List<string>();
+
+        public void Error(string message)
+        {
+            Errors.Add(message);
+        }
 
         public string GetFullPath(string fileOrDirectory)
         {

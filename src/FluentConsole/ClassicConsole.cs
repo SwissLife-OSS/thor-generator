@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ChilliCream.FluentConsole
 {
-    public sealed class ClassicConsole
+    public class ClassicConsole
         : IConsole
     {
         private ClassicConsole()
@@ -28,6 +28,11 @@ namespace ChilliCream.FluentConsole
 
             return Path.GetFullPath(Path.Combine(
                 Environment.CurrentDirectory, fileOrDirectoryName));
+        }
+
+        public void Error(string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
     {
         public GeneratorConsoleConfiguration()
         {
-            Bind<CreateSolutionEventSources>()
+            Bind<SolutionEventSourceGeneratorTask>()
                 .AsDefault()
                 .Argument(t => t.FileOrDirectoryName)
                 .WithName("solution", 's')
@@ -19,7 +19,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 .Argument(t => t.TemplateName)
                 .WithName("template");
 
-            Bind<CreateProjectEventSources>()
+            Bind<ProjectEventSourceGeneratorTask>()
                 .AsDefault()
                 .WithName("project")
                 .Argument(t => t.SourceProject)
@@ -34,7 +34,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 .Argument(t => t.TemplateName)
                 .WithName("template");
 
-            Bind<ExportTemplate>()
+            Bind<ExportTemplateTask>()
                 .WithName("templates", "export")
                 .Argument(t => t.FileName)
                 .WithName("file-name", 'f')
@@ -47,7 +47,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 .Argument(t => t.Name)
                 .WithName("name", 'n');
 
-            Bind<ImportTemplate>()
+            Bind<ImportTemplateTask>()
                 .WithName("templates", "import")
                 .Argument(t => t.FileName)
                 .WithName("file-name", 'f')

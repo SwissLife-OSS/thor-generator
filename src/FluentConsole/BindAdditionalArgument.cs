@@ -7,7 +7,7 @@ namespace ChilliCream.FluentConsole
 {
     internal sealed class BindAdditionalArgument<TTask>
         : IBindAdditionalArgument<TTask>
-        where TTask : class, ITask
+        where TTask : class, ICommandLineTask
     {
         private readonly TaskDefinition _task;
 

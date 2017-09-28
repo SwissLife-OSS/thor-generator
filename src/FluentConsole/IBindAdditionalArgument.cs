@@ -2,7 +2,7 @@
 {
     public interface IBindAdditionalArgument<TTask>
         : IArgumentsBindable<TTask>
-        where TTask : class, ITask
+        where TTask : class, ICommandLineTask
     {
 
     }

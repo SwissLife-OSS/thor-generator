@@ -1,7 +1,7 @@
 ﻿namespace ChilliCream.FluentConsole
 {
     public class MockTask1
-       : ITask
+       : ICommandLineTask
     {
         public MockTask1(IConsole console)
         {
@@ -13,17 +13,18 @@
         public string FileOrDirectoryName { get; set; }
         public bool Recursive { get; set; }
 
-        public void Execute()
+        public int Execute()
         {
             if (!string.IsNullOrEmpty(FileOrDirectoryName))
             {
                 Console.Write("task1: " + FileOrDirectoryName);
             }
+            return CommandLineResults.OK;
         }
     }
 
     public class MockTask2
-       : ITask
+       : ICommandLineTask
     {
         public MockTask2(IConsole console)
         {
@@ -36,7 +37,7 @@
         public string Property1 { get; set; }
         public string Property2 { get; set; }
 
-        public void Execute()
+        public int Execute()
         {
             if (!string.IsNullOrEmpty(FileOrDirectoryName))
             {
@@ -52,11 +53,13 @@
             {
                 Console.Write("task2: " + Property2);
             }
+
+            return CommandLineResults.OK;
         }
     }
 
     public class MockTask3
-        : ITask
+        : ICommandLineTask
     {
         public MockTask3(IConsole console)
         {
@@ -65,14 +68,15 @@
 
         public IConsole Console { get; }
 
-        public void Execute()
+        public int Execute()
         {
             Console.Write("task3");
+            return CommandLineResults.OK;
         }
     }
 
     public class MockTask4
-        : ITask
+        : ICommandLineTask
     {
         public MockTask4(IConsole console)
         {
@@ -81,9 +85,10 @@
 
         public IConsole Console { get; }
 
-        public void Execute()
+        public int Execute()
         {
             Console.Write("task4");
+            return CommandLineResults.OK;
         }
     }
 }
