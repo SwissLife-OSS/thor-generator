@@ -13,11 +13,6 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
     public class CSharpClassicProjectSystem
         : ProjectSystem<CSharpClassicProjectId>
     {
-        private static readonly HashSet<string> _projectGuids = new HashSet<string>
-        {
-            "{FECA14C5-1B06-4400-8131-3ECE5BD78381}"
-        };
-
         protected override IProjectId CreateProjectId(string projectFileOrDirectoryName)
         {
             return new CSharpClassicProjectId(projectFileOrDirectoryName);
@@ -60,7 +55,10 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
             {
                 ProjectRootElement project = ProjectRootElement.Open(projectFileOrDirectoryName);
                 ProjectPropertyElement property = project.Properties.FirstOrDefault(p => p.Name == "ProjectGuid");
-                return property != null && property.Value != null && _projectGuids.Contains(property.Value);
+                if (property != null && property.Value != null)
+                {
+                    return project.Items.Any(t => t.Include.Trim().EndsWith("Microsoft.CSharp.targets"));
+                }
             }
             return false;
         }

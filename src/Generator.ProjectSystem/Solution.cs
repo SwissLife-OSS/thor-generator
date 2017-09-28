@@ -73,13 +73,16 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
             SolutionFile solutionFile = SolutionFile.Parse(solutionFileName);
             foreach (ProjectInSolution project in solutionFile.ProjectsInOrder)
             {
-                if (CSharpProjectSystems.TryOpenProject(project.AbsolutePath,
-                    out Project p))
+                if (project.ProjectType == SolutionProjectType.KnownToBeMSBuildFormat)
                 {
-                    projects.Add(p);
+                    if (CSharpProjectSystems.TryOpenProject(project.AbsolutePath,
+                        out Project p))
+                    {
+                        projects.Add(p);
+                    }
                 }
             }
             return new Solution(projects);
-        }        
+        }
     }
 }

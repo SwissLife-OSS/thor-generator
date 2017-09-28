@@ -52,8 +52,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
         {
             if (string.IsNullOrEmpty(FileOrDirectoryName))
             {
-                Console.Error(Resources.NoFileOrDirectoryName);
-                return CustomErrorCodes.MissingArgument;
+                FileOrDirectoryName = ".";
             }
 
             // ensure that we have rooted file or directory paths

@@ -32,17 +32,14 @@ namespace ChilliCream.FluentConsole
         public ICommandLineTask CreateTask(string[] args)
         {
             Argument[] arguments = ArgumentParser.Parse(args).ToArray();
-            if (arguments.Any())
+            if (_resolver.TryResolve(arguments, out ResolvedTaskDefinitions resolvedTaskDefinitions))
             {
-                if (_resolver.TryResolve(arguments, out ResolvedTaskDefinitions resolvedTaskDefinitions))
+                TaskFactory taskFactory = new TaskFactory(
+                    resolvedTaskDefinitions.TaskDefinitions,
+                    arguments.Skip(resolvedTaskDefinitions.ArgumentCount));
+                if (taskFactory.TryCreate(_console, out ICommandLineTask task))
                 {
-                    TaskFactory taskFactory = new TaskFactory(
-                        resolvedTaskDefinitions.TaskDefinitions,
-                        arguments.Skip(resolvedTaskDefinitions.ArgumentCount));
-                    if (taskFactory.TryCreate(_console, out ICommandLineTask task))
-                    {
-                        return task;
-                    }
+                    return task;
                 }
             }
             return null;

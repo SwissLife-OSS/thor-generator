@@ -12,6 +12,11 @@ namespace ChilliCream.FluentConsole
                 throw new ArgumentNullException(nameof(args));
             }
 
+            if(args.Length == 0)
+            {
+                yield break;
+            }
+
             bool isPositional = true;
             int position = 0;
 
