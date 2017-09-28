@@ -1,0 +1,86 @@
+﻿using System;
+using System.Diagnostics.Tracing;
+using System.Text;
+using ChilliCream.Tracing;
+using ChilliCream.Tracing.Abstractions;
+
+namespace {{namespace}}
+{
+{{#attribute}}
+    [EventSource({{argumentSyntax}})]
+{{/attribute}}
+{{^attribute}}
+    [EventSource]
+{{/attribute}}
+    public sealed class {{name}}
+        : EventSourceBase
+        , I{{name}}
+    {
+        private {{name}}() { }
+
+        public static readonly I{{name}} Log = new {{name}}();
+
+{{#events}}
+        [NonEvent]
+        public void {{name}}({{#parameters}}{{#isFollowing}}, {{/isFollowing}}{{type}} {{name}}{{/parameters}})
+        {
+            if (IsEnabled())
+            {
+                {{name}}(Application.Id, ActivityStack.Id{{#parameters}}, {{name}}{{/parameters}});
+            }
+        }
+
+        [{{attributeSyntax}}]
+        private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) 
+        {
+            WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
+        }
+
+{{/events}}
+{{#writeMethods}}
+        [NonEvent]
+        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
+        {
+            if (IsEnabled())
+            {
+{{#parameters}}
+{{#isString}}
+                StringExtensions.SetToEmptyIfNull(ref {{name}});
+{{/isString}}
+{{/parameters}}
+
+{{#parameters}}
+{{#isString}}
+                fixed (char* {{name}}Bytes = {{name}})
+                {
+{{/isString}}
+{{/parameters}}
+                const short dataCount = {{parametersCount}};
+                EventData* data = stackalloc EventData[dataCount];
+                data[0].DataPointer = (IntPtr)(&applicationId);
+                data[0].Size = 4;
+                data[1].DataPointer = (IntPtr)(&activityId);
+                data[1].Size = 16;
+{{#parameters}}
+{{#isString}}
+                data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
+                data[{{position}}].Size = (({{name}}.Length + 1) * 2);
+{{/isString}}
+{{#isNotString}}
+                data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
+                data[{{position}}].Size = {{size}};
+{{/isNotString}}
+{{/parameters}}
+
+                WriteEventCore(eventId, dataCount, data);
+{{#parameters}}
+{{#isString}}
+                }
+{{/isString}}
+{{/parameters}}
+            }
+        }
+
+{{/writeMethods}}
+    }
+}

@@ -1,0 +1,21 @@
+﻿using System;
+using System.Diagnostics.Tracing;
+
+namespace TwoEventsNamespace
+{
+    [EventSourceDefinition(Name = "TwoEvents")]
+    public interface ITwoEventsEventSource
+    {
+        [Event(1, 
+            Level = EventLevel.Informational, 
+            Message = "Simple is called {0}.", 
+            Version = 2)]
+        void A(string name);
+
+        [Event(2, 
+            Level = EventLevel.Informational, 
+            Message = "Simple is called {0}.", 
+            Version = 2)]
+        void B(string name);
+    }
+}

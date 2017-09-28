@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>ChilliCream.Tracing.Generator.Tests</AssemblyName>
-    <RootNamespace>ChilliCream.Tracing.Generator</RootNamespace>
-    <IsPackable>false</IsPackable>
+    <AssemblyName>ChilliCream.Tracing.Generator.ProjectSystem.Tests</AssemblyName>
+    <RootNamespace>ChilliCream.Tracing.Generator.ProjectSystem.Tests</RootNamespace>
+    <IsPackable>false</IsPackable>    
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Generator\Generator.csproj" />
+    <ProjectReference Include="..\Generator.ProjectSystem\Generator.ProjectSystem.csproj" />
   </ItemGroup>
-  
+
 </Project>
