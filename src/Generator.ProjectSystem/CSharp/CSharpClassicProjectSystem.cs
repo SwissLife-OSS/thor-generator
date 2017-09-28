@@ -57,7 +57,7 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
                 ProjectPropertyElement property = project.Properties.FirstOrDefault(p => p.Name == "ProjectGuid");
                 if (property != null && property.Value != null)
                 {
-                    return project.Items.Any(t => t.Include.Trim().EndsWith("Microsoft.CSharp.targets"));
+                    return project.Imports.Any(t => t.Project.Trim().EndsWith("Microsoft.CSharp.targets"));
                 }
             }
             return false;
