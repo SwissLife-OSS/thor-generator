@@ -8,6 +8,9 @@ namespace ChilliCream.FluentConsole
     public class ClassicConsole
         : IConsole
     {
+        private ConsoleColor _default = Console.ForegroundColor;
+        private ConsoleColor _error = ConsoleColor.Red;
+
         private ClassicConsole()
         {
 
@@ -15,8 +18,23 @@ namespace ChilliCream.FluentConsole
 
         public static readonly ClassicConsole Default = new ClassicConsole();
 
-        public void Write(string s)
+        public void Write(string value)
         {
+            Console.ForegroundColor = _default;
+            Console.Write(value);
+        }
+
+        public void WriteLine(string value)
+        {
+            Console.ForegroundColor = _default;
+            Console.WriteLine(value);
+        }
+
+        public void Error(string message)
+        {
+            Console.ForegroundColor = _error;
+            Console.WriteLine(message);
+            Console.ForegroundColor = _default;
         }
 
         public string GetFullPath(string fileOrDirectoryName)
@@ -28,11 +46,6 @@ namespace ChilliCream.FluentConsole
 
             return Path.GetFullPath(Path.Combine(
                 Environment.CurrentDirectory, fileOrDirectoryName));
-        }
-
-        public void Error(string message)
-        {
-            throw new NotImplementedException();
         }
     }
 }

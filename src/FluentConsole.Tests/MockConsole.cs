@@ -18,9 +18,14 @@ namespace ChilliCream.FluentConsole
             return fileOrDirectory;
         }
 
-        public void Write(string s)
+        public void Write(string value)
         {
-            Messages.Add(s);
+            Messages.Add(value);
+        }
+
+        public void WriteLine(string value)
+        {
+            Messages.Add(value);
         }
     }
 }

@@ -2,7 +2,9 @@
 {
     public interface IConsole
     {
-        void Write(string s);
+        void Write(string value);
+
+        void WriteLine(string value);
 
         string GetFullPath(string fileOrDirectory);
 

@@ -59,7 +59,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
         /// </summary>
         /// <value>The name of the template.</value>
         public string TemplateName { get; set; }
-      
+
         /// <summary>
         /// Analyzes the given <paramref name="project"/> and 
         /// generates the event source into the same project. 
@@ -99,6 +99,15 @@ namespace ChilliCream.Tracing.Generator.Tasks
             if (target == null)
             {
                 throw new ArgumentNullException(nameof(target));
+            }
+
+            if (source == target)
+            {
+                _console.WriteLine($"Processing {source.Id} ...");
+            }
+            else
+            {
+                _console.WriteLine($"Processing {source.Id} -> {target.Id}  ...");
             }
 
             EventSourceBuilder eventSourceBuilder =
