@@ -43,8 +43,8 @@ namespace ChilliCream.Tracing.Generator.Tasks
 
             Bind<ExportTemplateTask>()
                 .WithName("templates", "export")
-                .Argument(t => t.FileName)
-                .WithName("file-name", 'f')
+                .Argument(t => t.DirectoryName)
+                .WithName("directory-name", 'd')
                 .Position(0)
                 .Mandatory()
                 .And()

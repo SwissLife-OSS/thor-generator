@@ -4,6 +4,7 @@ using System.Linq;
 using ChilliCream.FluentConsole;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 using ChilliCream.Tracing.Generator.Properties;
+using ChilliCream.Tracing.Generator.Templates;
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace ChilliCream.Tracing.Generator.Models
+namespace ChilliCream.Tracing.Generator.Templates
 {
     internal class EventModel
     {

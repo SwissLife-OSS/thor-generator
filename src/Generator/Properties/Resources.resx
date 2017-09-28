@@ -126,6 +126,9 @@
   <data name="NoSourceProject" xml:space="preserve">
     <value>No source project was provided.</value>
   </data>
+  <data name="NoTemplateExportDirectory" xml:space="preserve">
+    <value>No template export directory was provided.</value>
+  </data>
   <data name="NoTemplateFile" xml:space="preserve">
     <value>No template file was provided.</value>
   </data>

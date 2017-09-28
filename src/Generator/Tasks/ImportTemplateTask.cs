@@ -2,6 +2,7 @@
 using System.IO;
 using ChilliCream.FluentConsole;
 using ChilliCream.Tracing.Generator.Properties;
+using ChilliCream.Tracing.Generator.Templates;
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {
@@ -87,8 +88,8 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 return CustomErrorCodes.FileNotExists;
             }
 
-            string template = File.ReadAllText(FileName);
-            _templateStorage.SaveCustomTemplate(Name, template);
+            Template template = Template.FromFile(FileName);
+            _templateStorage.SaveCustomTemplate(template);
 
             return CommandLineResults.OK;
         }

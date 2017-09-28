@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ChilliCream.Tracing.Generator.Models
+namespace ChilliCream.Tracing.Generator.Templates
 {
     internal class AttributeModel
     {

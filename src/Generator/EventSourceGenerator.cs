@@ -1,194 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using ChilliCream.Logging.Generator;
 using ChilliCream.Tracing.Generator.Analyzer;
-using ChilliCream.Tracing.Generator.Models;
-using ChilliCream.Tracing.Generator.Types;
-using Nustache.Core;
+using ChilliCream.Tracing.Generator.ProjectSystem;
+using ChilliCream.Tracing.Generator.Templates;
 
-namespace ChilliCream.Logging.Generator
+namespace ChilliCream.Tracing.Generator
 {
     public class EventSourceGenerator
     {
-        private static readonly WriteMethod _defaultWriteMethod = new WriteMethod(new[] { "string" });
-        private readonly EventSourceDefinition _eventSourceDefinition;
-        private readonly string _templateContent;
+        private readonly Project _source;
+        private readonly Project _target;
+        private readonly EventSourceTemplateEngine _templateEngine;
 
-        public EventSourceGenerator(EventSourceDefinition eventSourceDefinition, string templateContent)
+        public EventSourceGenerator(Project source, Project target, Template template)
         {
-            if (eventSourceDefinition == null)
+            if (source == null)
             {
-                throw new ArgumentNullException(nameof(eventSourceDefinition));
+                throw new ArgumentNullException(nameof(source));
             }
 
-            if (string.IsNullOrEmpty(templateContent))
+            if (target == null)
             {
-                throw new ArgumentNullException(nameof(templateContent));
+                throw new ArgumentNullException(nameof(target));
             }
 
-            _eventSourceDefinition = eventSourceDefinition;
-            _templateContent = templateContent;
+            if (template == null)
+            {
+                throw new ArgumentNullException(nameof(template));
+            }
+
+            _source = source;
+            _target = target;
+            _templateEngine = new EventSourceTemplateEngine(template);
         }
 
-        public string CreateEventSource()
+        public void Generate()
         {
-            // generate event source
-            EventSourceModel eventSourceModel = CreateGeneratorModel();
-            string sourceCode = Render.StringToString(_templateContent, eventSourceModel,
-                renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
-
-            // reformat methods
-            //SyntaxNode syntaxRoot = CSharpSyntaxTree.ParseText(sourceCode).GetRoot();
-            //FormatMethodsRewriter rewriter = new FormatMethodsRewriter();
-            //syntaxRoot = rewriter.Visit(syntaxRoot);
-            //return syntaxRoot.ToString();
-            return sourceCode;
-        }
-
-        private EventSourceModel CreateGeneratorModel()
-        {
-            EventSourceModel eventSourceModel = new EventSourceModel
+            foreach (EventSourceFile eventSourceFile in FindEventSourceDefinitions())
             {
-                Name = _eventSourceDefinition.ClassName,
-                Namespace = _eventSourceDefinition.Namespace
-            };
-
-            string attributeArgumentSyntax = CreateAttributeArgumentSyntax();
-            if (attributeArgumentSyntax != null)
-            {
-                eventSourceModel.Attribute = new AttributeModel
-                {
-                    ArgumentSyntax = attributeArgumentSyntax
-                };
-            }
-
-            AddEvents(eventSourceModel);
-            AddWriteMethods(eventSourceModel);
-
-            return eventSourceModel;
-        }
-
-        private string CreateAttributeArgumentSyntax()
-        {
-            StringBuilder argumentSyntax = new StringBuilder();
-            if (_eventSourceDefinition.Name != null)
-            {
-                argumentSyntax.Append($"Name =\"{_eventSourceDefinition.Name}\"");
-            }
-
-            if (_eventSourceDefinition.Guid != null)
-            {
-                if (argumentSyntax.Length > 0)
-                {
-                    argumentSyntax.Append(", ");
-                }
-                argumentSyntax.Append($"Guid =\"{_eventSourceDefinition.Guid}\"");
-            }
-
-            if (_eventSourceDefinition.LocalizationResources != null)
-            {
-                if (argumentSyntax.Length > 0)
-                {
-                    argumentSyntax.Append(", ");
-                }
-                argumentSyntax.Append($"LocalizationResources =\"{_eventSourceDefinition.LocalizationResources}\"");
-            }
-            return argumentSyntax.ToString();
-        }
-
-        private void AddEvents(EventSourceModel eventSourceModel)
-        {
-            foreach (EventDefinition eventDefinition in _eventSourceDefinition.Events)
-            {
-                EventModel eventModel = new EventModel();
-                eventModel.Id = eventDefinition.EventId;
-                eventModel.Name = eventDefinition.Name;
-                eventModel.AttributeSyntax = eventDefinition.AttributeSyntax;
-
-                int i = 0;
-                bool isFollowing = false;
-
-                foreach (EventArgumentDefinition eventArgument in eventDefinition.Arguments)
-                {
-                    EventParameterModel parameterModel = new EventParameterModel
-                    {
-                        Position = i++,
-                        Name = eventArgument.Name,
-                        Type = GetWriteMethodParameterType(eventArgument.Type),
-                        IsFollowing = isFollowing
-                    };
-                    AddTypeDetails(parameterModel);
-                    eventModel.Parameters.Add(parameterModel);
-                    isFollowing = true;
-                }
-                eventSourceModel.Events.Add(eventModel);
+                string newName = eventSourceFile.Document.Name.StartsWith("I")
+                    ? eventSourceFile.Document.Name.Substring(1)
+                    : string.Concat(eventSourceFile.Document.Name, "Impl");
+                string eventSource = _templateEngine.Generate(eventSourceFile.Definition);
+                _target.UpdateDocument(eventSource, newName, eventSourceFile.Document.Folders);
             }
         }
 
-        private void AddWriteMethods(EventSourceModel eventSourceModel)
+        private IEnumerable<EventSourceFile> FindEventSourceDefinitions()
         {
-            foreach (WriteMethod writeMethod in GetWriteMethods())
+            foreach (Document document in _source.Documents)
             {
-                if (!writeMethod.Equals(_defaultWriteMethod))
-                {
-                    int c = 97;
-                    int i = 2;
-                    bool isFollowing = false;
+                EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+                visitor.Visit(document.GetSyntaxRoot());
 
-                    WriteCoreModel writeCoreModel = new WriteCoreModel();
-                    foreach (string type in writeMethod.ParameterTypes)
-                    {
-                        EventParameterModel parameterModel = new EventParameterModel
-                        {
-                            Name = ((char)c++).ToString(),
-                            Position = i++,
-                            Type = GetWriteMethodParameterType(type),
-                            IsFollowing = isFollowing
-                        };
-                        AddTypeDetails(parameterModel);
-                        writeCoreModel.Parameters.Add(parameterModel);
-                        isFollowing = true;
-                    }
-                    writeCoreModel.ParametersCount = i;
-                    eventSourceModel.WriteMethods.Add(writeCoreModel);
+                if (visitor.EventSourceDefinition != null)
+                {
+                    yield return new EventSourceFile(document, visitor.EventSourceDefinition);
                 }
             }
         }
 
-        private IEnumerable<WriteMethod> GetWriteMethods()
-        {
-            HashSet<WriteMethod> hashSet = new HashSet<WriteMethod>();
-            foreach (EventDefinition eventDefinition in _eventSourceDefinition.Events)
-            {
-                IEnumerable<string> types = eventDefinition.Arguments
-                    .Select(t => GetWriteMethodParameterType(t.Type));
-                hashSet.Add(new WriteMethod(types));
-            }
-            return hashSet;
-        }
+        #region Nested Types
 
-        private string GetWriteMethodParameterType(string typeName)
+        private class EventSourceFile
         {
-            IParameterTypeInfo typeInfo;
-            if (!ParameterTypeLookup.TryGet(typeName, out typeInfo))
+            public EventSourceFile(Document document, EventSourceDefinition definition)
             {
-                throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
-            }
-            return typeInfo.Name;
-        }
+                if (document == null)
+                {
+                    throw new ArgumentNullException(nameof(document));
+                }
 
-        private void AddTypeDetails(EventParameterModel eventParameterModel)
-        {
-            IParameterTypeInfo typeInfo;
-            if (!ParameterTypeLookup.TryGet(eventParameterModel.Type, out typeInfo))
-            {
-                throw new ArgumentException("The specified type is not allowed.", nameof(eventParameterModel));
+                if (definition == null)
+                {
+                    throw new ArgumentNullException(nameof(definition));
+                }
+
+                Document = document;
+                Definition = definition;
             }
 
-            eventParameterModel.IsString = typeInfo.IsString;
-            eventParameterModel.Size = typeInfo.Size;
-            eventParameterModel.Operator = typeInfo.Operator;
+            public Document Document { get; }
+            public EventSourceDefinition Definition { get; }
         }
+
+        #endregion
     }
 }

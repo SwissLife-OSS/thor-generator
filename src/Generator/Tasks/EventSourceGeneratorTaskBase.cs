@@ -1,6 +1,7 @@
 ﻿using System;
 using ChilliCream.FluentConsole;
 using ChilliCream.Tracing.Generator.ProjectSystem;
+using ChilliCream.Tracing.Generator.Templates;
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {
@@ -110,9 +111,9 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 _console.WriteLine($"Processing {source.Id} -> {target.Id}  ...");
             }
 
-            EventSourceBuilder eventSourceBuilder =
-                new EventSourceBuilder(source, target, GetTemplate());
-            eventSourceBuilder.Build();
+            EventSourceGenerator eventSourceBuilder =
+                new EventSourceGenerator(source, target, GetTemplate());
+            eventSourceBuilder.Generate();
         }
 
         /// <summary>
@@ -121,7 +122,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
         /// <returns>
         /// A <see cref="string"/> representing a mustache template.
         /// </returns>
-        protected string GetTemplate()
+        protected Template GetTemplate()
         {
             if (string.IsNullOrEmpty(TemplateName))
             {

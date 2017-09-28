@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChilliCream.Tracing.Generator.Models
+namespace ChilliCream.Tracing.Generator.Templates
 {
     internal class WriteCoreModel
     {

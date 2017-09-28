@@ -88,6 +88,15 @@ namespace ChilliCream.Tracing.Generator.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No template export directory was provided..
+        /// </summary>
+        internal static string NoTemplateExportDirectory {
+            get {
+                return ResourceManager.GetString("NoTemplateExportDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No template file was provided..
         /// </summary>
         internal static string NoTemplateFile {

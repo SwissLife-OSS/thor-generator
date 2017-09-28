@@ -2,11 +2,10 @@
 using System.IO;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 
-namespace ChilliCream.Tracing.Generator
+namespace ChilliCream.Tracing.Generator.Templates
 {
     public class TemplateStorage
     {
-        private static readonly string _mustache = ".mustache";
         private static readonly string _applicationDirectory = Path.GetDirectoryName(typeof(TemplateStorage).Assembly.Location);
 
         private readonly string _defaultTemplateDirectory;
@@ -23,55 +22,49 @@ namespace ChilliCream.Tracing.Generator
                 throw new ArgumentNullException(nameof(applicationDirectory));
             }
 
-            _defaultTemplateDirectory = Path.Combine(applicationDirectory, "Resources");
+            _defaultTemplateDirectory = Path.Combine(applicationDirectory, "Templates", "Defaults");
             _customTemplateDirectory = Path.Combine(applicationDirectory, "Templates");
         }
 
 
-        public string GetTemplate(Language language)
+        public Template GetTemplate(Language language)
         {
             switch (language)
             {
                 case Language.CSharp:
-                    string templateFile = Path.Combine(_defaultTemplateDirectory, language + _mustache);
-                    return File.ReadAllText(templateFile);
+                    string templateFile = Path.Combine(_defaultTemplateDirectory, language + Template.TemplateExtension);
+                    return Template.FromFile(templateFile);
 
                 default:
                     throw new NotSupportedException($"{language} is not supported as template language.");
             }
         }
 
-        public string GetCustomTemplate(string name)
+        public Template GetCustomTemplate(string name)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
-            string templateFile = Path.Combine(_customTemplateDirectory, name + _mustache);
+            string templateFile = Path.Combine(_customTemplateDirectory, name + Template.TemplateExtension);
 
             if (!File.Exists(templateFile))
             {
                 throw new FileNotFoundException($"The template {name} could not be found.", templateFile);
             }
 
-            return File.ReadAllText(templateFile);
+            return Template.FromFile(templateFile);
         }
 
-        public void SaveCustomTemplate(string name, string content)
+        public void SaveCustomTemplate(Template template)
         {
-            if (name == null)
+            if (template == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(template));
             }
 
-            if (!Directory.Exists(_customTemplateDirectory))
-            {
-                Directory.CreateDirectory(_customTemplateDirectory);
-            }
-
-            string templateFile = Path.Combine(_customTemplateDirectory, name + _mustache);
-            File.WriteAllText(templateFile, content);
+            template.Save(_customTemplateDirectory);
         }
 
         public bool CustomTemplateExists(string name)
@@ -81,7 +74,7 @@ namespace ChilliCream.Tracing.Generator
                 throw new ArgumentNullException(nameof(name));
             }
 
-            return File.Exists(Path.Combine(_customTemplateDirectory, name + _mustache));
+            return File.Exists(Path.Combine(_customTemplateDirectory, name + Template.TemplateExtension));
         }
     }
 }

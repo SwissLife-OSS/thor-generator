@@ -3,6 +3,7 @@ using System.IO;
 using ChilliCream.FluentConsole;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 using ChilliCream.Tracing.Generator.Properties;
+using ChilliCream.Tracing.Generator.Templates;
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {
@@ -51,10 +52,10 @@ namespace ChilliCream.Tracing.Generator.Tasks
         }
 
         /// <summary>
-        /// Gets or sets the name of the file to which the specified template shall be exported.
+        /// Gets or sets the name of the directory to which the specified template shall be exported.
         /// </summary>
         /// <value>The name of the template file.</value>
-        public string FileName { get; set; }
+        public string DirectoryName { get; set; }
 
         /// <summary>
         /// Gets or sets the language of the default template 
@@ -75,14 +76,14 @@ namespace ChilliCream.Tracing.Generator.Tasks
         /// </summary>
         public int Execute()
         {
-            if (string.IsNullOrEmpty(FileName))
+            if (string.IsNullOrEmpty(DirectoryName))
             {
                 _console.Error(Resources.NoTemplateFile);
                 return CustomErrorCodes.MissingArgument;
             }
 
             // ensure that we have rooted file or directory paths
-            FileName = _console.GetFullPath(FileName);
+            DirectoryName = _console.GetFullPath(DirectoryName);
 
             if (string.IsNullOrEmpty(Name))
             {
@@ -104,18 +105,16 @@ namespace ChilliCream.Tracing.Generator.Tasks
             }
         }
 
-        private void SaveTemplateToFile(string template)
+        private void SaveTemplateToFile(Template template)
         {
-            string exportDirectory = Path.GetDirectoryName(FileName);
-
             // ensure file directory exists before writing file
-            if (!Directory.Exists(exportDirectory))
+            if (!Directory.Exists(DirectoryName))
             {
-                Directory.CreateDirectory(exportDirectory);
+                Directory.CreateDirectory(DirectoryName);
             }
 
             // write template to file
-            File.WriteAllText(FileName, template);
+            template.Save(DirectoryName);
         }
     }
 }
