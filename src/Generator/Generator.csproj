@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp2.0;net46;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <AssemblyName>ChilliCream.Tracing.Generator</AssemblyName>
     <RootNamespace>ChilliCream.Tracing.Generator</RootNamespace>
   </PropertyGroup>

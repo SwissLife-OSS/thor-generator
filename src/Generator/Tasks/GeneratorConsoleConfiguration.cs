@@ -2,9 +2,16 @@
 
 namespace ChilliCream.Tracing.Generator.Tasks
 {
+    /// <summary>
+    /// This configuration provides command line tasks for a event source generator cli.
+    /// </summary>
+    /// <seealso cref="ChilliCream.FluentConsole.ConsoleConfiguration" />
     public class GeneratorConsoleConfiguration
         : ConsoleConfiguration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneratorConsoleConfiguration"/> class.
+        /// </summary>
         public GeneratorConsoleConfiguration()
         {
             Bind<SolutionEventSourceGeneratorTask>()
