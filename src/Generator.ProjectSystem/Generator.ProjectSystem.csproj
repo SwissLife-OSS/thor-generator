@@ -29,7 +29,7 @@
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(RuntimeIdentifier)'=='osx.10.10-x64'">
+  <ItemGroup Condition="'$(RuntimeIdentifier)'=='osx-x64'">
     <PackageReference Include="Microsoft.Win32.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Net.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
