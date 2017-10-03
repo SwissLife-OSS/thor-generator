@@ -7,7 +7,7 @@ using System.Diagnostics.Tracing;
 using Microsoft.CodeAnalysis;
 using ChilliCream.Tracing.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator.Analyzer
+namespace ChilliCream.Tracing.Generator.Analyzer.Templates
 {
     /// <summary>
     /// This visitor inspects syntax trees for event source definitions.

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using ChilliCream.Tracing.Generator.Analyzer;
+using ChilliCream.Tracing.Generator.Analyzer.Templates;
 using ChilliCream.Tracing.Generator.Properties;
 using ChilliCream.Tracing.Generator.Templates;
 using FluentAssertions;
@@ -9,7 +9,7 @@ using Xunit;
 
 namespace ChilliCream.Tracing.Generator
 {
-    public class AnalyzerTests
+    public class EventSourceDefinitionVisitorTests
     {
 
         [Fact]
