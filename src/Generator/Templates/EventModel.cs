@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ChilliCream.Tracing.Generator.Templates
 {
@@ -10,5 +11,7 @@ namespace ChilliCream.Tracing.Generator.Templates
         public AttributeModel Attribute { get; } = new AttributeModel("Event");
 
         public List<EventParameterModel> Parameters { get; } = new List<EventParameterModel>();
+
+        public bool HasParameters => Parameters != null && Parameters.Any();
     }
 }
