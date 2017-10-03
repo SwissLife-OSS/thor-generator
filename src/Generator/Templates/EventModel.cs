@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 
 namespace ChilliCream.Tracing.Generator.Templates
 {
@@ -9,7 +6,9 @@ namespace ChilliCream.Tracing.Generator.Templates
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string AttributeSyntax { get; set; }
-        public List<EventParameterModel> Parameters { get; set; } = new List<EventParameterModel>();
+
+        public AttributeModel Attribute { get; } = new AttributeModel("Event");
+
+        public List<EventParameterModel> Parameters { get; } = new List<EventParameterModel>();
     }
 }

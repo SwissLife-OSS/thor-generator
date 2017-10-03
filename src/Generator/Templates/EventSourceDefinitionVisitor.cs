@@ -39,7 +39,7 @@ namespace ChilliCream.Tracing.Generator.Analyzer
         private const string _eventSourceAttributeName = "EventSourceDefinition";
         private const string _eventAttributeName = "Event";
 
-        public EventSourceModel2 EventSource { get; private set; }
+        public EventSourceModel EventSource { get; private set; }
 
         private NamespaceDeclarationSyntax NamespaceDeclaration { get; set; }
 
@@ -75,7 +75,7 @@ namespace ChilliCream.Tracing.Generator.Analyzer
             if (EventSource != null
                 && eventAttribute != null
                 && eventAttribute.ArgumentList.Arguments.Count > 0
-                && TryParseEventAttribute(eventAttribute, out EventModel2 eventModel))
+                && TryParseEventAttribute(eventAttribute, out EventModel eventModel))
             {
                 foreach (ParameterSyntax eventParameter in node.ParameterList.Parameters)
                 {
@@ -89,9 +89,9 @@ namespace ChilliCream.Tracing.Generator.Analyzer
             base.VisitMethodDeclaration(node);
         }
 
-        private EventSourceModel2 ParseEventSourceAttribute(AttributeSyntax node)
+        private EventSourceModel ParseEventSourceAttribute(AttributeSyntax node)
         {
-            EventSourceModel2 eventSourceModel = new EventSourceModel2();
+            EventSourceModel eventSourceModel = new EventSourceModel();
 
             foreach (AttributeArgumentSyntax argument in node.ArgumentList.Arguments)
             {
@@ -106,9 +106,9 @@ namespace ChilliCream.Tracing.Generator.Analyzer
             return eventSourceModel;
         }
 
-        private bool TryParseEventAttribute(AttributeSyntax eventAttribute, out EventModel2 eventModel)
+        private bool TryParseEventAttribute(AttributeSyntax eventAttribute, out EventModel eventModel)
         {
-            eventModel = new EventModel2();
+            eventModel = new EventModel();
 
             AttributeArgumentSyntax eventId = eventAttribute
                 .ArgumentList.Arguments.First();

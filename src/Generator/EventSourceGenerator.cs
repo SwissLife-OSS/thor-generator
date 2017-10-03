@@ -61,7 +61,7 @@ namespace ChilliCream.Tracing.Generator
 
         private class EventSourceFile
         {
-            public EventSourceFile(Document document, EventSourceModel2 model)
+            public EventSourceFile(Document document, EventSourceModel model)
             {
                 if (document == null)
                 {
@@ -78,7 +78,7 @@ namespace ChilliCream.Tracing.Generator
             }
 
             public Document Document { get; }
-            public EventSourceModel2 Model { get; }
+            public EventSourceModel Model { get; }
         }
 
         #endregion

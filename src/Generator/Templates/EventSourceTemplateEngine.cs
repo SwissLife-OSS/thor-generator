@@ -8,7 +8,7 @@ using Nustache.Core;
 namespace ChilliCream.Tracing.Generator.Templates
 {
     /// <summary>
-    /// The template engine can generate event sources from an <see cref="EventSourceModel2"/>.
+    /// The template engine can generate event sources from an <see cref="EventSourceModel"/>.
     /// </summary>
     internal class EventSourceTemplateEngine
     {
@@ -44,7 +44,7 @@ namespace ChilliCream.Tracing.Generator.Templates
         /// <returns>
         /// Returns a <see cref="string"/> representing the generated event source.
         /// </returns>
-        public string Generate(EventSourceModel2 eventSourceModel)
+        public string Generate(EventSourceModel eventSourceModel)
         {
             if (eventSourceModel == null)
             {
@@ -57,7 +57,7 @@ namespace ChilliCream.Tracing.Generator.Templates
                 renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
         }
 
-        private void AddWriteMethods(EventSourceModel2 eventSourceModel)
+        private void AddWriteMethods(EventSourceModel eventSourceModel)
         {
             foreach (WriteMethod writeMethod in GetWriteMethods(eventSourceModel))
             {
@@ -66,7 +66,7 @@ namespace ChilliCream.Tracing.Generator.Templates
                     int c = 97;
                     int i = _defaultPayloads;
 
-                    WriteCoreModel2 writeCoreModel = new WriteCoreModel2();
+                    WriteCoreModel writeCoreModel = new WriteCoreModel();
                     foreach (string type in writeMethod.ParameterTypes)
                     {
                         IParameterTypeInfo typeInfo = GetWriteMethodParameterTypeInfo(type);
@@ -88,10 +88,10 @@ namespace ChilliCream.Tracing.Generator.Templates
             }
         }
 
-        private IEnumerable<WriteMethod> GetWriteMethods(EventSourceModel2 eventSourceModel)
+        private IEnumerable<WriteMethod> GetWriteMethods(EventSourceModel eventSourceModel)
         {
             HashSet<WriteMethod> hashSet = new HashSet<WriteMethod>();
-            foreach (EventModel2 eventModel in eventSourceModel.Events)
+            foreach (EventModel eventModel in eventSourceModel.Events)
             {
                 IEnumerable<string> types = eventModel.Parameters
                     .Select(t => GetWriteMethodParameterType(t.Type));
