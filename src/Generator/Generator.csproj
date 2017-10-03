@@ -41,6 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\Defaults\CSharp2.mustache">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Defaults\CSharp.mustache">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

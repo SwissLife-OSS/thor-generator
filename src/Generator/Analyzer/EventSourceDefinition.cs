@@ -7,9 +7,11 @@ namespace ChilliCream.Tracing.Generator.Analyzer
     {
         public string Namespace { get; set; }
         public string ClassName { get; set; }
+
         public string Guid { get; set; }
         public string Name { get; set; }
         public string LocalizationResources { get; set; }
+
         public List<EventDefinition> Events { get; } = new List<EventDefinition>();
     }
 }

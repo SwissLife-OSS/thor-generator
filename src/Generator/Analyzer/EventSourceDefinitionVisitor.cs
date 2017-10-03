@@ -213,9 +213,17 @@ namespace ChilliCream.Tracing.Generator.Analyzer
 
         private static string GetValue(AttributeArgumentSyntax node)
         {
-            string value = (node.Expression as LiteralExpressionSyntax)?.Token.Text.Trim('\"')
-                ?? (node.Expression as MemberAccessExpressionSyntax)?.Name.Identifier.Text;
-            return value;
+            if (node.Expression is LiteralExpressionSyntax literalExpression)
+            {
+                return literalExpression.Token.Text.Trim('\"');
+            }
+
+            if (node.Expression is MemberAccessExpressionSyntax memberAccessExpression)
+            {
+                return memberAccessExpression.Name.Identifier.Text;
+            }
+
+            throw new InvalidOperationException("Could not parse AttributeArgumentSyntax");
         }
 
         private static string GetValue(ParameterSyntax node)
