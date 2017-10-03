@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using ChilliCream.Logging.Generator;
 using ChilliCream.Tracing.Generator.Analyzer;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 using ChilliCream.Tracing.Generator.Templates;
@@ -40,11 +38,8 @@ namespace ChilliCream.Tracing.Generator
         {
             foreach (EventSourceFile eventSourceFile in FindEventSourceDefinitions())
             {
-                string newName = eventSourceFile.Document.Name.StartsWith("I")
-                    ? eventSourceFile.Document.Name.Substring(1)
-                    : string.Concat(eventSourceFile.Document.Name, "Impl");
-                string eventSource = _templateEngine.Generate(eventSourceFile.Definition);
-                _target.UpdateDocument(eventSource, newName, eventSourceFile.Document.Folders);
+                string eventSource = _templateEngine.Generate(eventSourceFile.Model);
+                _target.UpdateDocument(eventSource, eventSourceFile.Model.FileName, eventSourceFile.Document.Folders);
             }
         }
 
@@ -55,9 +50,9 @@ namespace ChilliCream.Tracing.Generator
                 EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
                 visitor.Visit(document.GetSyntaxRoot());
 
-                if (visitor.EventSourceDefinition != null)
+                if (visitor.EventSource != null)
                 {
-                    yield return new EventSourceFile(document, visitor.EventSourceDefinition);
+                    yield return new EventSourceFile(document, visitor.EventSource);
                 }
             }
         }
@@ -66,24 +61,24 @@ namespace ChilliCream.Tracing.Generator
 
         private class EventSourceFile
         {
-            public EventSourceFile(Document document, EventSourceDefinition definition)
+            public EventSourceFile(Document document, EventSourceModel2 model)
             {
                 if (document == null)
                 {
                     throw new ArgumentNullException(nameof(document));
                 }
 
-                if (definition == null)
+                if (model == null)
                 {
-                    throw new ArgumentNullException(nameof(definition));
+                    throw new ArgumentNullException(nameof(model));
                 }
 
                 Document = document;
-                Definition = definition;
+                Model = model;
             }
 
             public Document Document { get; }
-            public EventSourceDefinition Definition { get; }
+            public EventSourceModel2 Model { get; }
         }
 
         #endregion

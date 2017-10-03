@@ -81,12 +81,44 @@ namespace ChilliCream.Tracing.Generator.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to namespace EventSources
+        ///{
+        ///    [EventSourceDefinition(Name = &quot;Foo&quot;)]
+        ///    public interface IMessageEventSource
+        ///    {
+        ///        [Event(1,
+        ///           Level = EventLevel.Verbose,
+        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;,
+        ///           Version = 1)]
+        ///        void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
+        ///    }
+        ///}.
+        /// </summary>
+        internal static string EventSourceWithLiteral {
+            get {
+                return ResourceManager.GetString("EventSourceWithLiteral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {{#isTrue}}
         ///true
         ///{{/isTrue}}
         ///{{^isTrue}}
         ///false
-        ///{{/isTrue}}.
+        ///{{/isTrue}}
+        ///{{#name}}
+        ///name exists
+        ///{{/name}}
+        ///{{^name}}
+        ///name not exists
+        ///{{/name}}
+        ///{{#col}}
+        ///{{.}} col exists
+        ///{{/col}}
+        ///{{^col}}
+        ///col not exists
+        ///{{/col}}.
         /// </summary>
         internal static string fooTemplate {
             get {

@@ -21,6 +21,8 @@ namespace ChilliCream.Tracing.Generator
     public class  Foo
     {
         public bool IsTrue { get; set; } = true;
+        public string Name { get; set; } = "foo";
+        public List<string> Col { get; set; } = new List<string> { "aaaaa" };
     }
 
 }

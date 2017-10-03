@@ -131,12 +131,38 @@
     }
 }</value>
   </data>
+  <data name="EventSourceWithLiteral" xml:space="preserve">
+    <value>namespace EventSources
+{
+    [EventSourceDefinition(Name = "Foo")]
+    public interface IMessageEventSource
+    {
+        [Event(1,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Version = 1)]
+        void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
+    }
+}</value>
+  </data>
   <data name="fooTemplate" xml:space="preserve">
     <value>{{#isTrue}}
 true
 {{/isTrue}}
 {{^isTrue}}
 false
-{{/isTrue}}</value>
+{{/isTrue}}
+{{#name}}
+name exists
+{{/name}}
+{{^name}}
+name not exists
+{{/name}}
+{{#col}}
+{{.}} col exists
+{{/col}}
+{{^col}}
+col not exists
+{{/col}}</value>
   </data>
 </root>
