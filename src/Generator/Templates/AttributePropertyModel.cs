@@ -1,9 +1,9 @@
 ﻿namespace ChilliCream.Tracing.Generator.Templates
 {
     /// <summary>
-    /// Represents an attribute property template model.
+    /// Represents an attribute property or constructor argument template model.
     /// </summary>
-    internal class AttributePropertyModel
+    public class AttributePropertyModel
     {
         /// <summary>
         /// Gets or sets the name of the attribute model.
