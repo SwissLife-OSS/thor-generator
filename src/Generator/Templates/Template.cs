@@ -160,7 +160,7 @@ namespace ChilliCream.Tracing.Generator.Templates
                 templateInfo.BaseWriteMethods = new List<string[]>();
             }
 
-            return new Template(name, File.ReadAllText(fileName),
+            return new Template(templateName, File.ReadAllText(fileName),
                 templateInfo.BaseWriteMethods.Select(t => new WriteMethod(t)).Distinct(),
                 templateInfo.DefaultPayloads);
         }

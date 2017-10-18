@@ -51,7 +51,8 @@ namespace ChilliCream.Tracing.Generator.Analyzer.Templates
 
         public override void VisitAttribute(AttributeSyntax node)
         {
-            if (node.Parent?.Parent is InterfaceDeclarationSyntax interfaceDeclaration)
+            if (IsDefinitionAttribute(node)
+                && node.Parent?.Parent is InterfaceDeclarationSyntax interfaceDeclaration)
             {
                 EventSource = ParseEventSourceAttribute(node);
                 EventSource.InterfaceName = interfaceDeclaration.Identifier.Text;
@@ -136,10 +137,19 @@ namespace ChilliCream.Tracing.Generator.Analyzer.Templates
 
         private bool IsDefinitionAttribute(AttributeSyntax attribute)
         {
-            return GetSimpleNameFromNode(attribute)
+            string name = GetSimpleNameFromNode(attribute)
                 .Identifier
-                .Text
-                .StartsWith(_eventSourceAttributeName);
+                .Text;
+
+            if (name == _eventSourceAttributeName
+                || name == _eventSourceAttributeName + "Attribute"
+                || name.EndsWith("." + _eventSourceAttributeName)
+                || name.EndsWith("." + _eventSourceAttributeName + "Attribute"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private bool IsEventAttribute(AttributeSyntax attribute)

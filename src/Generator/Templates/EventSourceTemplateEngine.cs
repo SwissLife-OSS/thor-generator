@@ -51,6 +51,7 @@ namespace ChilliCream.Tracing.Generator.Templates
                 throw new ArgumentNullException(nameof(eventSourceModel));
             }
 
+            AddWriteMethods(eventSourceModel);
 
             // generate event source
             return Render.StringToString(_template, eventSourceModel,
@@ -59,6 +60,8 @@ namespace ChilliCream.Tracing.Generator.Templates
 
         private void AddWriteMethods(EventSourceModel eventSourceModel)
         {
+            eventSourceModel.WriteMethods.Clear();
+
             foreach (WriteMethod writeMethod in GetWriteMethods(eventSourceModel))
             {
                 if (!_baseWriteMethods.Contains(writeMethod))
@@ -74,6 +77,7 @@ namespace ChilliCream.Tracing.Generator.Templates
                         WriteMethodParameterModel parameterModel = new WriteMethodParameterModel
                         {
                             Name = ((char)c++).ToString(),
+                            Type = typeInfo.Name,
                             Position = i++,
                             IsString = typeInfo.IsString,
                             Operator = typeInfo.Operator,

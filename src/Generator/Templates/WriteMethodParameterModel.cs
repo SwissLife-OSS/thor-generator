@@ -4,6 +4,7 @@
     {
         public string Name { get; set; }
         public string Size { get; set; }
+        public string Type { get; set; }
 
         public string Operator { get; set; }
         public int Position { get; set; }
