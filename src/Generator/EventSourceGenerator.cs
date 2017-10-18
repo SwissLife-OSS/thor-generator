@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ChilliCream.Logging.Generator;
-using ChilliCream.Tracing.Generator.Analyzer;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 using ChilliCream.Tracing.Generator.Templates;
 
@@ -12,6 +8,7 @@ namespace ChilliCream.Tracing.Generator
     {
         private readonly Project _source;
         private readonly Project _target;
+        private readonly EventSourceResolver _eventSourceResolver;
         private readonly EventSourceTemplateEngine _templateEngine;
 
         public EventSourceGenerator(Project source, Project target, Template template)
@@ -33,59 +30,17 @@ namespace ChilliCream.Tracing.Generator
 
             _source = source;
             _target = target;
+            _eventSourceResolver = new EventSourceResolver(source, template);
             _templateEngine = new EventSourceTemplateEngine(template);
         }
 
         public void Generate()
         {
-            foreach (EventSourceFile eventSourceFile in FindEventSourceDefinitions())
+            foreach (EventSourceFile eventSourceFile in _eventSourceResolver.FindEventSourceDefinitions())
             {
-                string newName = eventSourceFile.Document.Name.StartsWith("I")
-                    ? eventSourceFile.Document.Name.Substring(1)
-                    : string.Concat(eventSourceFile.Document.Name, "Impl");
-                string eventSource = _templateEngine.Generate(eventSourceFile.Definition);
-                _target.UpdateDocument(eventSource, newName, eventSourceFile.Document.Folders);
+                string eventSource = _templateEngine.Generate(eventSourceFile.Model);
+                _target.UpdateDocument(eventSource, eventSourceFile.Model.FileName, eventSourceFile.Document.Folders);
             }
         }
-
-        private IEnumerable<EventSourceFile> FindEventSourceDefinitions()
-        {
-            foreach (Document document in _source.Documents)
-            {
-                EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
-                visitor.Visit(document.GetSyntaxRoot());
-
-                if (visitor.EventSourceDefinition != null)
-                {
-                    yield return new EventSourceFile(document, visitor.EventSourceDefinition);
-                }
-            }
-        }
-
-        #region Nested Types
-
-        private class EventSourceFile
-        {
-            public EventSourceFile(Document document, EventSourceDefinition definition)
-            {
-                if (document == null)
-                {
-                    throw new ArgumentNullException(nameof(document));
-                }
-
-                if (definition == null)
-                {
-                    throw new ArgumentNullException(nameof(definition));
-                }
-
-                Document = document;
-                Definition = definition;
-            }
-
-            public Document Document { get; }
-            public EventSourceDefinition Definition { get; }
-        }
-
-        #endregion
     }
 }

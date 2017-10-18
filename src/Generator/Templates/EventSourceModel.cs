@@ -4,10 +4,14 @@ namespace ChilliCream.Tracing.Generator.Templates
 {
     internal class EventSourceModel
     {
+        public string FileName { get; set; }
         public string Name { get; set; }
         public string Namespace { get; set; }
-        public AttributeModel Attribute { get; set; }
-        public List<EventModel> Events { get; set; } = new List<EventModel>();
-        public List<WriteCoreModel> WriteMethods { get; set; } = new List<WriteCoreModel>();
+
+        public string InterfaceName { get; set; }
+
+        public AttributeModel Attribute { get; } = new AttributeModel(Constants.EventSourceAttributeName);
+        public List<EventModel> Events { get; } = new List<EventModel>();
+        public List<WriteCoreModel> WriteMethods { get; } = new List<WriteCoreModel>();
     }
 }

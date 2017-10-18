@@ -7,22 +7,24 @@ using ChilliCream.Tracing.Abstractions;
 namespace {{namespace}}
 {
 {{#attribute}}
-    [EventSource({{argumentSyntax}})]
-{{/attribute}}
-{{^attribute}}
-    [EventSource]
+    {{#hasProperties}}
+    [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
+    {{/hasProperties}}
+    {{^hasProperties}}
+    [{{name}}]
+    {{/hasProperties}}
 {{/attribute}}
     public sealed class {{name}}
         : EventSourceBase
-        , I{{name}}
+        , {{interfaceName}}
     {
         private {{name}}() { }
 
-        public static readonly I{{name}} Log = new {{name}}();
+        public static readonly {{interfaceName}} Log = new {{name}}();
 
 {{#events}}
         [NonEvent]
-        public void {{name}}({{#parameters}}{{#isFollowing}}, {{/isFollowing}}{{type}} {{name}}{{/parameters}})
+        public void {{name}}({{#parameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/parameters}})
         {
             if (IsEnabled())
             {
@@ -30,7 +32,9 @@ namespace {{namespace}}
             }
         }
 
-        [{{attributeSyntax}}]
+        {{#attribute}}
+        [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
+        {{/attribute}}
         private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) 
         {
             WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
@@ -55,7 +59,7 @@ namespace {{namespace}}
                 {
 {{/isString}}
 {{/parameters}}
-                const short dataCount = {{parametersCount}};
+                const short dataCount = {{totalParameters}};
                 EventData* data = stackalloc EventData[dataCount];
                 data[0].DataPointer = (IntPtr)(&applicationId);
                 data[0].Size = 4;
@@ -66,10 +70,10 @@ namespace {{namespace}}
                 data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
                 data[{{position}}].Size = (({{name}}.Length + 1) * 2);
 {{/isString}}
-{{#isNotString}}
+{{^isString}}
                 data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
                 data[{{position}}].Size = {{size}};
-{{/isNotString}}
+{{/isString}}
 {{/parameters}}
 
                 WriteEventCore(eventId, dataCount, data);

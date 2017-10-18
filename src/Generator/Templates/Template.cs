@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ChilliCream.Logging.Generator.Templates;
 using ChilliCream.Tracing.Generator.Properties;
 using Newtonsoft.Json;
 
@@ -29,6 +28,7 @@ namespace ChilliCream.Tracing.Generator.Templates
         /// <param name="name">The name.</param>
         /// <param name="code">The code.</param>
         /// <param name="baseWriteMethods">The base write methods.</param>
+        /// <param name="defaultPayloads">The payloads that come from the context.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="name"/> is <c>null</c>
         /// or
@@ -39,9 +39,10 @@ namespace ChilliCream.Tracing.Generator.Templates
         /// <paramref name="code"/> is <see cref="string.Empty"/>
         /// or
         /// <paramref name="baseWriteMethods"/> is <c>null</c>.
-        /// baseWriteMethods
         /// </exception>
-        public Template(string name, string code, IEnumerable<WriteMethod> baseWriteMethods)
+        public Template(string name, string code,
+            IEnumerable<WriteMethod> baseWriteMethods,
+            int defaultPayloads)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -61,6 +62,7 @@ namespace ChilliCream.Tracing.Generator.Templates
             Name = name;
             Code = code;
             BaseWriteMethods = baseWriteMethods.ToArray();
+            DefaultPayloads = defaultPayloads;
         }
 
         /// <summary>
@@ -80,6 +82,12 @@ namespace ChilliCream.Tracing.Generator.Templates
         /// </summary>
         /// <value>The base write methods.</value>
         public IReadOnlyCollection<WriteMethod> BaseWriteMethods { get; }
+
+        /// <summary>
+        /// Gets the default payloads count which defines the additional payloads that are added from the context by this template.
+        /// </summary>
+        /// <value>The default payloads count.</value>
+        public int DefaultPayloads { get; }
 
         /// <summary>
         /// Saves this template to the specified directory.
@@ -107,7 +115,8 @@ namespace ChilliCream.Tracing.Generator.Templates
             {
                 BaseWriteMethods = BaseWriteMethods
                     .Select(t => t.ParameterTypes.ToArray())
-                    .ToList()
+                    .ToList(),
+                DefaultPayloads = DefaultPayloads
             };
 
             File.WriteAllText(templateFile, Code);
@@ -152,13 +161,15 @@ namespace ChilliCream.Tracing.Generator.Templates
                 templateInfo.BaseWriteMethods = new List<string[]>();
             }
 
-            return new Template(name, File.ReadAllText(fileName),
-                templateInfo.BaseWriteMethods.Select(t => new WriteMethod(t)).Distinct());
+            return new Template(templateName, File.ReadAllText(fileName),
+                templateInfo.BaseWriteMethods.Select(t => new WriteMethod(t)).Distinct(),
+                templateInfo.DefaultPayloads);
         }
 
         private class TemplateInfo
         {
             public List<string[]> BaseWriteMethods { get; set; }
+            public int DefaultPayloads { get; set; }
         }
     }
 }

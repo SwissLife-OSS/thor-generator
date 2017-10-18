@@ -37,7 +37,7 @@ namespace ChilliCream.Tracing.Generator.Tasks
                 .Argument(t => t.TargetProject)
                 .WithName("target", 't')
                 .Position(1)
-                 .And()
+                .And()
                 .Argument(t => t.TemplateName)
                 .WithName("template");
 

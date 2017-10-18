@@ -41,7 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\Defaults\CSharp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Defaults\CSharp.mustache">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Defaults\___CSharp.mustache">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
