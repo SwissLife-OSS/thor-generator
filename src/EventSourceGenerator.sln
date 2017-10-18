@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26906.1
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\Generator.csproj", "{CA54FBD8-FB29-4DCF-B3AB-032D94DD663F}"
 EndProject
@@ -16,9 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console Interface", "Consol
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project System", "Project System", "{37079DC3-7887-4EF0-9EF6-167802ADD139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentConsole", "FluentConsole\FluentConsole.csproj", "{E336FBB8-AC1F-4003-840E-22570C73CA1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentConsole", "FluentConsole\FluentConsole.csproj", "{E336FBB8-AC1F-4003-840E-22570C73CA1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentConsole.Tests", "FluentConsole.Tests\FluentConsole.Tests.csproj", "{C5EB2EBC-3F8D-4496-B829-0FD9BCA052E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentConsole.Tests", "FluentConsole.Tests\FluentConsole.Tests.csproj", "{C5EB2EBC-3F8D-4496-B829-0FD9BCA052E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
