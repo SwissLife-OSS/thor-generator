@@ -1,4 +1,5 @@
 ﻿{
+  "defaultPayloads": 2,
   "baseWriteMethods": [
     [ "string" ]
   ]
