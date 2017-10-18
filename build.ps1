@@ -1,4 +1,10 @@
-param([switch]$DisableBuild, [switch]$RunTests, [switch]$EnableCoverage)
+param([switch]$DisableBuild, [switch]$RunTests, [switch]$EnableCoverage, [switch]$EnableSonar)
+
+if($EnableSonar)
+{
+
+}
+
 
 if($DisableBuild -eq $false)
 {
@@ -6,22 +12,27 @@ if($DisableBuild -eq $false)
     msbuild src
 }
 
-if($RunTests)
+if($RunTests -or $EnableCoverage)
 {
     # Test
     $serachDirs = [System.IO.Path]::Combine($PSScriptRoot, "src", "*", "bin",  "Debug", "netcoreapp2.0")
-    $testAssemblies = $null
+    $runTestsCmd = [System.Guid]::NewGuid().ToString("N") + ".cmd"
+    $runTestsCmd = Join-Path -Path $env:TEMP -ChildPath $runTestsCmd
+    $testAssemblies = ""
     
-    Get-ChildItem -Path $serachDirs -Include *.Tests.dll -Recurse | %{ $testAssemblies += $_.FullName + " " }
-
+    Get-ChildItem ./src/*.Tests | %{ $testAssemblies += "`"C:\Program Files\dotnet\dotnet.exe`" test `"" + $_.FullName + "`" --no-build`n" }
+    
     if (!!$testAssemblies) # Has test assemblies
     {    
         $userDirectory = $env:USERPROFILE
         if($IsMacOS) 
         {
             $userDirectory = $env:HOME
-        }        
+        }
         
+        [System.IO.File]::WriteAllText($runTestsCmd, $testAssemblies)
+        Write-Host $runTestsCmd
+
         if ($EnableCoverage)
         {
             # Test & Code Coverage
@@ -33,16 +44,19 @@ if($RunTests)
             $coveralls = [System.IO.Path]::Combine($nugetPackages, "coveralls.io", "*", "tools",  "coveralls.net.exe")
             $coveralls = Resolve-Path $coveralls
 
-            $openCoverFormat = "{0} -register:user -target:`"dotnet`" -targetargs:`"test {1} --no-build`" -searchdirs:`"{2}`" -oldstyle -output:coverage.xml -skipautoprops -returntargetcode -filter:`"+[*Tracing]*`""        
-            Write-Host ([string]::Format($openCoverFormat, $openCover, $testAssemblies, $serachDirs))
-
-            Invoke-Expression ($openCover + ' -register:user -target:"dotnet" -targetargs:"test ' + $testAssemblies + ' --no-build" -searchdirs:"' + $serachDirs + '" -oldstyle -output:coverage.xml -skipautoprops -returntargetcode -filter:"+[*Tracing]*"')
-            Invoke-Expression ($coveralls + ' --opencover coverage.xml')
+            & $openCover -register:user -target:"$runTestsCmd" -searchdirs:"$serachDirs" -oldstyle -output:coverage.xml -skipautoprops -returntargetcode -filter:"+[ChilliCream*]*"
+            & $coveralls --opencover coverage.xml
         }
         else
         {
             # Test
-            & $vstest $testAssemblies $vstestFramework $vstestLogger
+            & $runTestsCmd
         }
     }
+}
+
+if($EnableSonar)
+{
+
+    
 }
