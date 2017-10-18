@@ -9,20 +9,9 @@ namespace ChilliCream.Tracing.Generator
 {
     public class GenerationTests
     {
-        [Fact]
-        public void FooTest()
-        {
-            var x = Render.StringToString(Resources.fooTemplate, new Foo (),
-                renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
-        }
+    
+
+
 
     }
-
-    public class  Foo
-    {
-        public bool IsTrue { get; set; } = true;
-        public string Name { get; set; } = "foo";
-        public List<string> Col { get; set; } = new List<string> { "aaaaa" };
-    }
-
 }
