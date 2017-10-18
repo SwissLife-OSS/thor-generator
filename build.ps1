@@ -1,5 +1,14 @@
 param([switch]$DisableBuild, [switch]$RunTests, [switch]$EnableCoverage, [switch]$EnableSonar, [switch]$Publish)
 
+if (!!$env:APPVEYOR_REPO_TAG_NAME)
+{
+    $version = $env:APPVEYOR_REPO_TAG_NAME
+}
+elseif(!!$env:APPVEYOR_BUILD_VERSION)
+{
+    $version = $env:APPVEYOR_BUILD_VERSION
+}
+
 if($EnableSonar)
 {
 
@@ -68,7 +77,7 @@ if($Publish)
     $ubuntu1404x64 = Join-Path -Path $dropRootDirectory -ChildPath "ubuntu.14.04-x64"
     $osxx64 = Join-Path -Path $dropRootDirectory -ChildPath "osx-x64"
 
-    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r win10-x64 -o $win10x64
-    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r ubuntu.14.04-x64 -o $ubuntu1404x64
-    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r osx-x64 -o $osxx64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -v $version -r win10-x64 -o $win10x64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -v $version -r ubuntu.14.04-x64 -o $ubuntu1404x64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -v $version -r osx-x64 -o $osxx64
 }
