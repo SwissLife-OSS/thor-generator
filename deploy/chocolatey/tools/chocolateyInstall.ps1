@@ -1,1 +1,1 @@
-Install-ChocolateyZipPackage 'MyApp' 'http://myapp.tld/myapp-0.1.0-x86.zip' "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+Install-ChocolateyZipPackage 'EventSourceGenerator' 'https://github.com/ChilliCream/EventSourceGenerator/releases/download/0.0.1-test123/win10-x64.zip' "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
