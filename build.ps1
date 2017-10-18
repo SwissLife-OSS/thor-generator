@@ -1,4 +1,4 @@
-param([switch]$DisableBuild, [switch]$RunTests, [switch]$EnableCoverage, [switch]$EnableSonar)
+param([switch]$DisableBuild, [switch]$RunTests, [switch]$EnableCoverage, [switch]$EnableSonar, [switch]$Publish)
 
 if($EnableSonar)
 {
@@ -20,7 +20,7 @@ if($RunTests -or $EnableCoverage)
     $runTestsCmd = Join-Path -Path $env:TEMP -ChildPath $runTestsCmd
     $testAssemblies = ""
     
-    Get-ChildItem ./src/*.Tests | %{ $testAssemblies += "`"C:\Program Files\dotnet\dotnet.exe`" test `"" + $_.FullName + "`" --no-build`n" }
+    Get-ChildItem ./src/*.Tests | %{ $testAssemblies += "dotnet test `"" + $_.FullName + "`" --no-build`n" }
     
     if (!!$testAssemblies) # Has test assemblies
     {    
@@ -59,4 +59,16 @@ if($EnableSonar)
 {
 
     
+}
+
+if($Publish) 
+{
+    $dropRootDirectory = Join-Path -Path $PSScriptRoot -ChildPath "drop"
+    $win10x64 = Join-Path -Path $dropRootDirectory -ChildPath "win10-x64"
+    $ubuntu1404x64 = Join-Path -Path $dropRootDirectory -ChildPath "ubuntu.14.04-x64"
+    $osxx64 = Join-Path -Path $dropRootDirectory -ChildPath "osx-x64"
+
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r win10-x64 -o $win10x64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r ubuntu.14.04-x64 -o $ubuntu1404x64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r osx-x64 -o $osxx64
 }
