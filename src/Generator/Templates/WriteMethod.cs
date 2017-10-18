@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChilliCream.Logging.Generator.Templates
+namespace ChilliCream.Tracing.Generator.Templates
 {
     /// <summary>
     /// Represents an event source write method. This class is used to 

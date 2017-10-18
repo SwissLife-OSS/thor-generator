@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ChilliCream.Logging.Generator.Templates;
 using ChilliCream.Tracing.Generator.Properties;
 using Newtonsoft.Json;
 
@@ -29,6 +28,7 @@ namespace ChilliCream.Tracing.Generator.Templates
         /// <param name="name">The name.</param>
         /// <param name="code">The code.</param>
         /// <param name="baseWriteMethods">The base write methods.</param>
+        /// <param name="defaultPayloads">The payloads that come from the context.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="name"/> is <c>null</c>
         /// or
@@ -39,9 +39,10 @@ namespace ChilliCream.Tracing.Generator.Templates
         /// <paramref name="code"/> is <see cref="string.Empty"/>
         /// or
         /// <paramref name="baseWriteMethods"/> is <c>null</c>.
-        /// baseWriteMethods
         /// </exception>
-        public Template(string name, string code, IEnumerable<WriteMethod> baseWriteMethods, int defaultPayloads)
+        public Template(string name, string code,
+            IEnumerable<WriteMethod> baseWriteMethods,
+            int defaultPayloads)
         {
             if (string.IsNullOrEmpty(name))
             {

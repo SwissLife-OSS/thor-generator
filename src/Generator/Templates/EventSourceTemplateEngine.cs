@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChilliCream.Logging.Generator.Templates;
 using ChilliCream.Tracing.Generator.Types;
 using Nustache.Core;
 

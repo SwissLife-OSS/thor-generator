@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChilliCream.Tracing.Generator.Analyzer.Templates;
 using ChilliCream.Tracing.Generator.ProjectSystem;
 using ChilliCream.Tracing.Generator.Templates;
 

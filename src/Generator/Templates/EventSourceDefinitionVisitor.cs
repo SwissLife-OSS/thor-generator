@@ -3,11 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Diagnostics.Tracing;
-using Microsoft.CodeAnalysis;
-using ChilliCream.Tracing.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator.Analyzer.Templates
+namespace ChilliCream.Tracing.Generator.Templates
 {
     /// <summary>
     /// This visitor inspects syntax trees for event source definitions.

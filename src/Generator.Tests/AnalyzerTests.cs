@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using ChilliCream.Tracing.Generator.Analyzer.Templates;
-using ChilliCream.Tracing.Generator.Properties;
-using ChilliCream.Tracing.Generator.Templates;
-using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using FluentAssertions;
 using Xunit;
+using ChilliCream.Tracing.Generator.Properties;
+using ChilliCream.Tracing.Generator.Templates;
 
 namespace ChilliCream.Tracing.Generator
 {
