@@ -145,24 +145,24 @@
     }
 }</value>
   </data>
-  <data name="fooTemplate" xml:space="preserve">
-    <value>{{#isTrue}}
-true
-{{/isTrue}}
-{{^isTrue}}
-false
-{{/isTrue}}
-{{#name}}
-name exists
-{{/name}}
-{{^name}}
-name not exists
-{{/name}}
-{{#col}}
-{{.}} col exists
-{{/col}}
-{{^col}}
-col not exists
-{{/col}}</value>
+  <data name="EventSourceWithTwoMethods" xml:space="preserve">
+    <value>namespace EventSources
+{
+    [EventSourceDefinition(Name = "FooEventSource")]
+    public interface IFooEventSource
+    {
+        [Event(1,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Version = 1)]
+        void One(Guid messageId, Guid correlationId, string messageType, string from, string to);
+
+	[Event(2,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Version = 1)]
+        void Two(Guid messageId, Guid correlationId, string messageType, string from, string to);
+    }
+}</value>
   </data>
 </root>
