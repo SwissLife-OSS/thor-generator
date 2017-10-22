@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ChilliCream.Tracing.Generator.Types;
 using Nustache.Core;
 
 namespace ChilliCream.Tracing.Generator.Templates
@@ -11,9 +8,14 @@ namespace ChilliCream.Tracing.Generator.Templates
     /// </summary>
     internal class EventSourceTemplateEngine
     {
-        private HashSet<WriteMethod> _baseWriteMethods;
+        private static readonly RenderContextBehaviour _renderContextBehaviour =
+            new RenderContextBehaviour
+            {
+                HtmlEncoder = t => t
+            };
+
         private readonly string _template;
-        private readonly int _defaultPayloads;
+        private readonly EventSourceModelPostProcessor _eventSourceModelPostProcessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventSourceTemplateEngine"/> class.
@@ -31,9 +33,8 @@ namespace ChilliCream.Tracing.Generator.Templates
                 throw new ArgumentNullException(nameof(template));
             }
 
-            _baseWriteMethods = new HashSet<WriteMethod>(template.BaseWriteMethods);
             _template = template.Code;
-            _defaultPayloads = template.DefaultPayloads;
+            _eventSourceModelPostProcessor = new EventSourceModelPostProcessor(template);
         }
 
         /// <summary>
@@ -50,77 +51,11 @@ namespace ChilliCream.Tracing.Generator.Templates
                 throw new ArgumentNullException(nameof(eventSourceModel));
             }
 
-            AddWriteMethods(eventSourceModel);
+            _eventSourceModelPostProcessor.Process(eventSourceModel);
 
             // generate event source
             return Render.StringToString(_template, eventSourceModel,
-                renderContextBehaviour: new RenderContextBehaviour { HtmlEncoder = t => t });
-        }
-
-        private void AddWriteMethods(EventSourceModel eventSourceModel)
-        {
-            eventSourceModel.WriteMethods.Clear();
-
-            foreach (WriteMethod writeMethod in GetWriteMethods(eventSourceModel))
-            {
-                if (!_baseWriteMethods.Contains(writeMethod))
-                {
-                    int c = 97;
-                    int i = _defaultPayloads;
-
-                    WriteCoreModel writeCoreModel = new WriteCoreModel();
-                    foreach (string type in writeMethod.ParameterTypes)
-                    {
-                        IParameterTypeInfo typeInfo = GetWriteMethodParameterTypeInfo(type);
-
-                        WriteMethodParameterModel parameterModel = new WriteMethodParameterModel
-                        {
-                            Name = ((char)c++).ToString(),
-                            Type = typeInfo.Name,
-                            Position = i++,
-                            IsString = typeInfo.IsString,
-                            Operator = typeInfo.Operator,
-                            Size = typeInfo.Size,
-                            IsFirst = writeCoreModel.Parameters.Count == 0
-                        };
-                        writeCoreModel.Parameters.Add(parameterModel);
-                    }
-                    writeCoreModel.TotalParameters = i;
-                    eventSourceModel.WriteMethods.Add(writeCoreModel);
-                }
-            }
-        }
-
-        private IEnumerable<WriteMethod> GetWriteMethods(EventSourceModel eventSourceModel)
-        {
-            HashSet<WriteMethod> hashSet = new HashSet<WriteMethod>();
-            foreach (EventModel eventModel in eventSourceModel.Events)
-            {
-                IEnumerable<string> types = eventModel.Parameters
-                    .Select(t => GetWriteMethodParameterType(t.Type));
-                hashSet.Add(new WriteMethod(types));
-            }
-            return hashSet;
-        }
-
-        private string GetWriteMethodParameterType(string typeName)
-        {
-            IParameterTypeInfo typeInfo;
-            if (!ParameterTypeLookup.TryGet(typeName, out typeInfo))
-            {
-                throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
-            }
-            return typeInfo.Name;
-        }
-
-        private IParameterTypeInfo GetWriteMethodParameterTypeInfo(string typeName)
-        {
-            IParameterTypeInfo typeInfo;
-            if (!ParameterTypeLookup.TryGet(typeName, out typeInfo))
-            {
-                throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
-            }
-            return typeInfo;
+                renderContextBehaviour: _renderContextBehaviour);
         }
     }
 }
