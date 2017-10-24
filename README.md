@@ -19,6 +19,29 @@
 
 ## How to get started
 
+Open a project where you want to add your event sources and add an interface that declares the structure of the event source you want to create. Annotate your event source interface with a ```EventSourceDefinitionAttribute```. You can either use the attribute located in our [tracing core](https://nuget.org) or create your own.
+
+```csharp
+using System;
+using System.Diagnostics.Tracing;
+using ChilliCream.Tracing;
+
+[EventSourceDefinition("MyEventSourceName")]
+public interface IMyEventSource
+{
+    [Event(1)]
+    void SayHello(string message);
+}
+```
+
+After you have added all your event source interfaces open a console window and switch to your solution location and run the following command.
+
+```cmd
+esgen
+```
+
+For a more detailed help that shows all the scenarious visit our [documentation](http://io.github.com).
+
 
 ## Building the Repository
 
