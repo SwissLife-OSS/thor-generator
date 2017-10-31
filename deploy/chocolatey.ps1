@@ -10,6 +10,6 @@ $installScriptContent = $installScriptContent.Replace("{version}", $Version)
 [System.IO.File]::WriteAllText($installScript, $installScriptContent)
 
 Set-Location $packageDir
-Write-Host "cpack $nuspec --version $Version --outdir $packageDir"
-cpack --version $Version --outdir $packageDir
+Write-Host "cpack $nuspec --version $Version"
+cpack --version $Version
 #cpush $nupkg --apikey $ApiKey
