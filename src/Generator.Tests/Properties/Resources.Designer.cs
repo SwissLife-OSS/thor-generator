@@ -101,28 +101,24 @@ namespace ChilliCream.Tracing.Generator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {{#isTrue}}
-        ///true
-        ///{{/isTrue}}
-        ///{{^isTrue}}
-        ///false
-        ///{{/isTrue}}
-        ///{{#name}}
-        ///name exists
-        ///{{/name}}
-        ///{{^name}}
-        ///name not exists
-        ///{{/name}}
-        ///{{#col}}
-        ///{{.}} col exists
-        ///{{/col}}
-        ///{{^col}}
-        ///col not exists
-        ///{{/col}}.
+        ///   Looks up a localized string similar to namespace EventSources
+        ///{
+        ///    [EventSourceDefinition(Name = &quot;FooEventSource&quot;)]
+        ///    public interface IFooEventSource
+        ///    {
+        ///        [Event(1,
+        ///           Level = EventLevel.Verbose,
+        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;,
+        ///           Version = 1)]
+        ///        void One(Guid messageId, Guid correlationId, string messageType, string from, string to);
+        ///
+        ///	[Event(2,
+        ///           Level = EventLevel.Verbose,
+        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;, [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string fooTemplate {
+        internal static string EventSourceWithTwoMethods {
             get {
-                return ResourceManager.GetString("fooTemplate", resourceCulture);
+                return ResourceManager.GetString("EventSourceWithTwoMethods", resourceCulture);
             }
         }
     }
