@@ -84,4 +84,6 @@ if($Publish)
     dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r win10-x64 -o $win10x64
     dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r ubuntu.14.04-x64 -o $ubuntu1404x64
     dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r osx-x64 -o $osxx64
+
+    ./deploy/chocolatey.ps1 -Version $version -ApiKey $env:CHOCO_APIKEY
 }
