@@ -12,4 +12,4 @@ $installScriptContent = $installScriptContent.Replace("{version}", $Version)
 Set-Location $packageDir
 Write-Host "cpack $nuspec --version $Version --outdir $packageDir"
 choco pack "$nuspec" --version $Version --outdir "$packageDir"
-#cpush $nupkg --apikey $ApiKey
+choco push $nupkg --apikey $ApiKey
