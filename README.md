@@ -68,20 +68,22 @@ public interface IMyEventSource
 }
 ```
 
-After you have added all your event source interfaces open a console window and switch to your solution location and run the following command.
+If you are using the msbuild integration of esgen just compile your project; otherwise, open a terminal window and switch to your solution location and run the following command.
 
 ```cmd
 esgen
 ```
 
-For a more detailed help that shows all the scenarious visit our [documentation](http://io.github.com).
+Or run ```esgen -r``` if you want esgen to search recursively for any solution.
+
+For a more detailed help that shows all the scenarious visit our [documentation](https://github.com/ChilliCream/EventSourceGenerator-docs/blob/master/README.md).
 
 
 ## Building the Repository
 
 | Windows               | macOS                 |
 | --------------------- | --------------------- |
-| [Instructions]()      | [Instructions]()      |
+| [Instructions](https://github.com/ChilliCream/EventSourceGenerator-docs/blob/master/build/windows.md)      | [Instructions](https://github.com/ChilliCream/EventSourceGenerator-docs/blob/master/build/macos.md)      |
 
 ### Build status of master branch
 
