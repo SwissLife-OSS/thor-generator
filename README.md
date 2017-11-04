@@ -8,7 +8,7 @@ The problem in writing event sources is often that you have to work with unsafe 
 
 The other problem with writing event sources is that one has to invest a lot of time into writing repetitive code "just" to have some logging in an application. It is not seldom that teams do not want to invest that time and opt for a simpler string based logging solution.
 
-The EventSourceGenerator (ESGen) wants to solf these problems by generating the nescesarry event source code.
+The EventSourceGenerator (ESGen) wants to solve these problems by generating the nescesarry event source code and letting developers focuse on designing their logging around their business logic.
 
 Event sources will be specified by writing an interface that describes the logging events (no other dsl needed). The event source generator will inspect those interfaces and generate the event source code for you.
 
