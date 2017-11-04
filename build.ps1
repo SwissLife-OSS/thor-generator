@@ -9,11 +9,15 @@ elseif(!!$env:APPVEYOR_BUILD_VERSION)
     $version = $env:APPVEYOR_BUILD_VERSION
 }
 
+if($version -ne $null)
+{
+    $env:Version = $version
+}
+
 if($EnableSonar)
 {
 
 }
-
 
 if($DisableBuild -eq $false)
 {
@@ -76,8 +80,10 @@ if($Publish)
     $win10x64 = Join-Path -Path $dropRootDirectory -ChildPath "win10-x64"
     $ubuntu1404x64 = Join-Path -Path $dropRootDirectory -ChildPath "ubuntu.14.04-x64"
     $osxx64 = Join-Path -Path $dropRootDirectory -ChildPath "osx-x64"
+    
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r win10-x64 -o $win10x64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r ubuntu.14.04-x64 -o $ubuntu1404x64
+    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r osx-x64 -o $osxx64
 
-    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -v $version -r win10-x64 -o $win10x64
-    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -v $version -r ubuntu.14.04-x64 -o $ubuntu1404x64
-    dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -v $version -r osx-x64 -o $osxx64
+    ./deploy/chocolatey.ps1 -Version $version -ApiKey $env:CHOCO_APIKEY
 }

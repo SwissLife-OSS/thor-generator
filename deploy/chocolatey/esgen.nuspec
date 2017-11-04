@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <metadata>
+    <id>esgen</id>
+    <title>ChilliCream EventSourceGenerator</title>
+    <version>0.0.1</version>
+    <authors>Michael and Rafael Staib</authors>
+    <owners>Michael and Rafael Staib</owners>
+    <summary></summary>
+    <description>ChilliCream EventSourceGenerator</description>
+    <projectUrl>https://github.com/ChilliCream/EventSourceGenerator</projectUrl>
+    <tags>etw</tags>
+    <licenseUrl>https://github.com/ChilliCream/EventSourceGenerator/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <!--iconUrl>http://www.myapp.tld/logo.png</iconUrl-->
+  </metadata>
+</package>
