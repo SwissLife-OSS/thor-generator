@@ -4,9 +4,9 @@
 
 Microsoft's Event Tracing for Windows is a powerfull tracing framwork that offers minimal overhead and structured log payloads.
 
-The problem in writing event sources is often that you have to work with unsafe code and that if you get anything wrong in your event source it won't log at all. This behaviour is a feature of ETW, the application shall not be disrupted by a faulty event sources, so your event source won't log but it also won't throw exceptions that crash your application.
+The problem in writing event sources is often that you have to work with unsafe code and that if you get anything wrong in your event source it won't log at all. This behaviour is a feature of ETW, the application shall not be disrupted by faulty event sources, so your event source won't log but it also won't throw exceptions that crash your application.
 
-The other problem with writing event sources is that you have to invest a lot more time into writing a lot of repetive code "just" to have some logging than using other logging frameworks. It is not seldom that teams do not want to invest a lot of time into logging, the business logic is their concern and logging is just another nagging task they have to incorporate into their daily business.
+The other problem with writing event sources is that you have to invest a lot of time into writing repetitive code "just" to have some logging in your application. It is not seldom that teams do not want to invest that time and opt to for a simpler string based logging solution.
 
 The EventSourceGenerator (ESGen) wants to solf these problems by generating the nescesarry event source code.
 
