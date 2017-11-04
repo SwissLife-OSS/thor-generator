@@ -10,7 +10,7 @@ The other problem with writing event sources is that one has to invest a lot of 
 
 The EventSourceGenerator (ESGen) wants to solve these problems by generating the nescesarry event source code and letting developers focuse on designing their logging around their business logic.
 
-Event sources will be specified by writing an interface that describes the logging events (no other dsl needed). The event source generator will inspect those interfaces and generate the event source code for you.
+Event sources will be specified by writing interfaces that specify the logging events and their payloads (no other DSL  needed). The event source generator will inspect those interfaces and generate the necessary event source code.
 
 The event source templates can be amended to fit your needs and your aesthetic point of view concerning the generated code.
 
