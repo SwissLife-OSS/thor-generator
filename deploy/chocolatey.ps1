@@ -1,8 +1,8 @@
 param([string]$Version, [string]$ApiKey)
 
 $packageDir = Join-Path -Path $PSScriptRoot -ChildPath "chocolatey"
-$nuspec = Join-Path -Path $packageDir -ChildPath "esgen.nuspec"
-$nupkg = Join-Path -Path $packageDir -ChildPath "esgen.$Version.nupkg"
+$nuspec = Join-Path -Path $packageDir -ChildPath "thorgen.nuspec"
+$nupkg = Join-Path -Path $packageDir -ChildPath "Thor.Generator.$Version.nupkg"
 $installScript = Join-Path -Path $packageDir -ChildPath "tools/chocolateyInstall.ps1"
 
 $installScriptContent = [System.IO.File]::ReadAllText($installScript)
