@@ -16,7 +16,6 @@ namespace ChilliCream.Tracing.Generator.Tasks
         , ICommandLineTask
     {
         private readonly TemplateStorage _templateStorage;
-        private readonly IConsole _console;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectEventSourceGeneratorTask"/> class.
@@ -68,8 +67,8 @@ namespace ChilliCream.Tracing.Generator.Tasks
             }
 
             // ensure that we have rooted file or directory paths
-            SourceProject = _console.GetFullPath(SourceProject);
-            TargetProject = _console.GetFullPath(TargetProject);
+            SourceProject = Console.GetFullPath(SourceProject);
+            TargetProject = Console.GetFullPath(TargetProject);
 
             if (Project.TryParse(SourceProject, out Project source)
                 && Project.TryParse(TargetProject, out Project target))
