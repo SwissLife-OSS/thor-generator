@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Tracing;
 using System.Text;
+using ChilliCream.Tracing;
+using ChilliCream.Tracing.Abstractions;
 
 namespace {{namespace}}
 {
@@ -13,7 +15,7 @@ namespace {{namespace}}
     {{/hasProperties}}
 {{/attribute}}
     public sealed class {{name}}
-        : EventSource
+        : EventSourceBase
         , {{interfaceName}}
     {
         private {{name}}() { }
@@ -21,15 +23,21 @@ namespace {{namespace}}
         public static readonly {{interfaceName}} Log = new {{name}}();
 
 {{#events}}
-        {{#attribute}}
-        [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
-        {{/attribute}}
+        [NonEvent]
         public void {{name}}({{#parameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/parameters}})
         {
             if (IsEnabled())
             {
-                WriteCore({{id}}{{#parameters}}, {{name}}{{/parameters}}); 
+                {{name}}(Application.Id, ActivityStack.Id{{#parameters}}, {{name}}{{/parameters}});
             }
+        }
+
+        {{#attribute}}
+        [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
+        {{/attribute}}
+        private void {{name}}(int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}}) 
+        {
+            WriteCore({{id}}, applicationId, activityId{{#parameters}}, {{name}}{{/parameters}}); 
         }
 
 {{/events}}
@@ -41,7 +49,7 @@ namespace {{namespace}}
             {
 {{#parameters}}
 {{#isString}}
-                SetToEmptyIfNull(ref {{name}});
+                StringExtensions.SetToEmptyIfNull(ref {{name}});
 {{/isString}}
 {{/parameters}}
 
@@ -51,6 +59,12 @@ namespace {{namespace}}
                 {
 {{/isString}}
 {{/parameters}}
+                const short dataCount = {{totalParameters}};
+                EventData* data = stackalloc EventData[dataCount];
+                data[0].DataPointer = (IntPtr)(&applicationId);
+                data[0].Size = 4;
+                data[1].DataPointer = (IntPtr)(&activityId);
+                data[1].Size = 16;
 {{#parameters}}
 {{#isString}}
                 data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
@@ -72,14 +86,5 @@ namespace {{namespace}}
         }
 
 {{/writeMethods}}
-
-        [NonEvent]
-        private static void SetToEmptyIfNull(ref string value)
-        {
-            if (value == null)
-            {
-                value = string.Empty;
-            }
-        }
     }
 }

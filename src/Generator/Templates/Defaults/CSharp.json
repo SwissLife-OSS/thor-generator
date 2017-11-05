@@ -1,6 +1,5 @@
 ﻿{
-  "defaultPayloads": 2,
-  "baseWriteMethods": [
-    [ "string" ]
-  ]
+  "defaultPayloads": 0,
+  "baseWriteMethods": [],
+  "packageDependencies" : []
 }

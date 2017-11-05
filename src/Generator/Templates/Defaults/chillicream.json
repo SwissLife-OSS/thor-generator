@@ -1,0 +1,12 @@
+﻿{
+  "defaultPayloads": 2,
+  "baseWriteMethods": [
+    [ "string" ]
+  ],
+  "packageDependencies" : [
+    {
+      "id":"ChilliCream.Tracing.Abstractions",
+      "version" : "1.0.0-preview3"
+    }
+  ]
+}
