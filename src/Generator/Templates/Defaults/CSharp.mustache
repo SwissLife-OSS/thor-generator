@@ -28,7 +28,7 @@ namespace {{namespace}}
         {
             if (IsEnabled())
             {
-                {{hasParameters}}
+                {{#hasParameters}}
                 WriteCore({{id}}{{#parameters}}, {{name}}{{/parameters}}); 
                 {{/hasParameters}}
                 {{^hasParameters}}
@@ -77,7 +77,7 @@ namespace {{namespace}}
         }
 
 {{/writeMethods}}
-{{hasWriteMethods}}
+{{#hasWriteMethods}}
         [NonEvent]
         private static void SetToEmptyIfNull(ref string value)
         {
