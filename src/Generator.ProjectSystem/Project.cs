@@ -106,7 +106,17 @@ namespace ChilliCream.Tracing.Generator.ProjectSystem
 
             Document document = Document.Create(content, name, folders);
 
-            // todo: remove and that add due to equality. this issue will be fixed later.
+            // check if an update of the document is necessary
+            if (_documents.TryGetValue(document.Id, out Document currentVersion))
+            {
+                string currentContent = currentVersion.GetContent();
+                if(currentContent.Equals(content, StringComparison.Ordinal))
+                {
+                    return currentVersion;
+                }
+            }
+
+            // todo: remove and than add due to equality. this issue will be fixed later.
             _documents = _documents.Remove(document.Id).Add(document.Id, document);
             _updatedDocuments.Add(document.Id);
             Documents = new ReadOnlyDocumentCollection(_documents);
