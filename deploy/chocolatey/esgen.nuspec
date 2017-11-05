@@ -18,7 +18,5 @@
  
     <requireLicenseAcceptance>true</requireLicenseAcceptance> 
     <tags>etw eventsource csharp dotent event-tracing-for-windows</tags>
-
- 
   </metadata>
 </package>
