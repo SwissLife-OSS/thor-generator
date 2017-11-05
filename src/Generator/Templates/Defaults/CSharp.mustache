@@ -40,7 +40,7 @@ namespace {{namespace}}
 {{/events}}
 {{#writeMethods}}
         [NonEvent]
-        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
+        private unsafe void WriteCore(int eventId{{#parameters}}, {{type}} {{name}}{{/parameters}})
         {
             if (IsEnabled())
             {
@@ -56,6 +56,8 @@ namespace {{namespace}}
                 {
 {{/isString}}
 {{/parameters}}
+                const short dataCount = {{totalParameters}};
+                EventData* data = stackalloc EventData[dataCount];
 {{#parameters}}
 {{#isString}}
                 data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
