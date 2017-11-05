@@ -26,7 +26,7 @@ We provide a nuget package that will integrate esgen with your project rather th
 1. Install the ```esgen``` nuget package to the projects that contain event source interfaces.
 
 ```powershell
-Install-Package esgen
+Install-Package Thor.Generator
 ```
 
 2. With the classic .net MSBuild projects we will inject esgen into your project file and run esgen for this project after every build. With the new MSBuild projects used for .net core our package will be located in the global package cache. You can then either integrate our MSBuild task into your projects or use the esgen console from your build scripts.
@@ -36,18 +36,17 @@ Install-Package esgen
 If you opt to install esgen on windows you can use chocolatey.
 
 ```powershell
-choco install esgen
+choco install Thor.Generator
 ```
 
 Chocolatey will add esgen to your path variable so that you can use it in any console you like.
 
- 
 ### macOS
 
 If you want to install esgen on macOS you can use brew.
 
 ```bash
-brew install esgen
+brew install Thor.Generator
 ```
 
 #### Install with brew

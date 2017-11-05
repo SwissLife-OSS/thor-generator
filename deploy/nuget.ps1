@@ -1,7 +1,7 @@
 param([string]$Version, [string]$ApiKey)
 
 $packageDir = Join-Path -Path $PSScriptRoot -ChildPath "nuget"
-$nupkg = Join-Path -Path $packageDir -ChildPath "esgen.$Version.nupkg"
+$nupkg = Join-Path -Path $packageDir -ChildPath "Thor.Generator.$Version.nupkg"
 
 Push-Location
 Set-Location $packageDir
