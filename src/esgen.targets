@@ -1,4 +1,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-
+    <PropertyGroup>
+        <SourceProject>$(MSBuildProjectDirectory)</SourceProject>
+    </PropertyGroup>
+ 
+    <Target Name="TargetName">
+        <Exec Command="esgen $(MSBuildProjectDirectory)" />        
+    </Target>
 </Project>
