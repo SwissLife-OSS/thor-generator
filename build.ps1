@@ -86,4 +86,5 @@ if($Publish)
     dotnet publish ./src/Generator.CLI -c Release -f netcoreapp2.0 -r osx-x64 -o $osxx64
 
     ./deploy/chocolatey.ps1 -Version $version -ApiKey $env:CHOCO_APIKEY
+    ./deploy/nuget.ps1 -Version $version -ApiKey $env:NUGET_APIKEY
 }

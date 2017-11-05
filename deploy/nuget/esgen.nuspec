@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ESGen</id>
+    <version>1.0.0</version>
+    <title>ChilliCream EventSourceGenerator</title>
+    <description>ChilliCream EventSourceGenerator</description>
+    <summary></summary>
+    <authors>Michael and Rafael Staib</authors>
+    <owners>Michael and Rafael Staib</owners>
+    <licenseUrl>https://github.com/ChilliCream/EventSourceGenerator/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ChilliCream/EventSourceGenerator</projectUrl>
+    <iconUrl>https://github.com/ChilliCream/EventSourceGenerator/blob/master/resources/icon.png?raw=true</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <language>en-US</language>
+    <tags>etw</tags>
+  </metadata>
+
+  <files>
+    <file src="..\..\src\esgen.targets" target="build" />
+    <file src="..\..\drop\win10-x64\**\*.*" target="tools" />
+  </files>
+</package>
