@@ -9,6 +9,7 @@ using ChilliCream.Tracing.Generator.Properties;
 using Microsoft.CodeAnalysis;
 using FluentAssertions;
 using System.Linq;
+using ChilliCream.Tracing.Generator.ProjectSystem;
 
 namespace ChilliCream.Tracing.Generator
 {
@@ -42,13 +43,39 @@ namespace ChilliCream.Tracing.Generator
             eventSourceVisitor.MethodSignatures[0].Should()
                 .Be("One(Guid messageId, Guid correlationId, string messageType, string from, string to)");
             eventSourceVisitor.MethodSignatures[1].Should()
-                .Be("One(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[2].Should()
                 .Be("Two(Guid messageId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[3].Should()
-                .Be("Two(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[4].Should()
+            eventSourceVisitor.MethodSignatures[2].Should()
                 .Be("WriteCore(int eventId, int applicationId, Guid activityId, Guid a, Guid b, string c, string d, string e)");
+            eventSourceVisitor.MethodSignatures[3].Should()
+                .Be("SetToEmptyIfNull(string value)");
+        }
+
+        [Fact]
+        public void GenerateCSharpEventSourceWithEventWithoutArguments()
+        {
+            // arrange
+            TemplateStorage templateStorage = new TemplateStorage();
+            Template template = templateStorage.GetTemplate(Language.CSharp);
+
+            EventSourceModel eventSourceModel = new EventSourceModel();
+            EventModel eventModel = new EventModel();
+            eventModel.Name = "Foo";
+            eventSourceModel.Events.Add(eventModel);
+
+            // act
+            EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
+            string eventSourceCode = templateEngine.Generate(eventSourceModel);
+
+            // assert
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(eventSourceCode);
+
+            EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
+            eventSourceVisitor.Visit(syntaxTree.GetRoot());
+
+            eventSourceVisitor.Classes.Should().HaveCount(1);
+            eventSourceVisitor.MethodSignatures.Should().HaveCount(1);
+            eventSourceVisitor.MethodSignatures[0].Should()
+                .Be("Foo()");
         }
     }
 
