@@ -17,6 +17,6 @@
     <packageSourceUrl>https://github.com/ChilliCream/thor-generator</packageSourceUrl>
  
     <requireLicenseAcceptance>true</requireLicenseAcceptance> 
-    <tags>etw eventsource csharp dotent event-tracing-for-windows</tags>
+    <tags>etw eventsource csharp dotent event-tracing-for-windows thorgen thor</tags>
   </metadata>
 </package>
