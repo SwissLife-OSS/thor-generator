@@ -1,24 +1,29 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{CA54FBD8-FB29-4DCF-B3AB-032D94DD663F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\Generator.csproj", "{CA54FBD8-FB29-4DCF-B3AB-032D94DD663F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.CLI", "Generator.CLI\Generator.CLI.csproj", "{6D1D9695-90A9-4EAA-A05B-DC944034CE87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.CLI", "Generator.CLI\Generator.CLI.csproj", "{6D1D9695-90A9-4EAA-A05B-DC944034CE87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Tests", "Generator.Tests\Generator.Tests.csproj", "{C480EB8E-7EC8-49AA-AAD5-8643FFBEF574}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Tests", "Generator.Tests\Generator.Tests.csproj", "{C480EB8E-7EC8-49AA-AAD5-8643FFBEF574}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.ProjectSystem", "Generator.ProjectSystem\Generator.ProjectSystem.csproj", "{BE62CBC9-6696-462E-A16D-91F5D3D6CCB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.ProjectSystem", "Generator.ProjectSystem\Generator.ProjectSystem.csproj", "{BE62CBC9-6696-462E-A16D-91F5D3D6CCB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.ProjectSystem.Tests", "Generator.ProjectSystem.Tests\Generator.ProjectSystem.Tests.csproj", "{7B7AA203-2957-49DA-858F-B8EB375CCA82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.ProjectSystem.Tests", "Generator.ProjectSystem.Tests\Generator.ProjectSystem.Tests.csproj", "{7B7AA203-2957-49DA-858F-B8EB375CCA82}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console Interface", "Console Interface", "{DDF125CA-8E76-4CD1-B3CB-3A11B1C23AE3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project System", "Project System", "{37079DC3-7887-4EF0-9EF6-167802ADD139}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentConsole", "FluentConsole\FluentConsole.csproj", "{E336FBB8-AC1F-4003-840E-22570C73CA1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentConsole", "FluentConsole\FluentConsole.csproj", "{E336FBB8-AC1F-4003-840E-22570C73CA1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentConsole.Tests", "FluentConsole.Tests\FluentConsole.Tests.csproj", "{C5EB2EBC-3F8D-4496-B829-0FD9BCA052E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentConsole.Tests", "FluentConsole.Tests\FluentConsole.Tests.csproj", "{C5EB2EBC-3F8D-4496-B829-0FD9BCA052E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Integration", "Build Integration", "{C9AE9217-5B16-4E40-9A92-FAE6033AFF88}"
+	ProjectSection(SolutionItems) = preProject
+		esgen.targets = esgen.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

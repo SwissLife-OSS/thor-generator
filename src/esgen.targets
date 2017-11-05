@@ -1,9 +1,18 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <SourceProject>$(MSBuildProjectDirectory)</SourceProject>
-    </PropertyGroup>
- 
-    <Target Name="TargetName">
-        <Exec Command="esgen $(MSBuildProjectDirectory)" />        
-    </Target>
+  <PropertyGroup>
+    <SourceProject Condition="'$(SourceProject)' == ''">$(MSBuildProjectFullPath)</SourceProject>
+    <TargetProject Condition="'$(TargetProject)' == ''">$(SourceProject)</TargetProject>
+
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+    <CurrentDirectory>$(MSBuildThisFileDirectory.TrimEnd('/').TrimEnd('\'))</CurrentDirectory>
+
+    <ESGenWin>&quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'esgen.exe'))&quot;</ESGenWin>
+    <ESGenCore>dotnet &quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'esgen.dll'))&quot;</ESGenCore>
+    <ESGen Condition="'$(IsWindows)' == 'true'">$(ESGenWin)</ESGen>
+    <ESGen Condition="'$(ESGen)' == ''">$(ESGenCore)</ESGen>
+  </PropertyGroup>
+
+  <Target Name="TargetName" BeforeTargets="CoreCompile">
+    <Exec Command="$(ESGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" />
+  </Target>
 </Project>
