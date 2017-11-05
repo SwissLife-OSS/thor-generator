@@ -1,9 +1,8 @@
-﻿using ChilliCream.Tracing.Generator.Templates;
-using FluentAssertions;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
+using ChilliCream.Tracing.Generator.Templates;
+using FluentAssertions;
 using Xunit;
 
 namespace ChilliCream.Tracing.Generator

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Generator\Generator.csproj" />
+    <ProjectReference Include="..\Generator.ProjectSystem\Generator.ProjectSystem.csproj" />
   </ItemGroup>
 
   <ItemGroup>
