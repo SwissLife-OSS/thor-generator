@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <Target Name="TargetName" BeforeTargets="CoreCompile">
-    <Exec Command="$(ESGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" />
+    <Exec Command="$(ESGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" Condition="'$(TemplateName)' == ''" />
+    <Exec Command="$(ESGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot; --template $(TemplateName)" Condition="'$(TemplateName)' != ''" />    
   </Target>
 </Project>
