@@ -16,4 +16,4 @@ Write-Host "cpack $nuspec --version $Version --outdir $packageDir"
 choco pack "$nuspec" --version $Version --outdir "$packageDir"
 choco push $nupkg --apikey $ApiKey
 
-Set-Location Pop-Location
+Pop-Location

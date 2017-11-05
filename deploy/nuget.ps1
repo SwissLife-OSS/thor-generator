@@ -9,4 +9,4 @@ Set-Location $packageDir
 .\nuget.exe pack -Version $Version
 .\nuget.exe push $nupkg -source https://api.nuget.org/v3/index.json -apiKey $ApiKey
 
-Set-Location Pop-Location
+Pop-Location
