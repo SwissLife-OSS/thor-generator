@@ -2,6 +2,9 @@
 
 **An *ETW* EventSource generator build on *.Net Core 2.0***
 
+[![GitHub release](https://img.shields.io/github/release/chillicream/eventsourcegenerator.svg)](https://github.com/ChilliCream/EventSourceGenerator/releases) [![License](https://img.shields.io/github/license/ChilliCream/EventSourceGenerator.svg)](https://github.com/ChilliCream/EventSourceGenerator/releases) [![AppVeyor branch](https://img.shields.io/appveyor/ci/rstaib/EventSourceGenerator/master.svg)](https://ci.appveyor.com/project/rstaib/eventsourcegenerator)
+ [![Coveralls](https://img.shields.io/coveralls/ChilliCream/EventSourceGenerator.svg)](https://coveralls.io/github/ChilliCream/EventSourceGenerator?branch=master) [![NuGet Package](https://img.shields.io/chocolatey/v/esgen.svg)](https://www.nuget.org/packages/ESGen/) [![Chocolatey Package](https://img.shields.io/nuget/v/esgen.svg)](https://chocolatey.org/packages/esgen)
+
 Microsoft's Event Tracing for Windows is a powerfull tracing framwork that offers minimal overhead and structured log payloads.
 
 The problem in writing event sources is often that you have to work with unsafe code and that if you get anything wrong in your event source it won't log at all. This behaviour is a feature of ETW, the application shall not be disrupted by faulty event sources, so your event source won't log but it also won't throw exceptions that crash your application.
