@@ -91,7 +91,8 @@ namespace ChilliCream.Tracing.Generator.Templates
         {
             EventSourceModel eventSourceModel = new EventSourceModel();
 
-            foreach (AttributeArgumentSyntax argument in node.ArgumentList.Arguments)
+            foreach (AttributeArgumentSyntax argument in node.ArgumentList?.Arguments
+                ?? Enumerable.Empty<AttributeArgumentSyntax>())
             {
                 string name = GetName(argument);
                 if (_eventSourceAttributeProperties.Contains(name))
