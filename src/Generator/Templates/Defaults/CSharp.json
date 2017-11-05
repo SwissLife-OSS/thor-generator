@@ -1,5 +1,7 @@
 ﻿{
   "defaultPayloads": 0,
-  "baseWriteMethods": [],
+  "baseWriteMethods": [
+    [ ]
+  ],
   "packageDependencies" : []
 }
