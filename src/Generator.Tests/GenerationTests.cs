@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ChilliCream.Tracing.Generator.Properties;
+using Thor.Generator.Properties;
 using Nustache.Core;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator
+namespace Thor.Generator
 {
     public class GenerationTests
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace ChilliCream.Tracing.Generator.Templates
+namespace Thor.Generator.Templates
 {
     /// <summary>
     /// This visitor inspects syntax trees for event source definitions.

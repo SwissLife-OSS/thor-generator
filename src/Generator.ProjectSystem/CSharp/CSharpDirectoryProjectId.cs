@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
+namespace Thor.Generator.ProjectSystem.CSharp
 {
     public sealed class CSharpDirectoryProjectId
         : ProjectId

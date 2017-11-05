@@ -1,7 +1,7 @@
 ﻿using System;
 using Nustache.Core;
 
-namespace ChilliCream.Tracing.Generator.Templates
+namespace Thor.Generator.Templates
 {
     /// <summary>
     /// The template engine can generate event sources from an <see cref="EventSourceModel"/>.

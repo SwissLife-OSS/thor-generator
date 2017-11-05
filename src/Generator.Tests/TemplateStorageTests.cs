@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using ChilliCream.Tracing.Generator.Templates;
+using Thor.Generator.Templates;
 using FluentAssertions;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator
+namespace Thor.Generator
 {
     public class TemplateStorageTests
         : IDisposable

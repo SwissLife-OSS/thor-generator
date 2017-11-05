@@ -6,7 +6,7 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public class SolutionTests
     {

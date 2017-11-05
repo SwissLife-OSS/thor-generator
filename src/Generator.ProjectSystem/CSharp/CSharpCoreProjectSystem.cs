@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
+namespace Thor.Generator.ProjectSystem.CSharp
 {
     public class CSharpCoreProjectSystem
         : ProjectSystem<CSharpCoreProjectId>

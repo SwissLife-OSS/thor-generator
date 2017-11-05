@@ -8,7 +8,7 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public class DocumentTests
     {

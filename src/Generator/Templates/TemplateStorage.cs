@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using ChilliCream.Tracing.Generator.ProjectSystem;
+using Thor.Generator.ProjectSystem;
 
-namespace ChilliCream.Tracing.Generator.Templates
+namespace Thor.Generator.Templates
 {
     /// <summary>
     /// This class provides access to the event source templates.

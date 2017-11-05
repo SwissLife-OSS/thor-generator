@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public static class TestProjects
     {

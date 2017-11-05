@@ -1,8 +1,8 @@
 ﻿using System;
-using ChilliCream.Tracing.Generator.ProjectSystem;
-using ChilliCream.Tracing.Generator.Templates;
+using Thor.Generator.ProjectSystem;
+using Thor.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator
+namespace Thor.Generator
 {
     public class EventSourceGenerator
     {

@@ -1,4 +1,4 @@
-﻿namespace ChilliCream.Tracing.Generator.ProjectSystem
+﻿namespace Thor.Generator.ProjectSystem
 {
     public enum Language
     {

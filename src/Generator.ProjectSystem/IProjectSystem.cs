@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// A prject system provides functionality to load projects or commit changes back to the project files.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// This class represents a source code document of a project.

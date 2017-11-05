@@ -5,7 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public abstract class ProjectSystemTestBase
         : IDisposable

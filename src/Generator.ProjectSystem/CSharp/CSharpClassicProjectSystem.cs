@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.Build.Construction;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
+namespace Thor.Generator.ProjectSystem.CSharp
 {
     /// <summary>
     /// This project system provides functionality to load and alter clasic csharp projects.

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>ChilliCream.Tracing.Generator.Tests</AssemblyName>
-    <RootNamespace>ChilliCream.Tracing.Generator</RootNamespace>
+    <AssemblyName>Thor.Generator.Tests</AssemblyName>
+    <RootNamespace>Thor.Generator</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace ChilliCream.Tracing.Generator.Tasks
+﻿namespace Thor.Generator.Tasks
 {
     internal static class CustomErrorCodes
     {

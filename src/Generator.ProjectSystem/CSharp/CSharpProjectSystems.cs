@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
+namespace Thor.Generator.ProjectSystem.CSharp
 {
     internal static class CSharpProjectSystems
     {

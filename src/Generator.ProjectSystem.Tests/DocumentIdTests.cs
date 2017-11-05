@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public class DocumentIdTests
     {

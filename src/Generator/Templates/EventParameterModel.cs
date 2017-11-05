@@ -1,4 +1,4 @@
-﻿namespace ChilliCream.Tracing.Generator.Templates
+﻿namespace Thor.Generator.Templates
 {
     internal class EventParameterModel
     {

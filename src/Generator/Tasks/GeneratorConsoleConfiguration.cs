@@ -1,6 +1,6 @@
 ﻿using ChilliCream.FluentConsole;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace Thor.Generator.Tasks
 {
     /// <summary>
     /// This configuration provides command line tasks for a event source generator cli.

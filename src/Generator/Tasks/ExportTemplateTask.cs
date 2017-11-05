@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using ChilliCream.FluentConsole;
-using ChilliCream.Tracing.Generator.ProjectSystem;
-using ChilliCream.Tracing.Generator.Properties;
-using ChilliCream.Tracing.Generator.Templates;
+using Thor.Generator.ProjectSystem;
+using Thor.Generator.Properties;
+using Thor.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace Thor.Generator.Tasks
 {
     /// <summary>
     /// This command line task exports default event source templates or custom event source template to a specified file.

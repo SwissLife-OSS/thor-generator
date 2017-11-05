@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChilliCream.Tracing.Generator.ProjectSystem.CSharp;
+using Thor.Generator.ProjectSystem.CSharp;
 using Microsoft.Build.Construction;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// Represents a collection of .net projects.

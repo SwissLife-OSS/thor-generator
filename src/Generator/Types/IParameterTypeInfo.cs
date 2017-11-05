@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChilliCream.Tracing.Generator.Types
+namespace Thor.Generator.Types
 {
     internal interface IParameterTypeInfo
     {

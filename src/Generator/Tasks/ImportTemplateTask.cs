@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using ChilliCream.FluentConsole;
-using ChilliCream.Tracing.Generator.Properties;
-using ChilliCream.Tracing.Generator.Templates;
+using Thor.Generator.Properties;
+using Thor.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace Thor.Generator.Tasks
 {
     /// <summary>
     /// This command line task imports custom event source template into the event source generator.

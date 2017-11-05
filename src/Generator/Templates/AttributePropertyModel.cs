@@ -1,4 +1,4 @@
-﻿namespace ChilliCream.Tracing.Generator.Templates
+﻿namespace Thor.Generator.Templates
 {
     /// <summary>
     /// Represents an attribute property or constructor argument template model.

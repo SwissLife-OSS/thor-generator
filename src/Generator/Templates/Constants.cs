@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ChilliCream.Tracing.Generator.Templates
+namespace Thor.Generator.Templates
 {
     internal static class Constants
     {

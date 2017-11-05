@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace ChilliCream.Tracing.Generator.Types
+namespace Thor.Generator.Types
 {
     internal static class ParameterTypeLookup
     {

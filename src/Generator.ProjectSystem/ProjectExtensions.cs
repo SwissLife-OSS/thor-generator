@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// Project extensions.

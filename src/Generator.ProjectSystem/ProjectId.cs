@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// A project identifier base class that 
     /// overrides <see cref="object.GetHashCode()"/>
     /// and <see cref="object.Equals(object)"/>.
     /// </summary>
-    /// <seealso cref="ChilliCream.Tracing.Generator.ProjectSystem.IProjectId" />
+    /// <seealso cref="Thor.Generator.ProjectSystem.IProjectId" />
     public class ProjectId
         : IProjectId
     {

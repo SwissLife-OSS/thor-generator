@@ -1,6 +1,6 @@
-﻿using ChilliCream.Tracing.Generator.Tasks;
+﻿using Thor.Generator.Tasks;
 
-namespace ChilliCream.Tracing.Generator.CLI
+namespace Thor.Generator.CLI
 {
     class Program
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// Implement this to provide a typed project 

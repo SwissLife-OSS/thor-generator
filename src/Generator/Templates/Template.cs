@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ChilliCream.Tracing.Generator.Properties;
+using Thor.Generator.Properties;
 using Newtonsoft.Json;
 
-namespace ChilliCream.Tracing.Generator.Templates
+namespace Thor.Generator.Templates
 {
     /// <summary>
     /// Represents an event source template.

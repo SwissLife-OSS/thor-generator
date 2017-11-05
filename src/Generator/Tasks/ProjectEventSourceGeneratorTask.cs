@@ -1,15 +1,15 @@
 ﻿using System;
 using ChilliCream.FluentConsole;
-using ChilliCream.Tracing.Generator.ProjectSystem;
-using ChilliCream.Tracing.Generator.Properties;
-using ChilliCream.Tracing.Generator.Templates;
+using Thor.Generator.ProjectSystem;
+using Thor.Generator.Properties;
+using Thor.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator.Tasks
+namespace Thor.Generator.Tasks
 {
     /// <summary>
     /// This command line task generates event sources based on projects provided.
     /// </summary>
-    /// <seealso cref="ChilliCream.Tracing.Generator.Tasks.EventSourceGeneratorTaskBase" />
+    /// <seealso cref="Thor.Generator.Tasks.EventSourceGeneratorTaskBase" />
     /// <seealso cref="ChilliCream.FluentConsole.ICommandLineTask" />
     public class ProjectEventSourceGeneratorTask
         : EventSourceGeneratorTaskBase

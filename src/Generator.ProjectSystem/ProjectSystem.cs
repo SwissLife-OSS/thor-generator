@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// Provides a base implementation for a prject system.
     /// </summary>
     /// <typeparam name="TProjectId">The type of the t project identifier.</typeparam>
-    /// <seealso cref="ChilliCream.Tracing.Generator.ProjectSystem.IProjectSystem" />
+    /// <seealso cref="Thor.Generator.ProjectSystem.IProjectSystem" />
     public abstract class ProjectSystem<TProjectId>
         : IProjectSystem
         where TProjectId : class, IProjectId

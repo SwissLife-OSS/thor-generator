@@ -3,10 +3,10 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using FluentAssertions;
 using Xunit;
-using ChilliCream.Tracing.Generator.Properties;
-using ChilliCream.Tracing.Generator.Templates;
+using Thor.Generator.Properties;
+using Thor.Generator.Templates;
 
-namespace ChilliCream.Tracing.Generator
+namespace Thor.Generator
 {
     public class EventSourceDefinitionVisitorTests
     {

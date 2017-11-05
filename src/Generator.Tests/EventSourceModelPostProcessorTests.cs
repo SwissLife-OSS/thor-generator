@@ -1,4 +1,4 @@
-﻿using ChilliCream.Tracing.Generator.Templates;
+﻿using Thor.Generator.Templates;
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace ChilliCream.Tracing.Generator
+namespace Thor.Generator
 {
     public class EventSourceModelPostProcessorTests
     {

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
-    <AssemblyName>ChilliCream.Tracing.Generator</AssemblyName>
-    <RootNamespace>ChilliCream.Tracing.Generator</RootNamespace>
+    <AssemblyName>Thor.Generator</AssemblyName>
+    <RootNamespace>Thor.Generator</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

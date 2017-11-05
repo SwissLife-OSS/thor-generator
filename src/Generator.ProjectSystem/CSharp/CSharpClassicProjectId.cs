@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.CSharp
+namespace Thor.Generator.ProjectSystem.CSharp
 {
     /// <summary>
     /// Represents a project identifier for <see cref="CSharpClassicProjectSystem"/> projects.
     /// </summary>
-    /// <seealso cref="ChilliCream.Tracing.Generator.ProjectSystem.ProjectId" />
+    /// <seealso cref="Thor.Generator.ProjectSystem.ProjectId" />
     public sealed class CSharpClassicProjectId
         : ProjectId
     {

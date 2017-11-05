@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using ChilliCream.Tracing.Generator.ProjectSystem.CSharp;
+using Thor.Generator.ProjectSystem.CSharp;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem
+namespace Thor.Generator.ProjectSystem
 {
     /// <summary>
     /// Represents a .net project.

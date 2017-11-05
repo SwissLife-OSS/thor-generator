@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Xunit;
-using ChilliCream.Tracing.Generator.Templates;
-using ChilliCream.Tracing.Generator.Properties;
+using Thor.Generator.Templates;
+using Thor.Generator.Properties;
 using Microsoft.CodeAnalysis;
 using FluentAssertions;
 using System.Linq;
-using ChilliCream.Tracing.Generator.ProjectSystem;
+using Thor.Generator.ProjectSystem;
 
-namespace ChilliCream.Tracing.Generator
+namespace Thor.Generator
 {
     public class EventSourceTemplateEngineTests
     {

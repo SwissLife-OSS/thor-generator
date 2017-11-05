@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ChilliCream.Tracing.Generator.Types;
+using Thor.Generator.Types;
 
-namespace ChilliCream.Tracing.Generator.Templates
+namespace Thor.Generator.Templates
 {
     /// <summary>
     /// The event source post processor will transform the <see cref="EventSourceModel"/> to satisfy the template specific demands.

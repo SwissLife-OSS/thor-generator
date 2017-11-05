@@ -1,7 +1,7 @@
 ﻿using System;
-using ChilliCream.Tracing.Generator.ProjectSystem.CSharp;
+using Thor.Generator.ProjectSystem.CSharp;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public class CSharpDirectoryProjectSystemTests
         : ProjectSystemTestBase

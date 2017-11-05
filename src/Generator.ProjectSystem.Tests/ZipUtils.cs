@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 
-namespace ChilliCream.Tracing.Generator.ProjectSystem.Tests
+namespace Thor.Generator.ProjectSystem.Tests
 {
     public static class ZipUtils
     {
