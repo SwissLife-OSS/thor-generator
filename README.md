@@ -1,7 +1,5 @@
 # EventSourceGenerator
 
-**An *ETW* EventSource generator build on *.Net Core 2.0***
-
 [![GitHub release](https://img.shields.io/github/release/chillicream/thor-generator.svg)](https://github.com/ChilliCream/thor-generator/releases) [![License](https://img.shields.io/github/license/ChilliCream/thor-generator.svg)](https://github.com/ChilliCream/thor-generator/releases) [![AppVeyor branch](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator)
  [![Coveralls](https://img.shields.io/coveralls/ChilliCream/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master) [![NuGet Package](https://img.shields.io/chocolatey/v/Thor.Generator.svg)](https://www.nuget.org/packages/Thor.Generator/) [![Chocolatey Package](https://img.shields.io/nuget/v/Thor.Generator.svg)](https://chocolatey.org/packages/Thor.Generator)
 
