@@ -2,7 +2,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/chillicream/thor-generator.svg)](https://github.com/ChilliCream/thor-generator/releases) [![NuGet Package](https://img.shields.io/nuget/v/Thor.Generator.svg)](https://www.nuget.org/packages/Thor.Generator/) [![Chocolatey Package](https://img.shields.io/chocolatey/v/Thor.Generator.svg)](https://chocolatey.org/packages/Thor.Generator/) [![License](https://img.shields.io/github/license/ChilliCream/thor-generator.svg)](https://github.com/ChilliCream/thor-generator/releases) [![Build](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) [![Tests](https://img.shields.io/appveyor/tests/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) [![Coveralls](https://img.shields.io/coveralls/ChilliCream/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master)
 
-*Thor Generator (ThorGen) is a generator for ETW (Event Tracing for Windows) event sources which helps avoid frequent mistakes and and save time.*
+*Thor Generator (ThorGen) is a generator for ETW (Event Tracing for Windows) event sources which helps avoid frequent mistakes and and saves time.*
 
 Microsoft's Event Tracing for Windows is a powerfull tracing framwork that offers minimal overhead and structured payloads.
 
@@ -90,15 +90,9 @@ For a more detailed help that shows all the scenarious visit our [documentation]
 
 ### Build status of master branch
 
-
-
-
-
-
-
 | Platform               | Build               | Tests                 | Code Coverage         |
 | --------------------- | --------------------- | --------------------- | --------------------- |
-| Windows | [![AppVeyor branch](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Tests](https://img.shields.io/appveyor/tests/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Coveralls](https://img.shields.io/coveralls/ChilliCrseam/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master) |
+| Windows | [![AppVeyor branch](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Tests](https://img.shields.io/appveyor/tests/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Coveralls](https://img.shields.io/coveralls/ChilliCream/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master) |
 
 ## Legal and Licensing
 
