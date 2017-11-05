@@ -6,14 +6,14 @@
     <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
     <CurrentDirectory>$(MSBuildThisFileDirectory.TrimEnd('/').TrimEnd('\'))</CurrentDirectory>
 
-    <ESGenWin>&quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'esgen.exe'))&quot;</ESGenWin>
-    <ESGenCore>dotnet &quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'esgen.dll'))&quot;</ESGenCore>
-    <ESGen Condition="'$(IsWindows)' == 'true'">$(ESGenWin)</ESGen>
-    <ESGen Condition="'$(ESGen)' == ''">$(ESGenCore)</ESGen>
+    <ThorGenWin>&quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'thorgen.exe'))&quot;</ThorGenWin>
+    <ThorGenCore>dotnet &quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'thorgen.dll'))&quot;</ThorGenCore>
+    <ThorGen Condition="'$(IsWindows)' == 'true'">$(ThorGenWin)</ThorGen>
+    <ThorGen Condition="'$(ThorGen)' == ''">$(ThorGenCore)</ThorGen>
   </PropertyGroup>
 
   <Target Name="TargetName" BeforeTargets="CoreCompile">
-    <Exec Command="$(ESGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" Condition="'$(TemplateName)' == ''" />
-    <Exec Command="$(ESGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot; --template $(TemplateName)" Condition="'$(TemplateName)' != ''" />    
+    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" Condition="'$(TemplateName)' == ''" />
+    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot; --template $(TemplateName)" Condition="'$(TemplateName)' != ''" />    
   </Target>
 </Project>
