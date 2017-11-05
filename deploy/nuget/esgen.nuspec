@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>ESGen</id>
+    <id>Thor.Generator</id>
     <version>1.0.0</version>
     
-    <title>ChilliCream EventSourceGenerator</title>
-    <description>ChilliCream EventSourceGenerator</description>
+    <title>Thor ETW Generator</title>
+    <description>The Thor Generator is a tool that helps you to generat event sources from interfaces.</description>
     <summary></summary>
     
     <authors>Michael and Rafael Staib</authors>
