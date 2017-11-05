@@ -45,7 +45,7 @@ namespace Thor.Generator
             eventSourceVisitor.MethodSignatures[1].Should()
                 .Be("Two(Guid messageId, Guid correlationId, string messageType, string from, string to)");
             eventSourceVisitor.MethodSignatures[2].Should()
-                .Be("WriteCore(int eventId, int applicationId, Guid activityId, Guid a, Guid b, string c, string d, string e)");
+                .Be("WriteCore(int eventId, Guid a, Guid b, string c, string d, string e)");
             eventSourceVisitor.MethodSignatures[3].Should()
                 .Be("SetToEmptyIfNull(string value)");
         }
