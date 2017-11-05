@@ -13,7 +13,7 @@
     <iconUrl>https://github.com/ChilliCream/EventSourceGenerator/blob/master/resources/icon.png?raw=true</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <language>en-US</language>
-    <tags>etw</tags>
+    <tags>etw eventsource csharp dotent event-tracing-for-windows</tags>
   </metadata>
 
   <files>
