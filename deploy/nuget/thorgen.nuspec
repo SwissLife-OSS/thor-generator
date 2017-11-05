@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Thor.Generator</id>
-    <version>1.0.0</version>
+    <version>0.0.1</version>
     
     <title>Thor ETW Generator</title>
     <description>The Thor Generator is a tool that helps you to generat event sources from interfaces.</description>
@@ -21,7 +21,7 @@
   </metadata>
 
   <files>
-    <file src="..\..\src\esgen.targets" target="build" />
+    <file src="..\..\src\Thor.Generator.targets" target="build" />
     <file src="..\..\drop\win10-x64\**\*.*" target="tools" />
   </files>
 </package>
