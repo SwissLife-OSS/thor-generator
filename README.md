@@ -2,21 +2,21 @@
 
 [![GitHub release](https://img.shields.io/github/release/chillicream/thor-generator.svg)](https://github.com/ChilliCream/thor-generator/releases) [![NuGet Package](https://img.shields.io/nuget/v/Thor.Generator.svg)](https://www.nuget.org/packages/Thor.Generator/) [![Chocolatey Package](https://img.shields.io/chocolatey/v/Thor.Generator.svg)](https://chocolatey.org/packages/Thor.Generator/) [![License](https://img.shields.io/github/license/ChilliCream/thor-generator.svg)](https://github.com/ChilliCream/thor-generator/releases) [![Build](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) [![Tests](https://img.shields.io/appveyor/tests/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) [![Coveralls](https://img.shields.io/coveralls/ChilliCream/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master)
 
-*Thor Generator (ThorGen) is a generator for ETW (Event Tracing for Windows) event sources which helps avoid frequent mistakes and and saves time.*
+*Thor Generator (ThorGen) is a generator for ETW (Event Tracing for Windows) event sources which helps avoid frequent mistakes and saves time.*
 
-Microsoft's Event Tracing for Windows is a powerfull tracing framwork that offers minimal overhead and structured payloads.
+Microsoft's Event Tracing for Windows is a powerful tracing framework that offers minimal overhead and structured payloads.
 
 The problem with writing event sources is often that you have to work with unsafe code and that if you get anything wrong in your event source it won't write events at all. This behaviour is a feature of ETW, applications shall not be disrupted by faulty event sources, so your event source won't log but it also won't throw exceptions that crash your application.
 
 The other problem with writing event sources is that one has to invest a lot of time into writing repetitive code "just" to have some "logging" in an application. It is not seldom that teams do not want to invest that time and opt for a simpler string based logging solution waiving all the benefits of ETW.
 
-The ThorGen wants to solve these problems by generating the nescesarry event source code and letting developers focus on designing their tracing events around their business logic. ThorGen makes ETW easy to use and fast to implement.
+ThorGen wants to solve these problems by generating the necessary event source code and letting developers focus on designing their tracing events around their business logic. ThorGen makes ETW easy to use and fast to implement.
 
 Event sources will be specified by writing interfaces that define the trace events and their payloads (no other DSL  needed, no context switch). The event source generator will inspect those interfaces and generate the necessary event source code.
 
 The event source templates can be amended to fit your needs and your aesthetic point of view concerning the generated code.
 
-At the moment we offer two built-in templates to generate event sources in c#.
+At the moment, we offer two built-in templates to generate event sources in c#.
 
 ## Get Thor Generator
 
@@ -30,13 +30,13 @@ We provide a nuget package that will integrate ThorGen with your project rather 
 Install-Package Thor.Generator
 ```
 
-2. With classic .net projects we will inject ThorGen into your project file and run ThorGen for this project before every build. With the new MSBuild projects used for .net core our package will be located in the global package cache. You can then either integrate our MSBuild task into your projects or use the esgen console from your build scripts.
+2. With classic .net projects we will inject ThorGen into your project file and run ThorGen for this project before every build. With the new MSBuild projects used for .net core our package will be located in the global package cache. You can then either integrate our MSBuild task into your projects or use the ThorGen console from your build scripts.
 
 We have a walk through for both scenarious [here](https://github.com/ChilliCream/thor-generator-docs/blob/master/README.md).
 
 ### Windows
 
-If you opt to install esgen on windows you can use chocolatey.
+If you opt to install ThorGen on windows you can use chocolatey.
 
 ```powershell
 choco install Thor.Generator
@@ -77,7 +77,7 @@ If you are using the msbuild integration of ThorGen just compile your project; o
 thorgen
 ```
 
-Or run ```thorgen -r``` if you want esgen to search recursively for any solution.
+Or run ```thorgen -r``` if you want ThorGen to search recursively for any solution.
 
 For a more detailed help that shows all the scenarious visit our [documentation](https://github.com/ChilliCream/thor-generator-docs/blob/master/README.md).
 
