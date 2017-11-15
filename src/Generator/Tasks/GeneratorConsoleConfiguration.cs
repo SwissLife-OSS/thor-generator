@@ -24,7 +24,10 @@ namespace Thor.Generator.Tasks
                 .WithName("recursive", 'r')
                 .And()
                 .Argument(t => t.TemplateName)
-                .WithName("template");
+                .WithName("template")
+                .And()
+                .Argument(t => t.TemplateFile)
+                .WithName("template-file");
 
             Bind<ProjectEventSourceGeneratorTask>()
                 .AsDefault()
@@ -39,7 +42,10 @@ namespace Thor.Generator.Tasks
                 .Position(1)
                 .And()
                 .Argument(t => t.TemplateName)
-                .WithName("template");
+                .WithName("template")
+                .And()
+                .Argument(t => t.TemplateFile)
+                .WithName("template-file");
 
             Bind<ExportTemplateTask>()
                 .WithName("templates", "export")

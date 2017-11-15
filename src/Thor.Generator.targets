@@ -13,7 +13,8 @@
   </PropertyGroup>
 
   <Target Name="TargetName" BeforeTargets="CoreCompile">
-    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" Condition="'$(TemplateName)' == ''" />
-    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot; --template $(TemplateName)" Condition="'$(TemplateName)' != ''" />    
+    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot;" Condition="'$(TemplateName)' == '' AND '$(TemplateFile)' == ''" />
+    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot; --template $(TemplateName)" Condition="'$(TemplateName)' != '' AND '$(TemplateFile)' == ''" />
+    <Exec Command="$(ThorGen) project -s &quot;$(SourceProject)&quot; -t &quot;$(TargetProject)&quot; --template-file $(TemplateName)" Condition="'$(TemplateName)' == '' AND '$(TemplateFile)' != ''" />
   </Target>
 </Project>

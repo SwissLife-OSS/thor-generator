@@ -62,6 +62,12 @@ namespace Thor.Generator.Tasks
         public string TemplateName { get; set; }
 
         /// <summary>
+        /// Gets or sets a custom template file 
+        /// that shall be used to generate event sources.
+        /// </summary>
+        public string TemplateFile { get; set; }
+
+        /// <summary>
         /// Analyzes the given <paramref name="project"/> and 
         /// generates the event source into the same project. 
         /// </summary>
@@ -124,11 +130,17 @@ namespace Thor.Generator.Tasks
         /// </returns>
         protected Template GetTemplate()
         {
-            if (string.IsNullOrEmpty(TemplateName))
+            if(!string.IsNullOrEmpty(TemplateFile))
             {
-                return _templateStorage.GetTemplate(Language);
+                return Template.FromFile(TemplateFile);
             }
-            return _templateStorage.GetCustomTemplate(TemplateName);
+
+            if (!string.IsNullOrEmpty(TemplateName))
+            {
+                return _templateStorage.GetCustomTemplate(TemplateName);
+            }
+
+            return _templateStorage.GetTemplate(Language);
         }
     }
 }
