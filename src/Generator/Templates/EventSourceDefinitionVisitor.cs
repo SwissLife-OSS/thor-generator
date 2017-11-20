@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis;
 
 namespace Thor.Generator.Templates
 {
@@ -53,12 +54,14 @@ namespace Thor.Generator.Templates
             {
                 EventSource = ParseEventSourceAttribute(node);
                 EventSource.InterfaceName = interfaceDeclaration.Identifier.Text;
-                EventSource.Namespace = NamespaceDeclaration.Name.ToString();
+                EventSource.Namespace = NamespaceDeclaration?.Name.ToString() ?? "EmptyNamespace";
 
                 EventSource.Name = EventSource.InterfaceName.StartsWith(Constants.InterfacePrefix)
                     ? EventSource.InterfaceName.Substring(Constants.InterfacePrefix.Length)
                     : string.Concat(EventSource.InterfaceName, Constants.ClassNamePostfix);
+
                 EventSource.FileName = EventSource.Name + ".cs";
+                EventSource.DocumentationXml = GetDocumentationXml(interfaceDeclaration);
             }
 
             base.VisitAttribute(node);
@@ -66,22 +69,26 @@ namespace Thor.Generator.Templates
 
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            AttributeSyntax eventAttribute = node.AttributeLists
-                .SelectMany(l => l.Attributes)
-                .FirstOrDefault(t => IsEventAttribute(t));
-
-            if (EventSource != null
-                && eventAttribute != null
-                && eventAttribute.ArgumentList.Arguments.Count > 0
-                && TryParseEventAttribute(eventAttribute, out EventModel eventModel))
+            if (EventSource != null)
             {
-                foreach (ParameterSyntax eventParameter in node.ParameterList.Parameters)
-                {
-                    eventModel.AddParameter(GetName(eventParameter), GetValue(eventParameter));
-                }
+                AttributeSyntax eventAttribute = node.AttributeLists
+                    .SelectMany(l => l.Attributes)
+                    .FirstOrDefault(t => IsEventAttribute(t));
 
-                eventModel.Name = node.Identifier.Text;
-                EventSource.Events.Add(eventModel);
+                if (eventAttribute != null
+                    && eventAttribute.ArgumentList.Arguments.Count > 0
+                    && TryParseEventAttribute(eventAttribute, out EventModel eventModel))
+                {
+                    foreach (ParameterSyntax eventParameter in node.ParameterList.Parameters)
+                    {
+                        eventModel.AddParameter(GetName(eventParameter), GetValue(eventParameter));
+                    }
+
+                    eventModel.Name = node.Identifier.Text;
+                    eventModel.DocumentationXml = GetDocumentationXml(node);
+
+                    EventSource.Events.Add(eventModel);
+                }
             }
 
             base.VisitMethodDeclaration(node);
@@ -210,6 +217,54 @@ namespace Thor.Generator.Templates
             return (node.Type as PredefinedTypeSyntax)?.Keyword.Text
                 ?? (node.Type as QualifiedNameSyntax)?.ToString()
                 ?? (node.Type as IdentifierNameSyntax)?.ToString();
+        }
+
+        private static string GetDocumentationXml(CSharpSyntaxNode syntaxNode)
+        {
+            string documentationXml = ResolveDocumentationXml(syntaxNode);
+
+            if(string.IsNullOrEmpty(documentationXml))
+            {
+                return null;
+            }
+
+            if(documentationXml.StartsWith("///") || documentationXml.StartsWith("//"))
+            {
+                return documentationXml;
+            }
+
+            return "///" + documentationXml;
+        }
+
+        private static string ResolveDocumentationXml(CSharpSyntaxNode syntaxNode)
+        {
+            SyntaxTrivia documentation = syntaxNode.GetLeadingTrivia()
+                 .FirstOrDefault(t => t.Kind() == SyntaxKind.SingleLineDocumentationCommentTrivia);
+            if (documentation.Equals(default(SyntaxTrivia)))
+            {
+                documentation = syntaxNode.GetLeadingTrivia()
+                    .FirstOrDefault(t => t.Kind() == SyntaxKind.MultiLineDocumentationCommentTrivia);
+            }
+
+            if (!documentation.Equals(default(SyntaxTrivia)))
+            {
+                return documentation.ToString();
+            }
+
+            documentation = syntaxNode.GetLeadingTrivia()
+                .FirstOrDefault(t => t.Kind() == SyntaxKind.SingleLineCommentTrivia);
+            if (documentation.Equals(default(SyntaxTrivia)))
+            {
+                documentation = syntaxNode.GetLeadingTrivia()
+                    .FirstOrDefault(t => t.Kind() == SyntaxKind.MultiLineCommentTrivia);
+            }
+
+            if (!documentation.Equals(default(SyntaxTrivia)))
+            {
+                return documentation.ToString();
+            }
+
+            return null;
         }
     }
 }

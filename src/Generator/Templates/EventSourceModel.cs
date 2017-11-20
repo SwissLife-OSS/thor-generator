@@ -11,6 +11,8 @@ namespace Thor.Generator.Templates
 
         public string InterfaceName { get; set; }
 
+        public string DocumentationXml { get; set; }
+
         public AttributeModel Attribute { get; } = new AttributeModel(Constants.EventSourceAttributeName);
         public List<EventModel> Events { get; } = new List<EventModel>();
         public List<WriteCoreModel> WriteMethods { get; } = new List<WriteCoreModel>();

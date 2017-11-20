@@ -77,17 +77,54 @@ namespace Thor.Generator
             eventSourceVisitor.MethodSignatures[0].Should()
                 .Be("Foo()");
         }
+
+        [Fact]
+        public void GenerateCSharpEventSourceWithEventWithDocumentation()
+        {
+            // arrange
+            TemplateStorage templateStorage = new TemplateStorage();
+            Template template = templateStorage.GetTemplate(Language.CSharp);
+
+            EventSourceModel eventSourceModel = new EventSourceModel();
+            eventSourceModel.DocumentationXml = "// <summary>eventsource</summary>";
+            EventModel eventModel = new EventModel();
+            eventModel.Name = "Foo";
+            eventModel.DocumentationXml = "// <summary>event</summary>";
+            eventSourceModel.Events.Add(eventModel);
+
+            // act
+            EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
+            string eventSourceCode = templateEngine.Generate(eventSourceModel);
+
+            // assert
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(eventSourceCode);
+
+            EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
+            eventSourceVisitor.Visit(syntaxTree.GetRoot());
+
+            eventSourceVisitor.Classes.Should().HaveCount(1);
+            eventSourceVisitor.ClassDocumentations.Should().HaveCount(1);
+            eventSourceVisitor.MethodSignatures.Should().HaveCount(1);
+            eventSourceVisitor.MethodDocumentations.Should().HaveCount(1);
+
+            eventSourceVisitor.ClassDocumentations.First().Should().Be(eventSourceModel.DocumentationXml);
+            eventSourceVisitor.MethodDocumentations.First().Should().Be(eventModel.DocumentationXml);
+        }
+
     }
 
     public class EventSourceVisitor
         : CSharpSyntaxWalker
     {
         public IList<string> Classes { get; } = new List<string>();
+        public IList<string> ClassDocumentations { get; } = new List<string>();
         public IList<string> MethodSignatures { get; } = new List<string>();
+        public IList<string> MethodDocumentations { get; } = new List<string>();
 
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
         {
             Classes.Add(node.Identifier.Text);
+            ClassDocumentations.Add(GetDocumentationXml(node));
             base.VisitClassDeclaration(node);
         }
 
@@ -113,8 +150,40 @@ namespace Thor.Generator
 
             methodSignature.Append(")");
             MethodSignatures.Add(methodSignature.ToString());
+            MethodDocumentations.Add(GetDocumentationXml(node));
 
             base.VisitMethodDeclaration(node);
+        }
+
+        private static string GetDocumentationXml(CSharpSyntaxNode syntaxNode)
+        {
+            SyntaxTrivia documentation = syntaxNode.GetLeadingTrivia()
+                .FirstOrDefault(t => t.Kind() == SyntaxKind.SingleLineDocumentationCommentTrivia);
+            if (documentation.Equals(default(SyntaxTrivia)))
+            {
+                documentation = syntaxNode.GetLeadingTrivia()
+                    .FirstOrDefault(t => t.Kind() == SyntaxKind.MultiLineDocumentationCommentTrivia);
+            }
+
+            if (!documentation.Equals(default(SyntaxTrivia)))
+            {
+                return documentation.ToString();
+            }
+
+            documentation = syntaxNode.GetLeadingTrivia()
+                .FirstOrDefault(t => t.Kind() == SyntaxKind.SingleLineCommentTrivia);
+            if (documentation.Equals(default(SyntaxTrivia)))
+            {
+                documentation = syntaxNode.GetLeadingTrivia()
+                    .FirstOrDefault(t => t.Kind() == SyntaxKind.MultiLineCommentTrivia);
+            }
+
+            if (!documentation.Equals(default(SyntaxTrivia)))
+            {
+                return documentation.ToString();
+            }
+
+            return null;
         }
     }
 }

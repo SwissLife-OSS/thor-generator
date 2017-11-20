@@ -4,6 +4,7 @@ using System.Text;
 
 namespace {{namespace}}
 {
+    {{documentationXml}}
 {{#attribute}}
     {{#hasProperties}}
     [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
@@ -21,6 +22,7 @@ namespace {{namespace}}
         public static readonly {{interfaceName}} Log = new {{name}}();
 
 {{#events}}
+        {{documentationXml}}
         {{#attribute}}
         [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
         {{/attribute}}

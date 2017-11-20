@@ -7,6 +7,7 @@ namespace Thor.Generator.Templates
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string DocumentationXml { get; set; }
 
         public AttributeModel Attribute { get; } = new AttributeModel("Event");
 

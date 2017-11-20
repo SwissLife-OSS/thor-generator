@@ -5,6 +5,7 @@ using FluentAssertions;
 using Xunit;
 using Thor.Generator.Properties;
 using Thor.Generator.Templates;
+using System.IO;
 
 namespace Thor.Generator
 {
@@ -119,6 +120,81 @@ namespace Thor.Generator
             eventModel.Parameters[3].Type.Should().Be("string");
             eventModel.Parameters[4].Name.Should().Be("to");
             eventModel.Parameters[4].Type.Should().Be("string");
+        }
+
+        [Fact]
+        public void ExtractDocumentationXmlFromInterface()
+        {
+            // arange
+            string s = @"
+                        /// <summary>
+                        /// MyComment
+                        /// Foo
+                        /// </summary>
+                        [EventSourceDefinition(Name = Constants.MessageEventSourceName)]
+                        public interface IMessageEventSource
+                        {
+                            /// <summary>
+                            /// Method
+                            /// </summary>
+                            [Event(1,
+                            Level = EventLevel.Verbose,
+                            Message = ""Sent message {correlationId}/{messageId} to {to}."",
+                            Version = 1)]
+                            void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
+                        }";
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(s);
+
+            // act
+            EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+            visitor.Visit(syntaxTree.GetRoot());
+
+
+            // assert
+            visitor.EventSource.DocumentationXml.Should().NotBeNullOrEmpty();
+
+            StringReader sr = new StringReader(visitor.EventSource.DocumentationXml);
+            sr.ReadLine().Trim().Should().Be("/// <summary>");
+            sr.ReadLine().Trim().Should().Be("/// MyComment");
+            sr.ReadLine().Trim().Should().Be("/// Foo");
+            sr.ReadLine().Trim().Should().Be("/// </summary>");
+        }
+
+        [Fact]
+        public void ExtractDocumentationXmlFromEvents()
+        {
+            // arange
+            string s = @"
+                        /// <summary>
+                        /// MyComment
+                        /// Foo
+                        /// </summary>
+                        [EventSourceDefinition(Name = Constants.MessageEventSourceName)]
+                        public interface IMessageEventSource
+                        {
+                            /// <summary>
+                            /// Method
+                            /// </summary>
+                            [Event(1,
+                            Level = EventLevel.Verbose,
+                            Message = ""Sent message {correlationId}/{messageId} to {to}."",
+                            Version = 1)]
+                            void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
+                        }";
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(s);
+
+            // act
+            EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
+            visitor.Visit(syntaxTree.GetRoot());
+
+
+            // assert
+            string documentationXml = visitor.EventSource.Events.First().DocumentationXml;
+
+            StringReader sr = new StringReader(documentationXml);
+            sr.ReadLine().Trim().Should().Be("/// <summary>");
+            sr.ReadLine().Trim().Should().Be("/// Method");
+            sr.ReadLine().Trim().Should().Be("/// </summary>");
         }
     }
 }
