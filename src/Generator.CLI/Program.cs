@@ -1,13 +1,18 @@
-﻿using Thor.Generator.Tasks;
+﻿using ChilliCream.FluentConsole;
+using Thor.Generator.Tasks;
 
 namespace Thor.Generator.CLI
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            GeneratorConsoleConfiguration configuration
-                = new GeneratorConsoleConfiguration();
+            ConsoleConfiguration configuration = new ConsoleConfiguration();
+
+            configuration.AddTaskConfiguration<SolutionEventSourceGeneratorTaskConfiguration>();
+            configuration.AddTaskConfiguration<ProjectEventSourceGeneratorTaskConfiguration>();
+            configuration.AddTaskConfiguration<ExportTemplateTaskConfiguration>();
+            configuration.AddTaskConfiguration<ImportTemplateTaskConfiguration>();
 
             configuration
                 .CreateRuntime()

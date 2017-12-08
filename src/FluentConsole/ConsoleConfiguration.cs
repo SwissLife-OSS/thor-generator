@@ -1,25 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace ChilliCream.FluentConsole
 {
     public class ConsoleConfiguration
+        : CommandLineTaskConfiguration
     {
-        private readonly List<TaskDefinition> _taskDefinitions = new List<TaskDefinition>();
-
-        public IBindTask<TTask> Bind<TTask>()
-            where TTask : class, ICommandLineTask
+        public void AddTaskConfiguration<TConfiguration>(TConfiguration configuration)
+            where TConfiguration : CommandLineTaskConfiguration
         {
-            return new BindTask<TTask>(_taskDefinitions);
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            foreach (TaskDefinition taskDefinition in configuration.GetTaskDefinitions())
+            {
+                AddTaskDefinition(taskDefinition);
+            }
+        }
+
+        public void AddTaskConfiguration<TConfiguration>()
+            where TConfiguration : CommandLineTaskConfiguration, new()
+        {
+            AddTaskConfiguration(new TConfiguration());
         }
 
         public ConsoleRuntime CreateRuntime()
         {
-            return new ConsoleRuntime(ClassicConsole.Default, _taskDefinitions);
+            return new ConsoleRuntime(ClassicConsole.Default, GetTaskDefinitions());
         }
 
         public ConsoleRuntime CreateRuntime(IConsole console)
         {
-            return new ConsoleRuntime(console, _taskDefinitions);
+            return new ConsoleRuntime(console, GetTaskDefinitions());
         }
     }
 }
