@@ -6,8 +6,8 @@
     <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
     <CurrentDirectory>$(MSBuildThisFileDirectory.TrimEnd('/').TrimEnd('\'))</CurrentDirectory>
 
-    <ThorGenWin>&quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'thorgen.exe'))&quot;</ThorGenWin>
-    <ThorGenCore>dotnet &quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'thorgen.dll'))&quot;</ThorGenCore>
+    <ThorGenWin>&quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'win10-x64', 'thorgen.exe'))&quot;</ThorGenWin>
+    <ThorGenCore>dotnet &quot;$([System.IO.Path]::Combine('$(CurrentDirectory)', '..', 'tools', 'all', 'thorgen.dll'))&quot;</ThorGenCore>
     <ThorGen Condition="'$(IsWindows)' == 'true'">$(ThorGenWin)</ThorGen>
     <ThorGen Condition="'$(ThorGen)' == ''">$(ThorGenCore)</ThorGen>
   </PropertyGroup>

@@ -23,6 +23,7 @@
 
   <files>
     <file src="..\..\src\Thor.Generator.targets" target="build" />
-    <file src="..\..\drop\win10-x64\**\*.*" target="tools" />
+    <file src="..\..\drop\win10-x64\**\*.*" target="tools\win10-x64" />
+    <file src="..\..\drop\all\**\*.*" target="tools\all" />
   </files>
 </package>
