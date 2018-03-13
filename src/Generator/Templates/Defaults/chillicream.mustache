@@ -21,7 +21,7 @@ namespace {{namespace}}
     {
         private {{name}}() { }
 
-        public static readonly {{interfaceName}} Log = new {{name}}();
+        public static {{interfaceName}} Log { get; } = new {{name}}();
 
 {{#events}}
         {{documentationXml}}
