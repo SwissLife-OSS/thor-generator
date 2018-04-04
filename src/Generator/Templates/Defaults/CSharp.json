@@ -1,7 +1,21 @@
 ﻿{
   "defaultPayloads": 0,
   "baseWriteMethods": [
-    [ ]
+    []
   ],
-  "packageDependencies" : []
+  "Usings": [
+    {
+      "alias": "Io",
+      "namespace": "System.IO"
+    },
+    {
+      "namespace": "Newtonsoft.Json",
+      "isStatic": true
+    },
+    {
+      "alias": "Gen",
+      "namespace": "System.Generic",
+      "isStatic": false
+    }
+  ]
 }

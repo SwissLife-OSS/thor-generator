@@ -8,11 +8,11 @@ namespace Thor.Generator.Templates
         public int Id { get; set; }
         public string Name { get; set; }
         public string DocumentationXml { get; set; }
-
         public AttributeModel Attribute { get; } = new AttributeModel("Event");
-
-        public List<EventParameterModel> Parameters { get; } = new List<EventParameterModel>();
-
-        public bool HasParameters => Parameters != null && Parameters.Any();
+        public List<EventParameterModel> InputParameters { get; } = new List<EventParameterModel>();
+        public List<EventParameterModel> ValueParameters { get; } = new List<EventParameterModel>();
+        public List<EventParameterModel> ComplexParameters { get; } = new List<EventParameterModel>();
+        public bool HasParameters => InputParameters != null && InputParameters.Any();
+        public bool HasComplexTypeParameters => ComplexParameters.Any();
     }
 }

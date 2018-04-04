@@ -61,18 +61,50 @@ namespace Thor.Generator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace EventSources
+        ///   Looks up a localized string similar to using System;
+        ///using  System.Linq;
+        ///using static System.Math;
+        ///using Gen = System.Generic;
+        ///
+        ///namespace EventSources
         ///{
+        ///    using System.Text;
+        ///    using System.Linq;
+        ///    using Tasks = System.Threading.Tasks;
+        ///
+        ///    [EventSourceDefinition(Name = &quot;FooEventSource&quot;)]
+        ///    public interface IFooEventSource
+        ///    {
+        ///        [Event(1,
+        ///           Level = EventLevel.Verbose,
+        ///           Message = &quot;Sent message {correlationId}/{messageType} to {to}.&quot;,
+        ///           Version = 1)]
+        ///        void One(Exception ex, Guid c [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EventSourceWithComplexType {
+            get {
+                return ResourceManager.GetString("EventSourceWithComplexType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System.Linq;
+        ///using static System.Math;
+        ///using Gen = System.Generic;
+        ///
+        ///namespace EventSources
+        ///{
+        ///    using System.Text;
+        ///    using Tasks System.Threading.Tasks;
+        ///
         ///    [EventSourceDefinition(Name = Constants.MessageEventSourceName)]
         ///    public interface IMessageEventSource
         ///    {
         ///        [Event(1,
         ///           Level = EventLevel.Verbose,
-        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;,
+        ///           Message = &quot;Sent message {correlationId}/{messageType} to {to}.&quot;,
         ///           Version = 1)]
-        ///        void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
-        ///    }
-        ///}.
+        ///        void MessageSent(Guid messageId, Guid correlationId [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EventSourceWithConstant {
             get {
@@ -81,18 +113,23 @@ namespace Thor.Generator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace EventSources
+        ///   Looks up a localized string similar to using System.Linq;
+        ///using static System.Math;
+        ///using Gen = System.Generic;
+        ///
+        ///namespace EventSources
         ///{
+        ///    using System.Text;
+        ///    using Tasks System.Threading.Tasks;
+        ///
         ///    [EventSourceDefinition(Name = &quot;Foo&quot;)]
         ///    public interface IMessageEventSource
         ///    {
         ///        [Event(1,
         ///           Level = EventLevel.Verbose,
-        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;,
+        ///           Message = &quot;Sent message {correlationId}/{messageType} to {to}.&quot;,
         ///           Version = 1)]
-        ///        void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
-        ///    }
-        ///}.
+        ///        void MessageSent(Guid messageId, Guid correlationId, string messageType, strin [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EventSourceWithLiteral {
             get {
@@ -101,20 +138,25 @@ namespace Thor.Generator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace EventSources
+        ///   Looks up a localized string similar to using System;
+        ///using  System.Linq;
+        ///using static System.Math;
+        ///using Gen = System.Generic;
+        ///
+        ///namespace EventSources
         ///{
+        ///    using System.Text;
+        ///    using System.Linq;
+        ///    using Tasks = System.Threading.Tasks;
+        ///
         ///    [EventSourceDefinition(Name = &quot;FooEventSource&quot;)]
         ///    public interface IFooEventSource
         ///    {
         ///        [Event(1,
         ///           Level = EventLevel.Verbose,
-        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;,
+        ///           Message = &quot;Sent message {correlationId}/{messageType} to {to}.&quot;,
         ///           Version = 1)]
-        ///        void One(Guid messageId, Guid correlationId, string messageType, string from, string to);
-        ///
-        ///	[Event(2,
-        ///           Level = EventLevel.Verbose,
-        ///           Message = &quot;Sent message {correlationId}/{messageId} to {to}.&quot;, [rest of string was truncated]&quot;;.
+        ///        void One(Guid ex, Guid correl [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EventSourceWithTwoMethods {
             get {

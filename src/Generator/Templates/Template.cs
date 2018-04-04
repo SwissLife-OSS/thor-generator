@@ -23,26 +23,30 @@ namespace Thor.Generator.Templates
         public static readonly string TemplateInfoExtension = ".json";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Template"/> class.
+        /// Initializes a new instance of the <see cref="Template" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="code">The code.</param>
         /// <param name="baseWriteMethods">The base write methods.</param>
+        /// <param name="usings">The usings.</param>
         /// <param name="defaultPayloads">The payloads that come from the context.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="name"/> is <c>null</c>
+        /// <param name="allowComplexParameters">if set to <c>true</c> [allow large payloads].</param>
+        /// <param name="eventComplexParameterName">Name of the event complex parameter.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name" /> is <c>null</c>
         /// or
-        /// <paramref name="name"/> is <see cref="string.Empty"/>
+        /// <paramref name="name" /> is <see cref="string.Empty" />
         /// or
-        /// <paramref name="code"/> is <c>null</c>
+        /// <paramref name="code" /> is <c>null</c>
         /// or
-        /// <paramref name="code"/> is <see cref="string.Empty"/>
+        /// <paramref name="code" /> is <see cref="string.Empty" />
         /// or
-        /// <paramref name="baseWriteMethods"/> is <c>null</c>.
-        /// </exception>
+        /// <paramref name="baseWriteMethods" /> is <c>null</c>.</exception>
         public Template(string name, string code,
             IEnumerable<WriteMethod> baseWriteMethods,
-            int defaultPayloads)
+            IEnumerable<NamespaceModel> usings,
+            int defaultPayloads,
+            bool allowComplexParameters,
+            string eventComplexParameterName)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -62,7 +66,10 @@ namespace Thor.Generator.Templates
             Name = name;
             Code = code;
             BaseWriteMethods = baseWriteMethods.ToArray();
+            Usings = usings.ToArray();
             DefaultPayloads = defaultPayloads;
+            AllowComplexParameters = allowComplexParameters;
+            EventComplexParameterName = eventComplexParameterName;
         }
 
         /// <summary>
@@ -84,10 +91,34 @@ namespace Thor.Generator.Templates
         public IReadOnlyCollection<WriteMethod> BaseWriteMethods { get; }
 
         /// <summary>
+        /// Gets the usings.
+        /// </summary>
+        /// <value>
+        /// The usings.
+        /// </value>
+        public IReadOnlyCollection<NamespaceModel> Usings { get; }
+
+        /// <summary>
         /// Gets the default payloads count which defines the additional payloads that are added from the context by this template.
         /// </summary>
         /// <value>The default payloads count.</value>
         public int DefaultPayloads { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the generator should allow large input parameters in the methods to generate.
+        /// </summary>
+        /// <value>
+        /// AllowComplexParameters <c>true</c> if [allow large payloads]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AllowComplexParameters { get; }
+
+        /// <summary>
+        /// Gets or sets the name of the event complex parameter.
+        /// </summary>
+        /// <value>
+        /// The name of the event complex parameter.
+        /// </value>
+        public string EventComplexParameterName { get; set; }
 
         /// <summary>
         /// Saves this template to the specified directory.
@@ -116,6 +147,7 @@ namespace Thor.Generator.Templates
                 BaseWriteMethods = BaseWriteMethods
                     .Select(t => t.ParameterTypes.ToArray())
                     .ToList(),
+                Usings = Usings.ToList(),
                 DefaultPayloads = DefaultPayloads
             };
 
@@ -162,14 +194,24 @@ namespace Thor.Generator.Templates
             }
 
             return new Template(templateName, File.ReadAllText(fileName),
-                templateInfo.BaseWriteMethods.Select(t => new WriteMethod(t)).Distinct(),
-                templateInfo.DefaultPayloads);
+                templateInfo.BaseWriteMethods.Select(t => new WriteMethod(t)).Distinct(), templateInfo.Usings.Distinct(),
+                templateInfo.DefaultPayloads,
+                templateInfo.ComplexParameter?.Enabled ?? false,
+                templateInfo.ComplexParameter?.EventParameterName);
         }
 
         private class TemplateInfo
         {
             public List<string[]> BaseWriteMethods { get; set; }
+            public List<NamespaceModel> Usings { get; set; }
             public int DefaultPayloads { get; set; }
+            public ComplexParameterInfo ComplexParameter { get; set; }
+        }
+
+        private class ComplexParameterInfo
+        {
+            public bool Enabled { get; set; }
+            public string EventParameterName { get; set; }
         }
     }
 }

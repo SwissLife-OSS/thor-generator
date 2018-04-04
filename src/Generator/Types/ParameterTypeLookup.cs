@@ -70,5 +70,10 @@ namespace Thor.Generator.Types
             parameterTypeInfo = null;
             return false;
         }
+
+        public static IParameterTypeInfo CreateForLargeType(string typeName)
+        {
+            return new ParameterTypeInfo<Object>(typeName, Marshal.SizeOf(typeof(Guid)));
+        }
     }
 }

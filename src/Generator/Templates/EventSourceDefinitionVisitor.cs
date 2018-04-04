@@ -37,9 +37,10 @@ namespace Thor.Generator.Templates
         private const string _eventSourceAttributeName = "EventSourceDefinition";
         private const string _eventAttributeName = "Event";
 
-        public EventSourceModel EventSource { get; private set; }
+        public EventSourceModel EventSource { get; } = new EventSourceModel();
 
         private NamespaceDeclarationSyntax NamespaceDeclaration { get; set; }
+
 
         public override void VisitNamespaceDeclaration(NamespaceDeclarationSyntax node)
         {
@@ -52,7 +53,7 @@ namespace Thor.Generator.Templates
             if (IsDefinitionAttribute(node)
                 && node.Parent?.Parent is InterfaceDeclarationSyntax interfaceDeclaration)
             {
-                EventSource = ParseEventSourceAttribute(node);
+                ParseEventSourceAttribute(node);
                 EventSource.InterfaceName = interfaceDeclaration.Identifier.Text;
                 EventSource.Namespace = NamespaceDeclaration?.Name.ToString() ?? "EmptyNamespace";
 
@@ -94,22 +95,30 @@ namespace Thor.Generator.Templates
             base.VisitMethodDeclaration(node);
         }
 
-        private EventSourceModel ParseEventSourceAttribute(AttributeSyntax node)
+        public override void VisitUsingDirective(UsingDirectiveSyntax node)
         {
-            EventSourceModel eventSourceModel = new EventSourceModel();
+            var namespaceModel = new NamespaceModel(node.StaticKeyword.Value != null, node.Alias?.Name?.ToString(), node.Name.ToString());
 
+            if (!EventSource.Usings.Contains(namespaceModel))
+            {
+                EventSource.Usings.Add(namespaceModel);
+            }
+
+            base.VisitUsingDirective(node);
+        }
+
+        private void ParseEventSourceAttribute(AttributeSyntax node)
+        {
             foreach (AttributeArgumentSyntax argument in node.ArgumentList?.Arguments
                 ?? Enumerable.Empty<AttributeArgumentSyntax>())
             {
                 string name = GetName(argument);
                 if (_eventSourceAttributeProperties.Contains(name))
                 {
-                    eventSourceModel.Attribute.AddProperty(name,
+                    EventSource.Attribute.AddProperty(name,
                         GetValueSyntax(argument));
                 }
             }
-
-            return eventSourceModel;
         }
 
         private bool TryParseEventAttribute(AttributeSyntax eventAttribute, out EventModel eventModel)

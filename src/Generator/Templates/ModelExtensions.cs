@@ -65,11 +65,10 @@ namespace Thor.Generator.Templates
                 throw new ArgumentNullException(nameof(type));
             }
 
-            eventModel.Parameters.Add(new EventParameterModel
+            eventModel.InputParameters.Add(new EventParameterModel
             {
                 Name = name,
-                Type = type,
-                IsFirst = eventModel.Parameters.Count == 0
+                Type = type
             });
         }
     }

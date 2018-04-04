@@ -32,7 +32,9 @@ namespace Thor.Generator
             // act
             Template template = new Template(templateName,
                 Guid.NewGuid().ToString("N"),
-                Enumerable.Empty<WriteMethod>(), 0);
+                Enumerable.Empty<WriteMethod>(),
+                Enumerable.Empty<NamespaceModel>(), 0, 
+                false, null);
             _templateStorage.SaveCustomTemplate(template);
 
             // assert
@@ -58,7 +60,9 @@ namespace Thor.Generator
             // act
             Template template = new Template(templateName,
                 Guid.NewGuid().ToString("N"),
-                new[] { new WriteMethod(new[] { "string" }) }, 5);
+                new[] { new WriteMethod(new[] { "string" }) },
+                Enumerable.Empty<NamespaceModel>(), 5, 
+                false, null);
             _templateStorage.SaveCustomTemplate(template);
 
             // assert
