@@ -117,52 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EventSourceWithConstant" xml:space="preserve">
-    <value>namespace EventSources
+  <data name="EventSourceWithComplexType" xml:space="preserve">
+    <value>using System;
+using  System.Linq;
+using static System.Math;
+using Gen = System.Generic;
+
+namespace EventSources
 {
+    using System.Text;
+    using System.Linq;
+    using Tasks = System.Threading.Tasks;
+
+    [EventSourceDefinition(Name = "FooEventSource")]
+    public interface IFooEventSource
+    {
+        [Event(1,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
+           Version = 1)]
+        void One(Exception ex, Guid correlationId, string messageType, string from, string to);
+
+	[Event(2,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
+           Version = 1)]
+        void Two(Guid messageId, Guid correlationId, string messageType, string from, string to);
+    }
+}
+</value>
+  </data>
+  <data name="EventSourceWithConstant" xml:space="preserve">
+    <value>using System.Linq;
+using static System.Math;
+using Gen = System.Generic;
+
+namespace EventSources
+{
+    using System.Text;
+    using Tasks System.Threading.Tasks;
+
     [EventSourceDefinition(Name = Constants.MessageEventSourceName)]
     public interface IMessageEventSource
     {
         [Event(1,
            Level = EventLevel.Verbose,
-           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
         void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
     }
 }</value>
   </data>
   <data name="EventSourceWithLiteral" xml:space="preserve">
-    <value>namespace EventSources
+    <value>using System.Linq;
+using static System.Math;
+using Gen = System.Generic;
+
+namespace EventSources
 {
+    using System.Text;
+    using Tasks System.Threading.Tasks;
+
     [EventSourceDefinition(Name = "Foo")]
     public interface IMessageEventSource
     {
         [Event(1,
            Level = EventLevel.Verbose,
-           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
         void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
     }
 }</value>
   </data>
   <data name="EventSourceWithTwoMethods" xml:space="preserve">
-    <value>namespace EventSources
+    <value>using System;
+using  System.Linq;
+using static System.Math;
+using Gen = System.Generic;
+
+namespace EventSources
 {
+    using System.Text;
+    using System.Linq;
+    using Tasks = System.Threading.Tasks;
+
     [EventSourceDefinition(Name = "FooEventSource")]
     public interface IFooEventSource
     {
         [Event(1,
            Level = EventLevel.Verbose,
-           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
-        void One(Guid messageId, Guid correlationId, string messageType, string from, string to);
+        void One(Guid ex, Guid correlationId, string messageType, string from, string to);
 
 	[Event(2,
            Level = EventLevel.Verbose,
-           Message = "Sent message {correlationId}/{messageId} to {to}.",
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
         void Two(Guid messageId, Guid correlationId, string messageType, string from, string to);
     }
-}</value>
+}
+</value>
   </data>
 </root>

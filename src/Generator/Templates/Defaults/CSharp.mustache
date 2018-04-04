@@ -1,17 +1,17 @@
-﻿using System;
-using System.Diagnostics.Tracing;
-using System.Text;
+﻿{{#Usings}}
+using {{#IsStatic}}static {{/IsStatic}}{{#Alias}}{{.}} = {{/Alias}}{{Namespace}};
+{{/Usings}}
 
 namespace {{namespace}}
 {
-    {{documentationXml}}
+{{documentationXml}}
 {{#attribute}}
-    {{#hasProperties}}
+{{#hasProperties}}
     [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
-    {{/hasProperties}}
-    {{^hasProperties}}
+{{/hasProperties}}
+{{^hasProperties}}
     [{{name}}]
-    {{/hasProperties}}
+{{/hasProperties}}
 {{/attribute}}
     public sealed class {{name}}
         : EventSource
@@ -22,20 +22,20 @@ namespace {{namespace}}
         public static {{interfaceName}} Log { get; } = new {{name}}();
 
 {{#events}}
-        {{documentationXml}}
-        {{#attribute}}
+{{documentationXml}}
+{{#attribute}}
         [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
-        {{/attribute}}
-        public void {{name}}({{#parameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/parameters}})
+{{/attribute}}
+        public void {{name}}({{#inputParameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/inputParameters}})
         {
             if (IsEnabled())
             {
-                {{#hasParameters}}
-                WriteCore({{id}}{{#parameters}}, {{name}}{{/parameters}}); 
-                {{/hasParameters}}
-                {{^hasParameters}}
+{{#hasParameters}}
+                WriteCore({{id}}{{#valueParameters}}, {{name}}{{/valueParameters}});
+{{/hasParameters}}
+{{^hasParameters}}
                 WriteEvent({{id}});
-                {{/hasParameters}}
+{{/hasParameters}}
             }
         }
 

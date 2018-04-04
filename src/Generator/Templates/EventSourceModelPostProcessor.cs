@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Thor.Generator.Types;
 
 namespace Thor.Generator.Templates
@@ -13,6 +14,9 @@ namespace Thor.Generator.Templates
     {
         private readonly Template _template;
         private HashSet<WriteMethod> _baseWriteMethods;
+        private HashSet<NamespaceModel> _usings;
+        private bool _allowComplexParameters;
+        private string _eventComplexParameterName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventSourceModelPostProcessor"/> class.
@@ -30,6 +34,9 @@ namespace Thor.Generator.Templates
 
             _template = template;
             _baseWriteMethods = new HashSet<WriteMethod>(template.BaseWriteMethods);
+            _usings = new HashSet<NamespaceModel>(template.Usings);
+            _allowComplexParameters = template.AllowComplexParameters;
+            _eventComplexParameterName = template.EventComplexParameterName;
         }
 
         /// <summary>
@@ -46,8 +53,74 @@ namespace Thor.Generator.Templates
                 throw new ArgumentNullException(nameof(eventSourceModel));
             }
 
+            //1. Separate complextype parameters from simpletype parameters
+            QualifyParameters(eventSourceModel);
+
+            //2. Generate the write methods with respect to the already existing write methods
             eventSourceModel.WriteMethods.Clear();
             AddWriteMethods(eventSourceModel);
+
+            //3. Generate the list of usings from the two input sources: Template usings and Interface (input file) usings
+            MergeUsings(eventSourceModel);
+        }
+
+        /// <summary>
+        /// Merges the usings from the Interface with the usings from the template.
+        /// </summary>
+        /// <param name="eventSourceModel">The event source model.</param>
+        private void MergeUsings(EventSourceModel eventSourceModel)
+        {
+            eventSourceModel.Usings =
+                eventSourceModel.Usings.Union(_usings).Distinct().OrderBy(u => u.Namespace).ToHashSet();
+        }
+
+        private void QualifyParameters(EventSourceModel eventSourceModel)
+        {
+            foreach(var eventModel in eventSourceModel.Events)
+            {
+                QualifyEventParameters(eventModel);
+            }
+
+            if (!_allowComplexParameters && eventSourceModel.Events.Any(e => e.HasComplexTypeParameters))
+            {
+                throw new ArgumentException("ComplexType parameters are not allowed by the template.");
+            }
+        }
+
+        private void QualifyEventParameters(EventModel eventModel)
+        {
+            foreach (var parameter in eventModel.InputParameters)
+            {
+                if (!ParameterTypeLookup.TryGet(parameter.Type, out var typeInfo))
+                {
+                    eventModel.ComplexParameters.Add(parameter.Clone());
+                }
+                else
+                {
+                    eventModel.ValueParameters.Add(parameter.Clone());
+                }
+            }
+
+            if (eventModel.HasComplexTypeParameters)
+            {
+                var parameter = new EventParameterModel
+                {
+                    Name = _eventComplexParameterName,
+                    Type = typeof(string).Name
+                };
+
+                eventModel.ValueParameters.Insert(0, parameter);
+            }
+
+            SetFirst(eventModel.InputParameters);
+            SetFirst(eventModel.ValueParameters);
+            SetFirst(eventModel.ComplexParameters);
+        }
+
+        private static void SetFirst(List<EventParameterModel> items)
+        {
+            if (items.Any())
+                items.First().IsFirst = true;
         }
 
         private void AddWriteMethods(EventSourceModel eventSourceModel)
@@ -87,7 +160,7 @@ namespace Thor.Generator.Templates
             HashSet<WriteMethod> hashSet = new HashSet<WriteMethod>();
             foreach (EventModel eventModel in eventSourceModel.Events)
             {
-                IEnumerable<string> types = eventModel.Parameters
+                IEnumerable<string> types = eventModel.ValueParameters
                     .Select(t => GetWriteMethodParameterType(t.Type));
                 hashSet.Add(new WriteMethod(types));
             }
@@ -96,11 +169,11 @@ namespace Thor.Generator.Templates
 
         private string GetWriteMethodParameterType(string typeName)
         {
-            IParameterTypeInfo typeInfo;
-            if (!ParameterTypeLookup.TryGet(typeName, out typeInfo))
+            if (!ParameterTypeLookup.TryGet(typeName, out var typeInfo))
             {
                 throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
             }
+
             return typeInfo.Name;
         }
 
