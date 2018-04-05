@@ -20,5 +20,6 @@ namespace Thor.Generator.Templates
 
         public bool HasEvents => Events.Any();
         public bool HasWriteMethods => WriteMethods.Any();
+		public bool IsInterface => !string.IsNullOrWhiteSpace(InterfaceName);
     }
 }
