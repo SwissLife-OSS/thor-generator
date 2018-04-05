@@ -33,7 +33,8 @@ namespace Thor.Generator
                 EventSourceDefinitionVisitor visitor = new EventSourceDefinitionVisitor();
                 visitor.Visit(document.GetSyntaxRoot());
 
-                if (visitor.EventSource.HasEvents)
+                if (visitor.EventSource.IsInterface
+                    && visitor.EventSource.HasEvents)
                 {
                     yield return new EventSourceFile(document, visitor.EventSource);
                 }
