@@ -18,6 +18,8 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="nustache.core" Version="1.0.0-alfa2" />
+    <PackageReference Include="Thor.Core" Version="1.0.0-preview1" />
+    <PackageReference Include="Thor.Core.Abstractions" Version="1.0.0-preview1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,10 +43,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\Defaults\CSharpLight.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Defaults\CSharpLight.mustache">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Defaults\CSharp.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Templates\Defaults\CSharp.mustache">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Defaults\CSharpWithComplexLight.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Defaults\CSharpWithComplexLight.mustache">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Templates\Defaults\CSharpWithComplex.json">

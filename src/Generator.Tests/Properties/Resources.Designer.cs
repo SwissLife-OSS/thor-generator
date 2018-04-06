@@ -62,6 +62,31 @@ namespace Thor.Generator.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to using System;
+        ///using System.Diagnostics.Tracing;
+        ///using Thor.Core.Abstractions;
+        ///
+        ///namespace EventSources
+        ///{
+        ///    [EventSourceDefinition(Name = &quot;BarEventSource&quot;)]
+        ///    public interface IBarEventSource
+        ///    {
+        ///        [Event(1,
+        ///           Level = EventLevel.Verbose,
+        ///           Message = &quot;Sent message {correlationId}/{messageType} to {to}.&quot;,
+        ///           Version = 1)]
+        ///        void One(string ex, Guid correlationId, string messageType, string from, string to);
+        ///
+        ///	[Event(2,
+        ///           Level = EventLevel.Ver [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EventSourceThatBuilds {
+            get {
+                return ResourceManager.GetString("EventSourceThatBuilds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
         ///using  System.Linq;
         ///using static System.Math;
         ///using Gen = System.Generic;
@@ -84,6 +109,31 @@ namespace Thor.Generator.Properties {
         internal static string EventSourceWithComplexType {
             get {
                 return ResourceManager.GetString("EventSourceWithComplexType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using System;
+        ///using System.Diagnostics.Tracing;
+        ///using Thor.Core.Abstractions;
+        ///
+        ///namespace EventSources
+        ///{
+        ///    [EventSourceDefinition(Name = &quot;FooEventSource&quot;)]
+        ///    public interface IFooEventSource
+        ///    {
+        ///        [Event(3,
+        ///           Level = EventLevel.Verbose,
+        ///           Message = &quot;Sent message {correlationId}/{messageType} to {to}.&quot;,
+        ///           Version = 1)]
+        ///        void Three(Exception ex, Guid correlationId, string messageType, string from, string to);
+        ///
+        ///	[Event(4,
+        ///           Level = EventLeve [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EventSourceWithComplexTypeThatBuilds {
+            get {
+                return ResourceManager.GetString("EventSourceWithComplexTypeThatBuilds", resourceCulture);
             }
         }
         
