@@ -97,7 +97,7 @@ namespace Thor.Generator.Templates
 
         public override void VisitUsingDirective(UsingDirectiveSyntax node)
         {
-            var namespaceModel = new NamespaceModel(node.StaticKeyword.Value != null, node.Alias?.Name?.ToString(), node.Name.ToString());
+            NamespaceModel namespaceModel = new NamespaceModel(node.StaticKeyword.Value != null, node.Alias?.Name?.ToString(), node.Name.ToString());
 
             if (!EventSource.Usings.Contains(namespaceModel))
             {

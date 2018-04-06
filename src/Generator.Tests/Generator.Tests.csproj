@@ -14,6 +14,9 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
     <PackageReference Include="moq" Version="4.7.99" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="Thor.Analyzer" Version="1.0.4" />
+    <PackageReference Include="Thor.Core" Version="1.0.0-preview2" />
+    <PackageReference Include="Thor.Core.Abstractions" Version="1.0.0-preview2" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>

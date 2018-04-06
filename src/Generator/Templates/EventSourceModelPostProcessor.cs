@@ -76,7 +76,7 @@ namespace Thor.Generator.Templates
 
         private void QualifyParameters(EventSourceModel eventSourceModel)
         {
-            foreach(var eventModel in eventSourceModel.Events)
+            foreach(EventModel eventModel in eventSourceModel.Events)
             {
                 QualifyEventParameters(eventModel);
             }
@@ -89,9 +89,9 @@ namespace Thor.Generator.Templates
 
         private void QualifyEventParameters(EventModel eventModel)
         {
-            foreach (var parameter in eventModel.InputParameters)
+            foreach (EventParameterModel parameter in eventModel.InputParameters)
             {
-                if (!ParameterTypeLookup.TryGet(parameter.Type, out var typeInfo))
+                if (!ParameterTypeLookup.TryGet(parameter.Type, out IParameterTypeInfo typeInfo))
                 {
                     eventModel.ComplexParameters.Add(parameter.Clone());
                 }
@@ -103,7 +103,7 @@ namespace Thor.Generator.Templates
 
             if (eventModel.HasComplexTypeParameters)
             {
-                var parameter = new EventParameterModel
+                EventParameterModel parameter = new EventParameterModel
                 {
                     Name = _eventComplexParameterName,
                     Type = typeof(string).Name
@@ -169,7 +169,7 @@ namespace Thor.Generator.Templates
 
         private string GetWriteMethodParameterType(string typeName)
         {
-            if (!ParameterTypeLookup.TryGet(typeName, out var typeInfo))
+            if (!ParameterTypeLookup.TryGet(typeName, out IParameterTypeInfo typeInfo))
             {
                 throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
             }

@@ -117,6 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EventSourceThatBuilds" xml:space="preserve">
+    <value>using System;
+using System.Diagnostics.Tracing;
+using Thor.Core.Abstractions;
+
+namespace EventSources
+{
+    [EventSourceDefinition(Name = "BarEventSource")]
+    public interface IBarEventSource
+    {
+        [Event(1,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
+           Version = 1)]
+        void One(string ex, Guid correlationId, string messageType, string from, string to);
+
+	[Event(2,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
+           Version = 1)]
+        void Two(Guid messageId, Guid correlationId, string messageType, string from, string to);
+    }
+}
+</value>
+  </data>
   <data name="EventSourceWithComplexType" xml:space="preserve">
     <value>using System;
 using  System.Linq;
@@ -143,6 +168,31 @@ namespace EventSources
            Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
         void Two(Guid messageId, Guid correlationId, string messageType, string from, string to);
+    }
+}
+</value>
+  </data>
+  <data name="EventSourceWithComplexTypeThatBuilds" xml:space="preserve">
+    <value>using System;
+using System.Diagnostics.Tracing;
+using Thor.Core.Abstractions;
+
+namespace EventSources
+{
+    [EventSourceDefinition(Name = "FooEventSource")]
+    public interface IFooEventSource
+    {
+        [Event(3,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
+           Version = 1)]
+        void Three(Exception ex, Guid correlationId, string messageType, string from, string to);
+
+	[Event(4,
+           Level = EventLevel.Verbose,
+           Message = "Sent message {correlationId}/{messageType} to {to}.",
+           Version = 1)]
+        void Four(Guid messageId, Guid correlationId, string messageType, string from, string to);
     }
 }
 </value>
