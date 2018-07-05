@@ -3,19 +3,26 @@
   "baseWriteMethods": [
     [ "string" ]
   ],
-  "complexParameter": { "enabled":  true, "eventParameterName": "attachmentId" }, 
+  "complexParameter": { "enabled":  true, "eventParameterName": "attachmentId" },
   "packageDependencies": [
     {
-      "id": "ChilliCream.Tracing.Abstractions",
-      "version": "1.0.0-preview3"
+      "id": "Thor.Core",
+      "version": "1.0.0-preview-0004"
+    },
+    {
+      "id": "Thor.Core.Transmission.Abstractions",
+      "version": "1.0.0-preview-0004"
     }
   ],
   "Usings": [
     {
-      "namespace": "ChilliCream.Tracing.Abstractions"
+      "namespace": "Thor.Core"
     },
     {
-      "namespace": "System.Collections.Generic"
+      "namespace": "Thor.Core.Abstractions"
+    },
+    {
+      "namespace": "Thor.Core.Transmission.Abstractions"
     }
   ]
 }

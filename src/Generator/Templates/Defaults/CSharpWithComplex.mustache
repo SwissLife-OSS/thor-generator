@@ -29,17 +29,17 @@ namespace {{namespace}}
             if (IsEnabled())
             {
 				{{#HasComplexTypeParameters}}
-				var attachments = new Dictionary<string, Object>{
-                    {{#complexParameters}}
-					{"{{name}}", {{name}} },
-                    {{/complexParameters}}
-				};
-
-				var attachmentId = AttachmentId.NewId().ToString();
+				var attachmentId = AttachmentId.NewId();
 				{{/HasComplexTypeParameters}}
-                {{name}}(Application.Id, ActivityStack.Id{{#valueparameters}}, {{name}}{{/valueparameters}});
-                {{#HasComplexTypeParameters}}
-                AttachmentDispatcher.Instance.Dispatch(attachmentId, attachments);
+
+				{{name}}(Application.Id, ActivityStack.Id{{#valueparameters}}, {{name}}{{/valueparameters}});
+                
+				{{#HasComplexTypeParameters}}
+                AttachmentDispatcher.Instance.Dispatch(
+					{{#complexParameters}}
+					{{^IsFirst}},{{/IsFirst}} AttachmentFactory.Create(attachmentId, "{{name}}", {{name}})
+                    {{/complexParameters}}
+				);
 				{{/HasComplexTypeParameters}}
             }
         }
