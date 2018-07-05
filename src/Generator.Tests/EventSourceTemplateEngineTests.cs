@@ -136,23 +136,25 @@ namespace Thor.Generator
                 .Be("WriteCore(int eventId, int applicationId, Guid activityId, Guid a, Guid b, string c, string d, string e)");
 
             eventSourceVisitor.ImportedNamespaces.Count.Should()
-                .Be(8);
+                .Be(9);
             eventSourceVisitor.ImportedNamespaces[0].Should()
-                .Be("using ChilliCream.Tracing.Abstractions;");
-            eventSourceVisitor.ImportedNamespaces[1].Should()
                 .Be("using System;");
-            eventSourceVisitor.ImportedNamespaces[2].Should()
-                .Be("using System.Collections.Generic;");
-            eventSourceVisitor.ImportedNamespaces[3].Should()
+            eventSourceVisitor.ImportedNamespaces[1].Should()
                 .Be("using Gen = System.Generic;");
-            eventSourceVisitor.ImportedNamespaces[4].Should()
+            eventSourceVisitor.ImportedNamespaces[2].Should()
                 .Be("using System.Linq;");
-            eventSourceVisitor.ImportedNamespaces[5].Should()
+            eventSourceVisitor.ImportedNamespaces[3].Should()
                 .Be("using static System.Math;");
-            eventSourceVisitor.ImportedNamespaces[6].Should()
+            eventSourceVisitor.ImportedNamespaces[4].Should()
                 .Be("using System.Text;");
-            eventSourceVisitor.ImportedNamespaces[7].Should()
+            eventSourceVisitor.ImportedNamespaces[5].Should()
                 .Be("using Tasks = System.Threading.Tasks;");
+            eventSourceVisitor.ImportedNamespaces[6].Should()
+                .Be("using Thor.Core;");
+            eventSourceVisitor.ImportedNamespaces[7].Should()
+                .Be("using Thor.Core.Abstractions;");
+            eventSourceVisitor.ImportedNamespaces[8].Should()
+                .Be("using Thor.Core.Transmission.Abstractions;");
         }
 
         [Fact]
