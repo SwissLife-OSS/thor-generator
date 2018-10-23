@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Thor.Generator.Types;
 
@@ -53,15 +54,17 @@ namespace Thor.Generator.Templates
                 throw new ArgumentNullException(nameof(eventSourceModel));
             }
 
-            //1. Separate complextype parameters from simpletype parameters
+            // 1. Separate complextype parameters from simpletype parameters
             QualifyParameters(eventSourceModel);
 
-            //2. Generate the write methods with respect to the already existing write methods
+            // 2. Generate the write methods with respect to the already existing write methods
             eventSourceModel.WriteMethods.Clear();
             AddWriteMethods(eventSourceModel);
 
-            //3. Generate the list of usings from the two input sources: Template usings and Interface (input file) usings
+            // 3. Generate the list of usings from the two input sources: Template usings and Interface (input file) usings
             MergeUsings(eventSourceModel);
+
+
         }
 
         /// <summary>
@@ -71,12 +74,47 @@ namespace Thor.Generator.Templates
         private void MergeUsings(EventSourceModel eventSourceModel)
         {
             eventSourceModel.Usings =
-                eventSourceModel.Usings.Union(_usings).Distinct().OrderBy(u => u.Namespace).ToHashSet();
+                eventSourceModel.Usings.Union(_usings).Distinct()
+                    .OrderBy(u => u.Namespace).ToHashSet();
         }
+
+        private void ReplaceMessagePlaceholdersWithIndexes(
+            EventSourceModel eventSourceModel)
+        {
+            foreach (EventModel eventModel in eventSourceModel.Events)
+            {
+                ReplaceMessagePlaceholdersWithIndexes(eventModel);
+            }
+        }
+
+        private void ReplaceMessagePlaceholdersWithIndexes(
+            EventModel eventModel)
+        {
+            AttributePropertyModel messageProperty =
+                eventModel.Attribute.Properties
+                    .FirstOrDefault(t => t.Name.Equals("Message",
+                        StringComparison.Ordinal));
+            if (messageProperty != null)
+            {
+                int offset = _template.DefaultPayloads;
+                StringBuilder message = new StringBuilder(messageProperty.Value);
+
+                for (int i = 0; i < eventModel.InputParameters.Count; i++)
+                {
+                    string placeholder = $"{{{eventModel.InputParameters[i].Name}}}";
+                    message.Replace(placeholder, $"{{{i + offset}}}");
+                }
+
+                messageProperty.Value = message.ToString();
+            }
+        }
+
+        // EventSourceModel eventSourceModel
+
 
         private void QualifyParameters(EventSourceModel eventSourceModel)
         {
-            foreach(EventModel eventModel in eventSourceModel.Events)
+            foreach (EventModel eventModel in eventSourceModel.Events)
             {
                 QualifyEventParameters(eventModel);
             }
