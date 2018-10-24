@@ -96,20 +96,29 @@ namespace Thor.Generator.Templates
                         StringComparison.Ordinal));
             if (messageProperty != null)
             {
+                ILookup<string, Placeholder> placeholderLookup =
+                    MessageParser.FindPlaceholders(messageProperty.Value)
+                        .ToLookup(t => t.Name);
+
                 int offset = _template.DefaultPayloads;
                 StringBuilder message = new StringBuilder(messageProperty.Value);
 
                 for (int i = 0; i < eventModel.InputParameters.Count; i++)
                 {
-                    string placeholder = $"{{{eventModel.InputParameters[i].Name}}}";
-                    message.Replace(placeholder, $"{{{i + offset}}}");
+                    string name = eventModel.InputParameters[i].Name;
+                    foreach (Placeholder placeholder in placeholderLookup[name])
+                    {
+                        int index = i + offset;
+                        message.Replace(
+                            placeholder.ToString(),
+                            placeholder.ToString(index));
+                    }
                 }
 
                 messageProperty.Value = message.ToString();
             }
         }
 
-        // EventSourceModel eventSourceModel
 
 
         private void QualifyParameters(EventSourceModel eventSourceModel)
@@ -158,7 +167,9 @@ namespace Thor.Generator.Templates
         private static void SetFirst(List<EventParameterModel> items)
         {
             if (items.Any())
+            {
                 items.First().IsFirst = true;
+            }
         }
 
         private void AddWriteMethods(EventSourceModel eventSourceModel)
@@ -223,6 +234,113 @@ namespace Thor.Generator.Templates
                 throw new ArgumentException("The specified type is not allowed.", nameof(typeName));
             }
             return typeInfo;
+        }
+    }
+
+    internal class MessageParser
+    {
+        public static IEnumerable<Placeholder> FindPlaceholders(string message)
+        {
+            int position = 0;
+            while (Skip(message, '{', ref position))
+            {
+                int start = position;
+
+                if (Peek(message, '{', start))
+                {
+                    position += 2;
+                    continue;
+                }
+                else if (Skip(message, '}', ref position))
+                {
+                    yield return ParsePlaceholder(
+                        start,
+                        position,
+                        message.Substring(
+                            start + 1,
+                            position - start - 1));
+                }
+            }
+        }
+
+        private static Placeholder ParsePlaceholder(
+            int start,
+            int end,
+            string placeholder)
+        {
+            int index = 0;
+
+            if (Skip(placeholder, ':', ref index))
+            {
+                return new Placeholder(
+                    start,
+                    end,
+                    placeholder.Substring(0, index),
+                    placeholder.Substring(index + 1));
+            }
+
+            return new Placeholder(start, end, placeholder);
+        }
+
+        private static bool Skip(string message, char token, ref int position)
+        {
+            while (position < message.Length && message[position] != token)
+            {
+                position++;
+            }
+
+            return (position < message.Length && message[position] == token);
+        }
+
+        private static bool Peek(string message, char token, int position)
+        {
+            int next = position + 1;
+            return message.Length > next
+                && message[next] == token;
+        }
+    }
+
+    internal class Placeholder
+    {
+        public Placeholder(int start, int end, string name)
+        {
+            Start = start;
+            End = end;
+            Name = name;
+        }
+
+        public Placeholder(int start, int end, string name, string format)
+        {
+            Start = start;
+            End = end;
+            Name = name;
+            Format = format;
+        }
+
+        public int Start { get; }
+
+        public int End { get; }
+
+        public string Name { get; }
+
+        public string Format { get; }
+
+        public override string ToString()
+        {
+            if (Format == null)
+            {
+                return $"{{{Name}}}";
+            }
+            return $"{{{Name}:{Format}}}";
+        }
+
+        public string ToString(int index)
+        {
+            if (Format == null)
+            {
+                return $"{{{index}}}";
+            }
+            return $"{{{index}:{Format}}}";
         }
     }
 }
