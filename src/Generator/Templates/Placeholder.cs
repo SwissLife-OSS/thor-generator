@@ -25,6 +25,9 @@ namespace Thor.Generator.Templates
 
         public string Format { get; }
 
+        public bool IsIndexBased() => int.TryParse(Name, out var _);
+        public bool IsNameBased() => !IsIndexBased();
+
         public override string ToString()
         {
             if (Format == null)

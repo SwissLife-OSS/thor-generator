@@ -21,12 +21,17 @@ namespace Thor.Generator.Templates
                 }
                 else if (Skip(message, '}', ref position))
                 {
-                    yield return ParsePlaceholder(
+                    Placeholder placeholder = ParsePlaceholder(
                         start,
                         position,
                         message.Substring(
                             start + 1,
                             position - start - 1));
+
+                    if (placeholder.IsNameBased())
+                    {
+                        yield return placeholder;
+                    }
                 }
             }
         }

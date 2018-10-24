@@ -66,6 +66,35 @@ namespace Thor.Generator
         }
 
         [Fact]
+        public void IgnoreIndexBasedPlaceholders()
+        {
+            // arrange
+            string message = "{foo:c} {1:c:sjkfj_fjd:shjhda} {0} {a}";
+
+            // act
+            Placeholder[] placeholders =
+                MessageParser.FindPlaceholders(message).ToArray();
+
+            // assert
+            Assert.Collection(placeholders,
+                t =>
+                {
+                    Assert.Equal(0, t.Start);
+                    Assert.Equal(6, t.End);
+                    Assert.Equal("foo", t.Name);
+                    Assert.Equal("c", t.Format);
+                },
+                t =>
+                {
+                    Assert.Equal(35, t.Start);
+                    Assert.Equal(37, t.End);
+                    Assert.Equal("a", t.Name);
+                    Assert.Null(t.Format);
+                });
+        }
+
+
+        [Fact]
         public void ReplacePlaceholders()
         {
             // arrange

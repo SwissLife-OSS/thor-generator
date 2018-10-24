@@ -64,7 +64,8 @@ namespace Thor.Generator.Templates
             // 3. Generate the list of usings from the two input sources: Template usings and Interface (input file) usings
             MergeUsings(eventSourceModel);
 
-
+            // 4. Replace named placeholders
+            ReplaceMessagePlaceholdersWithIndexes(eventSourceModel);
         }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace Thor.Generator.Templates
                 eventModel.Attribute.Properties
                     .FirstOrDefault(t => t.Name.Equals("Message",
                         StringComparison.Ordinal));
+
             if (messageProperty != null
                 && !string.IsNullOrEmpty(messageProperty.Value))
             {
