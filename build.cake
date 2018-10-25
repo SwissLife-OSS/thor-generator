@@ -125,12 +125,9 @@ Task("Tests")
             .Append($"/p:CoverletOutput=\"../../{testOutputDir}/{i++}\" --blame")
     };
 
-    DotNetCoreTest("./src/Language.Tests", testSettings);
-    DotNetCoreTest("./src/Runtime.Tests", testSettings);
-    DotNetCoreTest("./src/Types.Tests", testSettings);
-    DotNetCoreTest("./src/Validation.Tests", testSettings);
-    DotNetCoreTest("./src/Core.Tests", testSettings);
-    DotNetCoreTest("./src/AspNetCore.Tests", testSettings);
+    DotNetCoreTest("./src/FluentConsole.Tests", testSettings);
+    DotNetCoreTest("./src/Generator.ProjectSystem.Tests", testSettings);
+    DotNetCoreTest("./src/Generator.Tests", testSettings);
 });
 
 Task("SonarBegin")
