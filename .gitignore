@@ -287,5 +287,17 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
-.vscode/
-drop/
+lcov.info
+coverage.json
+.DS_Store
+
+BenchmarkDotNet.Artifacts
+.sonarqube/
+.testresults
+
+# Build related
+tools/**
+!tools/packages.config
+
+testoutput/
+artifacts/
