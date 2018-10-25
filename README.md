@@ -59,11 +59,13 @@ For a more detailed help that shows all the scenarious visit our [documentation]
 
 ## Building the Repository
 
-| Windows | macOS |auto| ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |auto| [Instructions](https://github.com/ChilliCream/thor-generator-docs/blob/master/build/windows.md) | [Instructions](https://github.com/ChilliCream/thor-generator-docs/blob/master/build/macos.md) |
+[Instructions](https://github.com/ChilliCream/thor-generator-docs/blob/master/build/windows.md)
 
 ### Build status of master branch
 
-| Platform | Build | Tests | Code Coverage |auto| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |auto| Windows | [![AppVeyor branch](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Tests](https://img.shields.io/appveyor/tests/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Coveralls](https://img.shields.io/coveralls/ChilliCream/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master) |
+| Platform | Build                                                                                                                                            | Tests                                                                                                                                     | Code Coverage                                                                                                                                         |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Windows  | [![AppVeyor branch](https://img.shields.io/appveyor/ci/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Tests](https://img.shields.io/appveyor/tests/rstaib/thor-generator/master.svg)](https://ci.appveyor.com/project/rstaib/thor-generator) | [![Coveralls](https://img.shields.io/coveralls/ChilliCream/thor-generator.svg)](https://coveralls.io/github/ChilliCream/thor-generator?branch=master) |
 
 ## Legal and Licensing
 
