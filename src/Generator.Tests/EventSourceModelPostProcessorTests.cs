@@ -44,6 +44,45 @@ namespace Thor.Generator
         }
 
         [Fact]
+        public void ReplaceNamedParameters()
+        {
+            // arrange
+            Template template = new Template(Guid.NewGuid().ToString("N"),
+                Guid.NewGuid().ToString("N"),
+                Enumerable.Empty<WriteMethod>(),
+                Enumerable.Empty<NamespaceModel>(),
+                5, false, null);
+
+            EventSourceModel eventSourceModel = new EventSourceModel();
+            EventModel eventModel = new EventModel();
+            eventModel.Attribute.Properties.Add(new AttributePropertyModel
+            {
+                Name = "Message",
+                Value = "{foo} {bar}"
+            });
+            eventModel.InputParameters.Add(new EventParameterModel
+            {
+                Name = "foo",
+                Type = "string"
+            });
+            eventModel.InputParameters.Add(new EventParameterModel
+            {
+                Name = "bar",
+                Type = "int"
+            });
+            eventSourceModel.Events.Add(eventModel);
+
+            // act
+            EventSourceModelPostProcessor postProcessor
+                = new EventSourceModelPostProcessor(template);
+            postProcessor.Process(eventSourceModel);
+
+            // assert
+            Assert.Equal("{5} {6}",
+                eventModel.Attribute.Properties.First().Value);
+        }
+
+        [Fact]
         public void CheckComplexParameter()
         {
             // arrange

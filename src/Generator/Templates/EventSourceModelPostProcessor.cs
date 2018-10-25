@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Thor.Generator.Types;
 
@@ -53,15 +54,18 @@ namespace Thor.Generator.Templates
                 throw new ArgumentNullException(nameof(eventSourceModel));
             }
 
-            //1. Separate complextype parameters from simpletype parameters
+            // 1. Separate complextype parameters from simpletype parameters
             QualifyParameters(eventSourceModel);
 
-            //2. Generate the write methods with respect to the already existing write methods
+            // 2. Generate the write methods with respect to the already existing write methods
             eventSourceModel.WriteMethods.Clear();
             AddWriteMethods(eventSourceModel);
 
-            //3. Generate the list of usings from the two input sources: Template usings and Interface (input file) usings
+            // 3. Generate the list of usings from the two input sources: Template usings and Interface (input file) usings
             MergeUsings(eventSourceModel);
+
+            // 4. Replace named placeholders
+            ReplaceMessagePlaceholdersWithIndexes(eventSourceModel);
         }
 
         /// <summary>
@@ -71,12 +75,73 @@ namespace Thor.Generator.Templates
         private void MergeUsings(EventSourceModel eventSourceModel)
         {
             eventSourceModel.Usings =
-                eventSourceModel.Usings.Union(_usings).Distinct().OrderBy(u => u.Namespace).ToHashSet();
+                eventSourceModel.Usings.Union(_usings).Distinct()
+                    .OrderBy(u => u.Namespace).ToHashSet();
+        }
+
+        private void ReplaceMessagePlaceholdersWithIndexes(
+            EventSourceModel eventSourceModel)
+        {
+            foreach (EventModel eventModel in eventSourceModel.Events)
+            {
+                ReplaceMessagePlaceholdersWithIndexes(eventModel);
+            }
+        }
+
+        private void ReplaceMessagePlaceholdersWithIndexes(
+            EventModel eventModel)
+        {
+            AttributePropertyModel messageProperty =
+                eventModel.Attribute.Properties
+                    .FirstOrDefault(t => t.Name.Equals("Message",
+                        StringComparison.Ordinal));
+
+            if (messageProperty != null
+                && !string.IsNullOrEmpty(messageProperty.Value))
+            {
+                Placeholder[] placeholders =
+                    MessageParser.FindPlaceholders(messageProperty.Value)
+                        .ToArray();
+
+                Dictionary<Placeholder, string> values =
+                    CreatePlaceholderValues(eventModel, placeholders);
+
+                messageProperty.Value = MessageParser.ReplacePlaceholders(
+                    messageProperty.Value,
+                    placeholders,
+                    p => values[p]);
+            }
+        }
+
+        private Dictionary<Placeholder, string> CreatePlaceholderValues(
+            EventModel eventModel,
+            IEnumerable<Placeholder> placeholders)
+        {
+            ILookup<string, Placeholder> placeholderLookup =
+                    placeholders.ToLookup(t => t.Name);
+
+            int offset = _template.DefaultPayloads;
+
+            Dictionary<Placeholder, string> values =
+                new Dictionary<Placeholder, string>();
+
+            for (int i = 0; i < eventModel.InputParameters.Count; i++)
+            {
+                string name = eventModel.InputParameters[i].Name;
+                int index = i + offset;
+
+                foreach (Placeholder placeholder in placeholderLookup[name])
+                {
+                    values[placeholder] = placeholder.ToString(index);
+                }
+            }
+
+            return values;
         }
 
         private void QualifyParameters(EventSourceModel eventSourceModel)
         {
-            foreach(EventModel eventModel in eventSourceModel.Events)
+            foreach (EventModel eventModel in eventSourceModel.Events)
             {
                 QualifyEventParameters(eventModel);
             }
@@ -120,7 +185,9 @@ namespace Thor.Generator.Templates
         private static void SetFirst(List<EventParameterModel> items)
         {
             if (items.Any())
+            {
                 items.First().IsFirst = true;
+            }
         }
 
         private void AddWriteMethods(EventSourceModel eventSourceModel)
