@@ -18,8 +18,8 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="nustache.core" Version="1.0.0-alfa2" />
-    <PackageReference Include="Thor.Core" Version="1.0.0-preview-0004" />
-    <PackageReference Include="Thor.Core.Transmission.Abstractions" Version="1.0.0-preview-0004" />
+    <PackageReference Include="Thor.Core" Version="1.0.0-preview-0019" />
+    <PackageReference Include="Thor.Core.Transmission.Abstractions" Version="1.0.0-preview-0019" />
   </ItemGroup>
 
   <ItemGroup>
