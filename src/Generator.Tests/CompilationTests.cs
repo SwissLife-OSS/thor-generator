@@ -28,11 +28,7 @@ namespace Thor.Generator
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(Resources.EventSourceWithComplexTypeThatBuilds);
             eventSourceDefinitionVisitor.Visit(syntaxTree.GetRoot());
 
-            CodeEventAnalyzer analyzer = new CodeEventAnalyzer(new[]
-            {
-                MetadataReference.CreateFromFile(typeof(Core.Application).GetTypeInfo().Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Core.Abstractions.EventSourceBase).GetTypeInfo().Assembly.Location),
-            });
+            CodeEventAnalyzer analyzer = new CodeEventAnalyzer();
 
             // act
             EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
