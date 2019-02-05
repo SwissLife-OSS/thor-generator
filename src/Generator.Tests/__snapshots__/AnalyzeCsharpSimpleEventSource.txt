@@ -28,7 +28,7 @@ namespace EventSources
             }
         }
 
-        [Event(1, Level = EventLevel.Verbose, Message = "Sent message {3}}/{4}} to {6}.", Version = 1)]
+        [Event(1, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
         private void One(int applicationId, Guid activityId, string ex, Guid correlationId, string messageType, string from, string to)
         {
             WriteCore(1, applicationId, activityId, ex, correlationId, messageType, from, to);
@@ -46,7 +46,7 @@ namespace EventSources
             }
         }
 
-        [Event(2, Level = EventLevel.Verbose, Message = "Sent message {3}}/{4}} to {6}.", Version = 1)]
+        [Event(2, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
         private void Two(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)
         {
             WriteCore(2, applicationId, activityId, messageId, correlationId, messageType, from, to);

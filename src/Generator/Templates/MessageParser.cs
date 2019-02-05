@@ -46,19 +46,19 @@ namespace Thor.Generator.Templates
 
             foreach (Placeholder placeholder in placeholders)
             {
-                if (index < placeholder.Start && index < placeholder.Start - 1)
+                if (index < placeholder.Start)
                 {
                     newMessage.Append(message.Substring(index, placeholder.Start - index));
                     index = placeholder.Start;
                 }
 
                 newMessage.Append(getValue(placeholder));
-                index = placeholder.End;
+                index = placeholder.End + 1;
             }
 
             if (index < message.Length)
             {
-                newMessage.Append(message.Substring(index + 1));
+                newMessage.Append(message.Substring(index));
             }
 
             return newMessage.ToString();
