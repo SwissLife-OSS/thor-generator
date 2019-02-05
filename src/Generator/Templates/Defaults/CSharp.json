@@ -16,6 +16,9 @@
   ],
   "Usings": [
     {
+      "namespace": "System"
+    },
+    {
       "namespace": "Thor.Core"
     },
     {
