@@ -93,8 +93,9 @@ namespace Thor.Generator.Templates
         {
             AttributePropertyModel messageProperty =
                 eventModel.Attribute.Properties
-                    .FirstOrDefault(t => t.Name.Equals("Message",
-                        StringComparison.Ordinal));
+                    .FirstOrDefault(t => t.Name != null
+                        && t.Name.Equals("Message",
+                            StringComparison.Ordinal));
 
             if (messageProperty != null
                 && !string.IsNullOrEmpty(messageProperty.Value))
@@ -171,7 +172,7 @@ namespace Thor.Generator.Templates
                 EventParameterModel parameter = new EventParameterModel
                 {
                     Name = _eventComplexParameterName,
-                    Type = typeof(string).Name
+                    Type = "string"
                 };
 
                 eventModel.ValueParameters.Insert(0, parameter);

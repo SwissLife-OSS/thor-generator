@@ -13,10 +13,17 @@ namespace Thor.Generator.Templates
 
         public string DocumentationXml { get; set; }
 
-        public AttributeModel Attribute { get; } = new AttributeModel(Constants.EventSourceAttributeName);
-        public List<EventModel> Events { get; } = new List<EventModel>();
-        public List<WriteCoreModel> WriteMethods { get; } = new List<WriteCoreModel>();
-        public HashSet<NamespaceModel> Usings { get; set; } = new HashSet<NamespaceModel>();
+        public AttributeModel Attribute { get; } =
+            new AttributeModel(Constants.EventSourceAttributeName);
+
+        public List<EventModel> Events { get; } =
+            new List<EventModel>();
+
+        public List<WriteCoreModel> WriteMethods { get; } =
+            new List<WriteCoreModel>();
+
+        public HashSet<NamespaceModel> Usings { get; set; } =
+            new HashSet<NamespaceModel>();
 
         public bool HasEvents => Events.Any();
         public bool HasWriteMethods => WriteMethods.Any();

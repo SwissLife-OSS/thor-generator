@@ -8,26 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coveralls.io" Version="1.4.2" />
-    <PackageReference Include="FluentAssertions" Version="4.19.4" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
-    <PackageReference Include="moq" Version="4.7.99" />
-    <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="Thor.Analyzer" Version="1.0.4" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Generator\Generator.csproj" />
-    <ProjectReference Include="..\Generator.ProjectSystem\Generator.ProjectSystem.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -41,5 +21,38 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="__snapshots__\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="__resources__\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coveralls.io" Version="1.4.2" />
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
+    <PackageReference Include="moq" Version="4.7.99" />
+    <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="ChilliCream.Testing.Utilities" Version="0.2.0" />
+    <PackageReference Include="Thor.Analyzer" Version="1.0.4" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <PackageReference Include="Thor.Core" Version="1.0.0-preview-0019" />
+    <PackageReference Include="Thor.Core.Transmission.Abstractions" Version="1.0.0-preview-0019" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Generator\Generator.csproj" />
+    <ProjectReference Include="..\Generator.ProjectSystem\Generator.ProjectSystem.csproj" />
+  </ItemGroup>
+
   
 </Project>

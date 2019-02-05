@@ -29,8 +29,10 @@ namespace Thor.Generator.Templates
         }
 
         public string Name { get; }
+
         public bool HasProperties => Properties != null && Properties.Any();
 
-        public List<AttributePropertyModel> Properties { get; } = new List<AttributePropertyModel>();
+        public List<AttributePropertyModel> Properties { get; } =
+            new List<AttributePropertyModel>();
     }
 }

@@ -1,0 +1,142 @@
+using System;
+using System.Diagnostics.Tracing;
+using Thor.Core;
+using Thor.Core.Abstractions;
+using Thor.Core.Transmission.Abstractions;
+
+namespace EventSources
+{
+
+    [EventSource(Name = "FooEventSource")]
+    public sealed class FooEventSource
+        : EventSourceBase
+        , IFooEventSource
+    {
+        private FooEventSource() { }
+
+        public static IFooEventSource Log { get; } = new FooEventSource();
+
+
+        [NonEvent]
+        public void Three(Exception ex, Guid correlationId, string messageType, string from, string to)
+        {
+            if (IsEnabled())
+            {
+				var attachmentId = AttachmentId.NewId();
+
+				Three(Application.Id, ActivityStack.Id, attachmentId, correlationId, messageType, from, to);
+                
+                AttachmentDispatcher.Instance.Dispatch(
+					 AttachmentFactory.Create(attachmentId, "ex", ex)
+				);
+            }
+        }
+
+        [Event(3, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
+        private void Three(int applicationId, Guid activityId, string attachmentId, Guid correlationId, string messageType, string from, string to)
+        {
+            WriteCore(3, applicationId, activityId, attachmentId, correlationId, messageType, from, to);
+        }
+
+
+        [NonEvent]
+        public void Four(Guid messageId, Guid correlationId, string messageType, string from, string to)
+        {
+            if (IsEnabled())
+            {
+
+				Four(Application.Id, ActivityStack.Id, messageId, correlationId, messageType, from, to);
+                
+            }
+        }
+
+        [Event(4, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
+        private void Four(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)
+        {
+            WriteCore(4, applicationId, activityId, messageId, correlationId, messageType, from, to);
+        }
+
+        [NonEvent]
+        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId, string a, Guid b, string c, string d, string e)
+        {
+            if (IsEnabled())
+            {
+                StringExtensions.SetToEmptyIfNull(ref a);
+                StringExtensions.SetToEmptyIfNull(ref c);
+                StringExtensions.SetToEmptyIfNull(ref d);
+                StringExtensions.SetToEmptyIfNull(ref e);
+
+                fixed (char* aBytes = a)
+                {
+                fixed (char* cBytes = c)
+                {
+                fixed (char* dBytes = d)
+                {
+                fixed (char* eBytes = e)
+                {
+                    const short dataCount = 7;
+                    EventData* data = stackalloc EventData[dataCount];
+                    data[0].DataPointer = (IntPtr)(&applicationId);
+                    data[0].Size = 4;
+                    data[1].DataPointer = (IntPtr)(&activityId);
+                    data[1].Size = 16;
+                    data[2].DataPointer = (IntPtr)(aBytes);
+                    data[2].Size = ((a.Length + 1) * 2);
+                    data[3].DataPointer = (IntPtr)(&b);
+                    data[3].Size = 16;
+                    data[4].DataPointer = (IntPtr)(cBytes);
+                    data[4].Size = ((c.Length + 1) * 2);
+                    data[5].DataPointer = (IntPtr)(dBytes);
+                    data[5].Size = ((d.Length + 1) * 2);
+                    data[6].DataPointer = (IntPtr)(eBytes);
+                    data[6].Size = ((e.Length + 1) * 2);
+
+                    WriteEventCore(eventId, dataCount, data);
+                }
+                }
+                }
+                }
+            }
+        }
+
+        [NonEvent]
+        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId, Guid a, Guid b, string c, string d, string e)
+        {
+            if (IsEnabled())
+            {
+                StringExtensions.SetToEmptyIfNull(ref c);
+                StringExtensions.SetToEmptyIfNull(ref d);
+                StringExtensions.SetToEmptyIfNull(ref e);
+
+                fixed (char* cBytes = c)
+                {
+                fixed (char* dBytes = d)
+                {
+                fixed (char* eBytes = e)
+                {
+                    const short dataCount = 7;
+                    EventData* data = stackalloc EventData[dataCount];
+                    data[0].DataPointer = (IntPtr)(&applicationId);
+                    data[0].Size = 4;
+                    data[1].DataPointer = (IntPtr)(&activityId);
+                    data[1].Size = 16;
+                    data[2].DataPointer = (IntPtr)(&a);
+                    data[2].Size = 16;
+                    data[3].DataPointer = (IntPtr)(&b);
+                    data[3].Size = 16;
+                    data[4].DataPointer = (IntPtr)(cBytes);
+                    data[4].Size = ((c.Length + 1) * 2);
+                    data[5].DataPointer = (IntPtr)(dBytes);
+                    data[5].Size = ((d.Length + 1) * 2);
+                    data[6].DataPointer = (IntPtr)(eBytes);
+                    data[6].Size = ((e.Length + 1) * 2);
+
+                    WriteEventCore(eventId, dataCount, data);
+                }
+                }
+                }
+            }
+        }
+
+    }
+}

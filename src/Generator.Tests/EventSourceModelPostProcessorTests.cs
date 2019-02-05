@@ -57,8 +57,12 @@ namespace Thor.Generator
             EventModel eventModel = new EventModel();
             eventModel.Attribute.Properties.Add(new AttributePropertyModel
             {
+                Value = "1"
+            });
+            eventModel.Attribute.Properties.Add(new AttributePropertyModel
+            {
                 Name = "Message",
-                Value = "{foo} {bar}"
+                Value = "\"{foo} {bar}\""
             });
             eventModel.InputParameters.Add(new EventParameterModel
             {
@@ -78,8 +82,8 @@ namespace Thor.Generator
             postProcessor.Process(eventSourceModel);
 
             // assert
-            Assert.Equal("{5} {6}",
-                eventModel.Attribute.Properties.First().Value);
+            Assert.Equal("\"{5} {6}\"",
+                eventModel.Attribute.Properties.Skip(1).First().Value);
         }
 
         [Fact]
@@ -87,7 +91,8 @@ namespace Thor.Generator
         {
             // arrange
             Template template = new Template(Guid.NewGuid().ToString("N"),
-                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(), Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
+                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(),
+                Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
 
             EventSourceModel eventSourceModel = new EventSourceModel();
             EventModel eventModel = new EventModel();
@@ -128,7 +133,8 @@ namespace Thor.Generator
         {
             // arrange
             Template template = new Template(Guid.NewGuid().ToString("N"),
-                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(), Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
+                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(),
+                Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
 
             EventSourceModel eventSourceModel = new EventSourceModel();
             EventModel eventModel = new EventModel();

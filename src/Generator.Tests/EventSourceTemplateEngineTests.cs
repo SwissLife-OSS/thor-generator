@@ -10,39 +10,13 @@ using Microsoft.CodeAnalysis;
 using FluentAssertions;
 using System.Linq;
 using Thor.Generator.ProjectSystem;
+using System.IO;
+using ChilliCream.Testing;
 
 namespace Thor.Generator
 {
     public class EventSourceTemplateEngineTests
     {
-        [Fact]
-        public void DontGenerateCSharpEventSource()
-        {
-            // arrange
-            TemplateStorage templateStorage = new TemplateStorage();
-            Template template = templateStorage.GetTemplate(ProjectSystem.Language.CSharp);
-
-            EventSourceDefinitionVisitor eventSourceDefinitionVisitor = new EventSourceDefinitionVisitor();
-            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(Resources.EventSourceWithComplexType);
-            eventSourceDefinitionVisitor.Visit(syntaxTree.GetRoot());
-
-            Exception ex = null;
-
-            // act
-            EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
-            try
-            {
-                string eventSourceCode = templateEngine.Generate(eventSourceDefinitionVisitor.EventSource);
-            }
-            catch (ArgumentException e)
-            {
-                ex = e;
-            }
-            // assert
-            Assert.NotNull(ex);
-            ex.Message.Should().Be("ComplexType parameters are not allowed by the template.");
-        }
-
         [Fact]
         public void GenerateCSharpEventSource()
         {
@@ -64,37 +38,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Classes.Should().HaveCount(1);
-            eventSourceVisitor.Classes.First().Should()
-                .Be(eventSourceDefinitionVisitor.EventSource.Name);
-
-            eventSourceVisitor.MethodSignatures[0].Should()
-                .Be("One(Guid ex, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[1].Should()
-                .Be("Two(Guid messageId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[2].Should()
-                .Be("WriteCore(int eventId, Guid a, Guid b, string c, string d, string e)");
-            eventSourceVisitor.MethodSignatures[3].Should()
-                .Be("SetToEmptyIfNull(string value)");
-
-            eventSourceVisitor.ImportedNamespaces.Count.Should()
-                .Be(8);
-            eventSourceVisitor.ImportedNamespaces[0].Should()
-                .Be("using static Newtonsoft.Json;");
-            eventSourceVisitor.ImportedNamespaces[1].Should()
-                .Be("using System;");
-            eventSourceVisitor.ImportedNamespaces[2].Should()
-                .Be("using Gen = System.Generic;");
-            eventSourceVisitor.ImportedNamespaces[3].Should()
-                .Be("using Io = System.IO;");
-            eventSourceVisitor.ImportedNamespaces[4].Should()
-                .Be("using System.Linq;");
-            eventSourceVisitor.ImportedNamespaces[5].Should()
-                .Be("using static System.Math;");
-            eventSourceVisitor.ImportedNamespaces[6].Should()
-                .Be("using System.Text;");
-            eventSourceVisitor.ImportedNamespaces[7].Should()
-                .Be("using Tasks = System.Threading.Tasks;");
+            eventSourceVisitor.Snapshot();
         }
 
         [Fact]
@@ -102,7 +46,7 @@ namespace Thor.Generator
         {
             // arrange
             TemplateStorage templateStorage = new TemplateStorage();
-            Template template = templateStorage.GetCustomTemplate("Defaults\\CSharpWithComplex");
+            Template template = templateStorage.GetCustomTemplate(Path.Combine("Defaults", "CSharp"));
 
             EventSourceDefinitionVisitor eventSourceDefinitionVisitor = new EventSourceDefinitionVisitor();
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(Resources.EventSourceWithComplexType);
@@ -118,43 +62,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Classes.Should().HaveCount(1);
-            eventSourceVisitor.Classes.First().Should()
-                .Be(eventSourceDefinitionVisitor.EventSource.Name);
-
-            eventSourceVisitor.MethodSignatures[0].Should()
-                .Be("One(Exception ex, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[1].Should()
-                .Be("One(int applicationId, Guid activityId, String attachmentId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[2].Should()
-                .Be("Two(Guid messageId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[3].Should()
-                .Be("Two(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)");
-            eventSourceVisitor.MethodSignatures[4].Should()
-                .Be("WriteCore(int eventId, int applicationId, Guid activityId, string a, Guid b, string c, string d, string e)");
-            eventSourceVisitor.MethodSignatures[5].Should()
-                .Be("WriteCore(int eventId, int applicationId, Guid activityId, Guid a, Guid b, string c, string d, string e)");
-
-            eventSourceVisitor.ImportedNamespaces.Count.Should()
-                .Be(9);
-            eventSourceVisitor.ImportedNamespaces[0].Should()
-                .Be("using System;");
-            eventSourceVisitor.ImportedNamespaces[1].Should()
-                .Be("using Gen = System.Generic;");
-            eventSourceVisitor.ImportedNamespaces[2].Should()
-                .Be("using System.Linq;");
-            eventSourceVisitor.ImportedNamespaces[3].Should()
-                .Be("using static System.Math;");
-            eventSourceVisitor.ImportedNamespaces[4].Should()
-                .Be("using System.Text;");
-            eventSourceVisitor.ImportedNamespaces[5].Should()
-                .Be("using Tasks = System.Threading.Tasks;");
-            eventSourceVisitor.ImportedNamespaces[6].Should()
-                .Be("using Thor.Core;");
-            eventSourceVisitor.ImportedNamespaces[7].Should()
-                .Be("using Thor.Core.Abstractions;");
-            eventSourceVisitor.ImportedNamespaces[8].Should()
-                .Be("using Thor.Core.Transmission.Abstractions;");
+            eventSourceVisitor.Snapshot();
         }
 
         [Fact]
@@ -179,10 +87,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Classes.Should().HaveCount(1);
-            eventSourceVisitor.MethodSignatures.Should().HaveCount(1);
-            eventSourceVisitor.MethodSignatures[0].Should()
-                .Be("Foo()");
+            eventSourceVisitor.Snapshot();
         }
 
         [Fact]
@@ -209,13 +114,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Classes.Should().HaveCount(1);
-            eventSourceVisitor.ClassDocumentations.Should().HaveCount(1);
-            eventSourceVisitor.MethodSignatures.Should().HaveCount(1);
-            eventSourceVisitor.MethodDocumentations.Should().HaveCount(1);
-
-            eventSourceVisitor.ClassDocumentations.First().Should().Be(eventSourceModel.DocumentationXml);
-            eventSourceVisitor.MethodDocumentations.First().Should().Be(eventModel.DocumentationXml);
+            eventSourceVisitor.Snapshot();
         }
 
     }

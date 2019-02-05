@@ -4,6 +4,7 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using ChilliCream.Testing;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
@@ -22,20 +23,25 @@ namespace Thor.Generator
         {
             // arrange
             TemplateStorage templateStorage = new TemplateStorage();
-            Template template = templateStorage.GetCustomTemplate("Defaults\\CSharpWithComplexLight");
+            Template template = templateStorage.GetCustomTemplate(Path.Combine("Defaults", "CSharp"));
 
             EventSourceDefinitionVisitor eventSourceDefinitionVisitor = new EventSourceDefinitionVisitor();
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(Resources.EventSourceWithComplexTypeThatBuilds);
             eventSourceDefinitionVisitor.Visit(syntaxTree.GetRoot());
 
-            CodeEventAnalyzer analyzer = new CodeEventAnalyzer();
 
             // act
             EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
             string eventSourceCode = templateEngine.Generate(eventSourceDefinitionVisitor.EventSource);
-            Report report = analyzer.CompileAndAnalyze(eventSourceCode, "EventSources.FooEventSource");
 
             // assert
+            eventSourceCode.Snapshot();
+
+            Report report = EventSourceReportBuilder.New()
+                .AddSourceCode(Resources.EventSourceWithComplexTypeThatBuilds)
+                .AddSourceCode(eventSourceCode)
+                .Build("EventSources.FooEventSource");
+
             Assert.NotNull(report);
             Assert.False(report.HasErrors);
         }
@@ -45,47 +51,66 @@ namespace Thor.Generator
         {
             // arrange
             TemplateStorage templateStorage = new TemplateStorage();
-            Template template = templateStorage.GetCustomTemplate("Defaults\\CSharpLight");
+            Template template = templateStorage.GetCustomTemplate(Path.Combine("Defaults", "CSharp"));
 
             EventSourceDefinitionVisitor eventSourceDefinitionVisitor = new EventSourceDefinitionVisitor();
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(Resources.EventSourceThatBuilds);
             eventSourceDefinitionVisitor.Visit(syntaxTree.GetRoot());
 
-            CodeEventAnalyzer analyzer = new CodeEventAnalyzer();
+            EventSourceReportBuilder analyzer = new EventSourceReportBuilder();
 
             // act
             EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
             string eventSourceCode = templateEngine.Generate(eventSourceDefinitionVisitor.EventSource);
-            Report report = analyzer.CompileAndAnalyze(eventSourceCode, "EventSources.BarEventSource");
 
             // assert
+            eventSourceCode.Snapshot();
+
+            Report report = EventSourceReportBuilder.New()
+                .AddSourceCode(Resources.EventSourceThatBuilds)
+                .AddSourceCode(eventSourceCode)
+                .Build("EventSources.BarEventSource");
+
             Assert.NotNull(report);
             Assert.False(report.HasErrors);
         }
     }
 
-    public class CodeEventAnalyzer
+    public class EventSourceReportBuilder
     {
-        private IReadOnlyCollection<MetadataReference> _references;
+        private readonly CSharpLanguage _sourceLanguage = new CSharpLanguage();
+        private List<MetadataReference> _references = new List<MetadataReference>();
+        private List<SyntaxTree> _sourceTrees = new List<SyntaxTree>();
 
+        public static EventSourceReportBuilder New() =>
+            new EventSourceReportBuilder();
 
-        public CodeEventAnalyzer()
+        public EventSourceReportBuilder()
         {
-            _references = GetBaseAssemblies();
+            _references.AddRange(GetBaseAssemblies());
         }
 
-        public CodeEventAnalyzer(ICollection<PortableExecutableReference> references)
+        public EventSourceReportBuilder AddReferences(ICollection<PortableExecutableReference> references)
         {
-            _references = GetBaseAssemblies().Union(references).ToList();
+            _references.AddRange(references);
+            return this;
         }
 
-        public Report CompileAndAnalyze(string code, string className)
+        public EventSourceReportBuilder AddSourceCode(string source)
         {
-            Assembly assembly = CreateAssemblyDefinition(code);
+            _sourceTrees.Add(_sourceLanguage.ParseText(source, SourceCodeKind.Regular));
+            return this;
+        }
+
+        public Report Build(string className)
+        {
+            Assembly assembly = CreateAssemblyDefinition();
 
             Type type = assembly.GetType(className);
-            EventSource eventSource = (EventSource) type.GetMethod("CreateInstance").Invoke(null, null);
-
+            EventSource eventSource = (EventSource)type.GetTypeInfo()
+                .DeclaredConstructors
+                .First(t => !t.GetParameters().Any())
+                    .Invoke(Array.Empty<object>());
             return Analyze(eventSource);
         }
 
@@ -95,15 +120,14 @@ namespace Thor.Generator
             return analyzer.Inspect(eventSource);
         }
 
-        private Assembly CreateAssemblyDefinition(string code)
+        private Assembly CreateAssemblyDefinition()
         {
-            CSharpLanguage sourceLanguage = new CSharpLanguage();
-            SyntaxTree syntaxTree = sourceLanguage.ParseText(code, SourceCodeKind.Regular);
-
-            Compilation compilation = sourceLanguage
-                .CreateLibraryCompilation(assemblyName: "InMemoryAssembly", enableOptimisations: false)
+            Compilation compilation = _sourceLanguage
+                .CreateLibraryCompilation(
+                    assemblyName: "InMemoryAssembly",
+                    enableOptimisations: false)
                 .AddReferences(_references)
-                .AddSyntaxTrees(syntaxTree);
+                .AddSyntaxTrees(_sourceTrees);
 
             MemoryStream stream = new MemoryStream();
             EmitResult emitResult = compilation.Emit(stream);
