@@ -14,7 +14,7 @@ namespace {{namespace}}
 {{/hasProperties}}
 {{/attribute}}
     public sealed class {{name}}
-        : EventSource
+        : EventSourceBase
         , {{interfaceName}}
     {
         private {{name}}() { }
@@ -23,32 +23,45 @@ namespace {{namespace}}
 
 {{#events}}
 {{documentationXml}}
-{{#attribute}}
-        [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
-{{/attribute}}
-        public void {{name}}({{#inputParameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/inputParameters}})
+        [NonEvent]
+        public void {{name}}({{#inputparameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/inputparameters}})
         {
             if (IsEnabled())
             {
-{{#hasParameters}}
-                WriteCore({{id}}{{#valueParameters}}, {{name}}{{/valueParameters}});
-{{/hasParameters}}
-{{^hasParameters}}
-                WriteEvent({{id}});
-{{/hasParameters}}
+				{{#HasComplexTypeParameters}}
+				var attachmentId = AttachmentId.NewId();
+				{{/HasComplexTypeParameters}}
+
+				{{name}}(Application.Id, ActivityStack.Id{{#valueparameters}}, {{name}}{{/valueparameters}});
+                
+				{{#HasComplexTypeParameters}}
+                AttachmentDispatcher.Instance.Dispatch(
+					{{#complexParameters}}
+					{{^IsFirst}},{{/IsFirst}} AttachmentFactory.Create(attachmentId, "{{name}}", {{name}})
+                    {{/complexParameters}}
+				);
+				{{/HasComplexTypeParameters}}
             }
+        }
+
+{{#attribute}}
+        [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
+{{/attribute}}
+        private void {{name}}(int applicationId, Guid activityId{{#valueparameters}}, {{type}} {{name}}{{/valueparameters}})
+        {
+            WriteCore({{id}}, applicationId, activityId{{#valueparameters}}, {{name}}{{/valueparameters}});
         }
 
 {{/events}}
 {{#writeMethods}}
         [NonEvent]
-        private unsafe void WriteCore(int eventId{{#parameters}}, {{type}} {{name}}{{/parameters}})
+        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
         {
             if (IsEnabled())
             {
 {{#parameters}}
 {{#isString}}
-                SetToEmptyIfNull(ref {{name}});
+                StringExtensions.SetToEmptyIfNull(ref {{name}});
 {{/isString}}
 {{/parameters}}
 
@@ -58,20 +71,24 @@ namespace {{namespace}}
                 {
 {{/isString}}
 {{/parameters}}
-                const short dataCount = {{totalParameters}};
-                EventData* data = stackalloc EventData[dataCount];
+                    const short dataCount = {{totalParameters}};
+                    EventData* data = stackalloc EventData[dataCount];
+                    data[0].DataPointer = (IntPtr)(&applicationId);
+                    data[0].Size = 4;
+                    data[1].DataPointer = (IntPtr)(&activityId);
+                    data[1].Size = 16;
 {{#parameters}}
 {{#isString}}
-                data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
-                data[{{position}}].Size = (({{name}}.Length + 1) * 2);
+                    data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
+                    data[{{position}}].Size = (({{name}}.Length + 1) * 2);
 {{/isString}}
 {{^isString}}
-                data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
-                data[{{position}}].Size = {{size}};
+                    data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
+                    data[{{position}}].Size = {{size}};
 {{/isString}}
 {{/parameters}}
 
-                WriteEventCore(eventId, dataCount, data);
+                    WriteEventCore(eventId, dataCount, data);
 {{#parameters}}
 {{#isString}}
                 }
@@ -81,15 +98,5 @@ namespace {{namespace}}
         }
 
 {{/writeMethods}}
-{{#hasWriteMethods}}
-        [NonEvent]
-        private static void SetToEmptyIfNull(ref string value)
-        {
-            if (value == null)
-            {
-                value = string.Empty;
-            }
-        }
-{{/hasWriteMethods}}
     }
 }

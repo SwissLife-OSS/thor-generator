@@ -48,7 +48,7 @@ namespace Thor.Generator.Templates
             {
                 if (last < placeholder.Start && last < placeholder.Start - 1)
                 {
-                    newMessage.Append(message.Substring(last + 1, placeholder.Start - last - 1));
+                    newMessage.Append(message.Substring(last, placeholder.Start - last));
                     last = placeholder.Start;
                 }
 

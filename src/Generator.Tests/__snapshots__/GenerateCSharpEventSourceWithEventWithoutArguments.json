@@ -1,0 +1,23 @@
+{
+  "Classes": [
+    ""
+  ],
+  "ClassDocumentations": [
+    null
+  ],
+  "MethodSignatures": [
+    "Foo()",
+    "Foo(int applicationId, Guid activityId)",
+    "WriteCore(int eventId, int applicationId, Guid activityId)"
+  ],
+  "MethodDocumentations": [
+    null,
+    null,
+    null
+  ],
+  "ImportedNamespaces": [
+    "using Thor.Core;",
+    "using Thor.Core.Abstractions;",
+    "using Thor.Core.Transmission.Abstractions;"
+  ]
+}

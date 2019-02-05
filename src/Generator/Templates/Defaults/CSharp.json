@@ -1,21 +1,28 @@
 ﻿{
-  "defaultPayloads": 0,
+  "defaultPayloads": 2,
   "baseWriteMethods": [
-    []
+    [ "string" ]
+  ],
+  "complexParameter": { "enabled":  true, "eventParameterName": "attachmentId" },
+  "packageDependencies": [
+    {
+      "id": "Thor.Core",
+      "version": "1.0.0-preview-0004"
+    },
+    {
+      "id": "Thor.Core.Transmission.Abstractions",
+      "version": "1.0.0-preview-0004"
+    }
   ],
   "Usings": [
     {
-      "alias": "Io",
-      "namespace": "System.IO"
+      "namespace": "Thor.Core"
     },
     {
-      "namespace": "Newtonsoft.Json",
-      "isStatic": true
+      "namespace": "Thor.Core.Abstractions"
     },
     {
-      "alias": "Gen",
-      "namespace": "System.Generic",
-      "isStatic": false
+      "namespace": "Thor.Core.Transmission.Abstractions"
     }
   ]
 }

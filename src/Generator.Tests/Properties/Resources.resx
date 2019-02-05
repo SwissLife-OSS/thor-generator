@@ -163,7 +163,7 @@ namespace EventSources
            Version = 1)]
         void One(Exception ex, Guid correlationId, string messageType, string from, string to);
 
-	[Event(2,
+        [Event(2,
            Level = EventLevel.Verbose,
            Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
@@ -215,6 +215,12 @@ namespace EventSources
            Message = "Sent message {correlationId}/{messageType} to {to}.",
            Version = 1)]
         void MessageSent(Guid messageId, Guid correlationId, string messageType, string from, string to);
+
+        [Event(2, Level = EventLevel.Informational, Message = "Register PolicyAuthMiddleware {scopes}", Version = 1)]
+        void RegisterPolicyAuthMiddleware(object policies);
+
+        [Event(3, Level = EventLevel.Informational, Message = "GetServiceIdentityToken {scopes}", Version = 1)]
+        void GetServiceIdentityToken(string scopes);
     }
 }</value>
   </data>

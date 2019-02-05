@@ -11,7 +11,6 @@ namespace Thor.Generator
 {
     public class EventSourceDefinitionVisitorTests
     {
-
         [Fact]
         public void GetEventSourceDetailsWithNameConstant()
         {
