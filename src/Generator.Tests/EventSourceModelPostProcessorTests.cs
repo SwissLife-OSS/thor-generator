@@ -62,7 +62,7 @@ namespace Thor.Generator
             eventModel.Attribute.Properties.Add(new AttributePropertyModel
             {
                 Name = "Message",
-                Value = "{foo} {bar}"
+                Value = "\"{foo} {bar}\""
             });
             eventModel.InputParameters.Add(new EventParameterModel
             {
@@ -82,7 +82,7 @@ namespace Thor.Generator
             postProcessor.Process(eventSourceModel);
 
             // assert
-            Assert.Equal("{5} {6}",
+            Assert.Equal("\"{5} {6}\"",
                 eventModel.Attribute.Properties.Skip(1).First().Value);
         }
 

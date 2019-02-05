@@ -42,23 +42,23 @@ namespace Thor.Generator.Templates
             Func<Placeholder, string> getValue)
         {
             StringBuilder newMessage = new StringBuilder();
-            int last = 0;
+            int index = 0;
 
             foreach (Placeholder placeholder in placeholders)
             {
-                if (last < placeholder.Start && last < placeholder.Start - 1)
+                if (index < placeholder.Start && index < placeholder.Start - 1)
                 {
-                    newMessage.Append(message.Substring(last, placeholder.Start - last));
-                    last = placeholder.Start;
+                    newMessage.Append(message.Substring(index, placeholder.Start - index));
+                    index = placeholder.Start;
                 }
 
                 newMessage.Append(getValue(placeholder));
-                last = placeholder.End;
+                index = placeholder.End;
             }
 
-            if (last < message.Length)
+            if (index < message.Length)
             {
-                newMessage.Append(message.Substring(last + 1));
+                newMessage.Append(message.Substring(index + 1));
             }
 
             return newMessage.ToString();
