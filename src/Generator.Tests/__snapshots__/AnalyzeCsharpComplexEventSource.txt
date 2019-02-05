@@ -33,7 +33,7 @@ namespace EventSources
         }
 
         [Event(3, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
-        private void Three(int applicationId, Guid activityId, String attachmentId, Guid correlationId, string messageType, string from, string to)
+        private void Three(int applicationId, Guid activityId, string attachmentId, Guid correlationId, string messageType, string from, string to)
         {
             WriteCore(3, applicationId, activityId, attachmentId, correlationId, messageType, from, to);
         }

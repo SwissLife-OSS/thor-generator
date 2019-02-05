@@ -172,7 +172,7 @@ namespace Thor.Generator.Templates
                 EventParameterModel parameter = new EventParameterModel
                 {
                     Name = _eventComplexParameterName,
-                    Type = typeof(string).Name
+                    Type = "string"
                 };
 
                 eventModel.ValueParameters.Insert(0, parameter);

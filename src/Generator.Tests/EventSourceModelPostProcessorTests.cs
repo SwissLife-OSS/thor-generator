@@ -91,7 +91,8 @@ namespace Thor.Generator
         {
             // arrange
             Template template = new Template(Guid.NewGuid().ToString("N"),
-                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(), Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
+                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(),
+                Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
 
             EventSourceModel eventSourceModel = new EventSourceModel();
             EventModel eventModel = new EventModel();
@@ -132,7 +133,8 @@ namespace Thor.Generator
         {
             // arrange
             Template template = new Template(Guid.NewGuid().ToString("N"),
-                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(), Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
+                Guid.NewGuid().ToString("N"), Enumerable.Empty<WriteMethod>(),
+                Enumerable.Empty<NamespaceModel>(), 5, true, "attachmentId");
 
             EventSourceModel eventSourceModel = new EventSourceModel();
             EventModel eventModel = new EventModel();
