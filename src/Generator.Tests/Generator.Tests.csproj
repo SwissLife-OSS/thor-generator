@@ -40,7 +40,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
     <PackageReference Include="moq" Version="4.7.99" />
-    <PackageReference Include="OpenCover" Version="4.6.519" />
+    <PackageReference Include="OpenCover" Version="4.7.922" />
     <PackageReference Include="ChilliCream.Testing.Utilities" Version="0.2.0" />
     <PackageReference Include="Thor.Analyzer" Version="1.0.4" />
     <PackageReference Include="xunit" Version="2.4.1" />
