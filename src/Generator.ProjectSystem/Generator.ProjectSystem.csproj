@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.3.409" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.3.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="2.3.2" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.4.0" />
