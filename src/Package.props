@@ -1,0 +1,29 @@
+<Project>
+
+  <PropertyGroup>
+    <Product>Thor Generator</Product>
+    <Authors>Swiss Life authors and contributors</Authors>
+    <Company>Swiss Life</Company>
+    <Copyright>Copyright © 2019 Swiss Life</Copyright>
+    <PackageLicenseUrl>https://github.com/SwissLife-OSS/thor-generator/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/SwissLife-OSS/thor-generator</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SwissLife-OSS/thor-generator</RepositoryUrl>
+    <PackageTags>etw eventsource csharp dotent event-tracing-for-windows thorgen thor</PackageTags>
+    <PackageReleaseNotes>Release notes: https://github.com/SwissLife-OSS/thor-generator/releases/$(PackageVersion)</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageIconUrl>https://github.com/SwissLife-OSS/thor-generator/raw/master/logo.png</PackageIconUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <LangVersion>8.0</LangVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+ <ItemGroup>
+   <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+ </ItemGroup>
+
+</Project>

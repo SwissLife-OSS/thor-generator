@@ -1,0 +1,35 @@
+﻿{
+  "Classes": [
+    "FooEventSource"
+  ],
+  "ClassDocumentations": [
+    null
+  ],
+  "MethodSignatures": [
+    "One(Exception ex, Guid correlationId, string messageType, string from, string to)",
+    "One(int applicationId, Guid activityId, string attachmentId, Guid correlationId, string messageType, string from, string to)",
+    "Two(Guid messageId, Guid correlationId, string messageType, string from, string to)",
+    "Two(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)",
+    "WriteCore(int eventId, int applicationId, Guid activityId, string a, Guid b, string c, string d, string e)",
+    "WriteCore(int eventId, int applicationId, Guid activityId, Guid a, Guid b, string c, string d, string e)"
+  ],
+  "MethodDocumentations": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "ImportedNamespaces": [
+    "using System;",
+    "using Gen = System.Generic;",
+    "using System.Linq;",
+    "using static System.Math;",
+    "using System.Text;",
+    "using Tasks = System.Threading.Tasks;",
+    "using Thor.Core;",
+    "using Thor.Core.Abstractions;",
+    "using Thor.Core.Transmission.Abstractions;"
+  ]
+}

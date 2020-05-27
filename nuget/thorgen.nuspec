@@ -1,0 +1,28 @@
+<?xml version="1.0"?>	
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">	
+  <metadata>	
+    <id>Thor.Generator</id>	
+    <version>0.0.1</version>
+
+    <title>Thor ETW Generator</title>
+    <description>The Thor Generator is a tool that helps you to generat event sources from interfaces.</description>
+    <summary></summary>
+
+    <authors>Swiss Life authors and contributors</authors>
+
+    <licenseUrl>https://github.com/SwissLife-OSS/thor-generator/blob/master/LICENSE</licenseUrl>	
+    <projectUrl>https://github.com/SwissLife-OSS/thor-generator</projectUrl>	
+    <iconUrl>https://github.com/SwissLife-OSS/thor-generator/raw/master/logo.png</iconUrl>	
+
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <language>en-US</language>	
+    <tags>etw eventsource csharp dotent event-tracing-for-windows thorgen thor</tags>	
+    <developmentDependency>true</developmentDependency>	
+  </metadata>	
+
+  <files>	
+    <file src="..\..\src\Thor.Generator.targets" target="build" />	
+    <file src="..\..\drop\win10-x64\**\*.*" target="tools\win10-x64" />	
+    <file src="..\..\drop\all\**\*.*" target="tools\all" />	
+  </files>
+</package> 

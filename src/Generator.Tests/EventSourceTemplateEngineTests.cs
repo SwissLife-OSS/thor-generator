@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,11 +6,10 @@ using Xunit;
 using Thor.Generator.Templates;
 using Thor.Generator.Properties;
 using Microsoft.CodeAnalysis;
-using FluentAssertions;
 using System.Linq;
 using Thor.Generator.ProjectSystem;
 using System.IO;
-using ChilliCream.Testing;
+using Snapshooter.Xunit;
 
 namespace Thor.Generator
 {
@@ -38,7 +36,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Snapshot();
+            eventSourceVisitor.MatchSnapshot();
         }
 
         [Fact]
@@ -62,7 +60,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Snapshot();
+            eventSourceVisitor.MatchSnapshot();
         }
 
         [Fact]
@@ -87,7 +85,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Snapshot();
+            eventSourceVisitor.MatchSnapshot();
         }
 
         [Fact]
@@ -114,7 +112,7 @@ namespace Thor.Generator
             EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
             eventSourceVisitor.Visit(syntaxTree.GetRoot());
 
-            eventSourceVisitor.Snapshot();
+            eventSourceVisitor.MatchSnapshot();
         }
 
     }

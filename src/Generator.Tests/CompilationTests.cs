@@ -4,11 +4,11 @@ using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using ChilliCream.Testing;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
 using Microsoft.CodeAnalysis.Host;
+using Snapshooter.Xunit;
 using Thor.Analyzer;
 using Thor.Generator.Properties;
 using Thor.Generator.Templates;
@@ -35,7 +35,7 @@ namespace Thor.Generator
             string eventSourceCode = templateEngine.Generate(eventSourceDefinitionVisitor.EventSource);
 
             // assert
-            eventSourceCode.Snapshot();
+            eventSourceCode.MatchSnapshot();
 
             Report report = EventSourceReportBuilder.New()
                 .AddSourceCode(Resources.EventSourceWithComplexTypeThatBuilds)
@@ -64,7 +64,7 @@ namespace Thor.Generator
             string eventSourceCode = templateEngine.Generate(eventSourceDefinitionVisitor.EventSource);
 
             // assert
-            eventSourceCode.Snapshot();
+            eventSourceCode.MatchSnapshot();
 
             Report report = EventSourceReportBuilder.New()
                 .AddSourceCode(Resources.EventSourceThatBuilds)

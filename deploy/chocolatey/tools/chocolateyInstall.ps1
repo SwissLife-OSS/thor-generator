@@ -1,1 +1,0 @@
-Install-ChocolateyZipPackage 'EventSourceGenerator' 'https://github.com/ChilliCream/EventSourceGenerator/releases/download/{version}/win10-x64.zip' "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
