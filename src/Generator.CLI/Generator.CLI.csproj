@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    
     <AssemblyName>thorgen</AssemblyName>
     <RootNamespace>Thor.Generator</RootNamespace>
   </PropertyGroup>

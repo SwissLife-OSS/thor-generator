@@ -4,7 +4,6 @@
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AssemblyName>Thor.Generator.ProjectSystem.Tests</AssemblyName>
     <RootNamespace>Thor.Generator.ProjectSystem.Tests</RootNamespace>
-    <IsPackable>false</IsPackable>    
   </PropertyGroup>
 
   <ItemGroup>
