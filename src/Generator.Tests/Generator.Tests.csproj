@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AssemblyName>Thor.Generator.Tests</AssemblyName>
     <RootNamespace>Thor.Generator</RootNamespace>
     <IsPackable>false</IsPackable>
@@ -40,12 +41,12 @@
     <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
     <PackageReference Include="moq" Version="4.7.99" />
     <PackageReference Include="OpenCover" Version="4.6.519" />
-    <PackageReference Include="ChilliCream.Testing.Utilities" Version="0.2.0" />
+    <PackageReference Include="Snapshooter.xUnit" Version="0.5.2" />
     <PackageReference Include="Thor.Analyzer" Version="1.0.4" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
-    <PackageReference Include="Thor.Core" Version="1.0.0-preview-0019" />
-    <PackageReference Include="Thor.Core.Transmission.Abstractions" Version="1.0.0-preview-0019" />
+    <PackageReference Include="Thor.Core" Version="2.4.3" />
+    <PackageReference Include="Thor.Core.Transmission.Abstractions" Version="2.4.3" />
   </ItemGroup>
 
   <ItemGroup>

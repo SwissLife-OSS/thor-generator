@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics.Tracing;
 using Thor.Core;
 using Thor.Core.Abstractions;
@@ -7,53 +7,50 @@ using Thor.Core.Transmission.Abstractions;
 namespace EventSources
 {
 
-    [EventSource(Name = "FooEventSource")]
-    public sealed class FooEventSource
+    [EventSource(Name = "BarEventSource")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("thor-generator", "1.0.0")]
+    public sealed class BarEventSource
         : EventSourceBase
-        , IFooEventSource
+        , IBarEventSource
     {
-        private FooEventSource() { }
+        private BarEventSource() { }
 
-        public static IFooEventSource Log { get; } = new FooEventSource();
-
-
-        [NonEvent]
-        public void Three(Exception ex, Guid correlationId, string messageType, string from, string to)
-        {
-            if (IsEnabled())
-            {
-				var attachmentId = AttachmentId.NewId();
-
-				Three(Application.Id, ActivityStack.Id, attachmentId, correlationId, messageType, from, to);
-                
-                AttachmentDispatcher.Instance.Dispatch(
-					 AttachmentFactory.Create(attachmentId, "ex", ex)
-				);
-            }
-        }
-
-        [Event(3, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
-        private void Three(int applicationId, Guid activityId, string attachmentId, Guid correlationId, string messageType, string from, string to)
-        {
-            WriteCore(3, applicationId, activityId, attachmentId, correlationId, messageType, from, to);
-        }
+        public static IBarEventSource Log { get; } = new BarEventSource();
 
 
         [NonEvent]
-        public void Four(Guid messageId, Guid correlationId, string messageType, string from, string to)
+        public void One(string ex, Guid correlationId, string messageType, string from, string to)
         {
             if (IsEnabled())
             {
 
-				Four(Application.Id, ActivityStack.Id, messageId, correlationId, messageType, from, to);
+				One(Application.Id, ActivityStack.Id, ex, correlationId, messageType, from, to);
                 
             }
         }
 
-        [Event(4, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
-        private void Four(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)
+        [Event(1, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
+        private void One(int applicationId, Guid activityId, string ex, Guid correlationId, string messageType, string from, string to)
         {
-            WriteCore(4, applicationId, activityId, messageId, correlationId, messageType, from, to);
+            WriteCore(1, applicationId, activityId, ex, correlationId, messageType, from, to);
+        }
+
+
+        [NonEvent]
+        public void Two(Guid messageId, Guid correlationId, string messageType, string from, string to)
+        {
+            if (IsEnabled())
+            {
+
+				Two(Application.Id, ActivityStack.Id, messageId, correlationId, messageType, from, to);
+                
+            }
+        }
+
+        [Event(2, Level = EventLevel.Verbose, Message = "Sent message {3}/{4} to {6}.", Version = 1)]
+        private void Two(int applicationId, Guid activityId, Guid messageId, Guid correlationId, string messageType, string from, string to)
+        {
+            WriteCore(2, applicationId, activityId, messageId, correlationId, messageType, from, to);
         }
 
         [NonEvent]
