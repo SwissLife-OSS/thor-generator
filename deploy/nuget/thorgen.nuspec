@@ -2,18 +2,18 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Thor.Generator</id>
-    <version>0.0.1</version>
+    <version>1.4.0</version>
     
     <title>Thor ETW Generator</title>
     <description>The Thor Generator is a tool that helps you to generat event sources from interfaces.</description>
     <summary></summary>
     
     <authors>Michael and Rafael Staib</authors>
-    <owners>Michael and Rafael Staib</owners>
+    <owners>SwissLife</owners>
     
-    <licenseUrl>https://github.com/ChilliCream/thor-generator/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/ChilliCream/thor-generator</projectUrl>
-    <iconUrl>https://github.com/ChilliCream/thor-generator/blob/master/resources/icon.png?raw=true</iconUrl>
+    <licenseUrl>https://github.com/SwissLife-OSS/thor-generator/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SwissLife-OSS/thor-generator</projectUrl>
+    <iconUrl>https://github.com/SwissLife-OSS/thor-generator/blob/master/resources/icon.png?raw=true</iconUrl>
     
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <language>en-US</language>

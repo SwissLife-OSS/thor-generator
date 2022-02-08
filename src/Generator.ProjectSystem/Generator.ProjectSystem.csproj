@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <AssemblyName>Thor.Generator.ProjectSystem</AssemblyName>
     <RootNamespace>Thor.Generator.ProjectSystem</RootNamespace>
   </PropertyGroup>
