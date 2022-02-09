@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="DefaultTemplateBody" xml:space="preserve">
+        <value>{{#Usings}}
+using {{#IsStatic}}static {{/IsStatic}}{{#Alias}}{{.}} = {{/Alias}}{{Namespace}};
+{{/Usings}}
+
+namespace {{namespace}}
+{
+{{documentationXml}}
+{{#attribute}}
+{{#hasProperties}}
+    [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
+{{/hasProperties}}
+{{^hasProperties}}
+    [{{name}}]
+{{/hasProperties}}
+{{/attribute}}
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("thor-generator", "1.0.0")]
+    public sealed class {{name}}
+        : EventSourceBase
+        , {{interfaceName}}
+    {
+        private {{name}}() { }
+
+        public static {{interfaceName}} Log { get; } = new {{name}}();
+
+{{#events}}
+{{documentationXml}}
+        [NonEvent]
+        public void {{name}}({{#inputparameters}}{{^isFirst}}, {{/isFirst}}{{type}} {{name}}{{/inputparameters}})
+        {
+            if (IsEnabled())
+            {
+				{{#HasComplexTypeParameters}}
+				var attachmentId = AttachmentId.NewId();
+				{{/HasComplexTypeParameters}}
+
+				{{name}}(Application.Id, ActivityStack.Id{{#valueparameters}}, {{name}}{{/valueparameters}});
+                
+				{{#HasComplexTypeParameters}}
+                AttachmentDispatcher.Instance.Dispatch(
+					{{#complexParameters}}
+					{{^IsFirst}},{{/IsFirst}} AttachmentFactory.Create(attachmentId, "{{name}}", {{name}})
+                    {{/complexParameters}}
+				);
+				{{/HasComplexTypeParameters}}
+            }
+        }
+
+{{#attribute}}
+        [{{name}}({{#properties}}{{^isFirst}}, {{/isFirst}}{{#hasName}}{{name}} = {{/hasName}}{{value}}{{/properties}})]
+{{/attribute}}
+        private void {{name}}(int applicationId, Guid activityId{{#valueparameters}}, {{type}} {{name}}{{/valueparameters}})
+        {
+            WriteCore({{id}}, applicationId, activityId{{#valueparameters}}, {{name}}{{/valueparameters}});
+        }
+
+{{/events}}
+{{#writeMethods}}
+        [NonEvent]
+        private unsafe void WriteCore(int eventId, int applicationId, Guid activityId{{#parameters}}, {{type}} {{name}}{{/parameters}})
+        {
+            if (IsEnabled())
+            {
+{{#parameters}}
+{{#isString}}
+                StringExtensions.SetToEmptyIfNull(ref {{name}});
+{{/isString}}
+{{/parameters}}
+
+{{#parameters}}
+{{#isString}}
+                fixed (char* {{name}}Bytes = {{name}})
+                {
+{{/isString}}
+{{/parameters}}
+                    const short dataCount = {{totalParameters}};
+                    EventData* data = stackalloc EventData[dataCount];
+                    data[0].DataPointer = (IntPtr)(&amp;applicationId);
+                    data[0].Size = 4;
+                    data[1].DataPointer = (IntPtr)(&amp;activityId);
+                    data[1].Size = 16;
+{{#parameters}}
+{{#isString}}
+                    data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}}Bytes);
+                    data[{{position}}].Size = (({{name}}.Length + 1) * 2);
+{{/isString}}
+{{^isString}}
+                    data[{{position}}].DataPointer = (IntPtr)({{operator}}{{name}});
+                    data[{{position}}].Size = {{size}};
+{{/isString}}
+{{/parameters}}
+
+                    WriteEventCore(eventId, dataCount, data);
+{{#parameters}}
+{{#isString}}
+                }
+{{/isString}}
+{{/parameters}}
+            }
+        }
+
+{{/writeMethods}}
+    }
+}
+</value>
+    </data>
+    <data name="DefaultTemplateInfo" xml:space="preserve">
+        <value>{
+  "defaultPayloads": 2,
+  "baseWriteMethods": [
+    [ "string" ]
+  ],
+  "complexParameter": { "enabled":  true, "eventParameterName": "attachmentId" },
+  "packageDependencies": [
+    {
+      "id": "Thor.Core",
+      "version": "1.0.0-preview-0004"
+    },
+    {
+      "id": "Thor.Core.Transmission.Abstractions",
+      "version": "1.0.0-preview-0004"
+    }
+  ],
+  "Usings": [
+    {
+      "namespace": "System"
+    },
+    {
+      "namespace": "Thor.Core"
+    },
+    {
+      "namespace": "Thor.Core.Abstractions"
+    },
+    {
+      "namespace": "Thor.Core.Transmission.Abstractions"
+    }
+  ]
+}
+</value>
+    </data>
+</root>
