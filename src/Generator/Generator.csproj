@@ -53,6 +53,12 @@
     <None Update="Templates\Defaults\CSharp.mustache">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\Foo\CSharp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\Foo\CSharp.mustache">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\Defaults\CSharpWithComplexLight.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

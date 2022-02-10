@@ -66,6 +66,30 @@ namespace Thor.Generator
         }
 
         [Fact]
+        public void GenerateCsharpComplexEventSource1()
+        {
+            // arrange
+            TemplateStorage templateStorage = new TemplateStorage();
+            Template template = templateStorage.GetCustomTemplate(Path.Combine("Foo", "CSharp"));
+
+            EventSourceDefinitionVisitor eventSourceDefinitionVisitor = new EventSourceDefinitionVisitor();
+            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(Resources.EventSourceWithComplexType);
+            eventSourceDefinitionVisitor.Visit(syntaxTree.GetRoot());
+
+            // act
+            EventSourceTemplateEngine templateEngine = new EventSourceTemplateEngine(template);
+            string eventSourceCode = templateEngine.Generate(eventSourceDefinitionVisitor.EventSource);
+
+            // assert
+            syntaxTree = CSharpSyntaxTree.ParseText(eventSourceCode);
+
+            EventSourceVisitor eventSourceVisitor = new EventSourceVisitor();
+            eventSourceVisitor.Visit(syntaxTree.GetRoot());
+
+            eventSourceVisitor.Snapshot();
+        }
+
+        [Fact]
         public void GenerateCSharpEventSourceWithEventWithoutArguments()
         {
             // arrange
